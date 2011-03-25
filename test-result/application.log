@@ -1,0 +1,3 @@
+25 mars 2011 12:15:45,285 INFO  ~ Starting /var/www/covami
+25 mars 2011 12:15:46,015 WARN  ~ You're running Play! in DEV mode
+25 mars 2011 12:15:46,131 INFO  ~ Listening for HTTP on port 9000 (Waiting a first request to start) ...
