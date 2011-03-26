@@ -22,12 +22,12 @@ public class User extends Model {
         this.lastname = lastname;
     }
     
-    public static User connect(String email, String password) {
-        return find("byLoginAndPassword", email, password).first();
+    public static User connect(String login, String password) {
+        return find("byLoginAndPassword", login, password).first();
     }
     
-    static boolean authentify(String username, String password) {
-        return User.connect(username, password) != null;
+    static boolean authentify(String login, String password) {
+        return User.connect(login, password) != null;
     }
     
     public String toString() {
