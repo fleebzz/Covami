@@ -1,19 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-
-<!--Si on est connecté, on dit bonjour et on propose de se déconnecter -->
-#{if security != null}
-	Hello ${user.login} ! /
-	<a href="@{Secure.logout()}">Logout</a>
-#{/if}
-<!-- Sinon on propose de se logger -->
-#{else}
-	<a href="@{Secure.login()}">Login</a>
-#{/else}
-
-<hr>
-
 <!-- Petite fonction permettant de voir si la connexion a bien fonctionné -->
 #{if security != null}
 	<b>You are connected !</b>

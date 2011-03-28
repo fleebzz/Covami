@@ -9,8 +9,7 @@ import models.*;
 
 
 public class Application extends Controller {
-
-	//START : notre modification
+	
     @Before
     static void setConnectedUser(){
          if(Security.isConnected()){
@@ -21,10 +20,8 @@ public class Application extends Controller {
              renderArgs.put("user", new User("","","", "John", "Doe"));
          }
      }
-    //END
     
     public static void index() {
-    	List<User> allUsers = User.findAll();
-        render(allUsers);
+        render();
     }
 }

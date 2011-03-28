@@ -11,6 +11,31 @@
         #{get 'moreScripts' /}
     </head>
     <body>
-        #{doLayout /}
+	    <div id="header">
+		    <div id="logo">
+		        COVAMI
+		    </div>
+		    <ul id="tools">
+		        <li>
+		        	#{if security != null}
+						Hello ${user.login} ! 
+						<a href="@{Secure.logout()}">Logout</a>
+					#{/if}
+					<!-- Sinon on propose de se logger -->
+					#{else}
+						<a href="@{Secure.login()}">Login</a>
+					#{/else}
+		        </li>
+		    </ul>
+		    <div id="title">
+		    	<h2>Covoiturage en tout tranquilité !</h2>
+		    </div>
+		</div>
+        <div id="main">
+            #{doLayout /} 
+        </div>
     </body>
+    <p id="footer">
+	    Propulsé par Florian Bezagu & François-Guillaume Ribreau
+	</p>
 </html>
