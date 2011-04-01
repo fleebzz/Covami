@@ -13,9 +13,26 @@ GRANT ALL PRIVILEGES ON  `covami` . * TO  'covami'@'localhost';
 
 Users de test de l'application :
 Florian :
-	fbezagu
+	fbezagu@fbezagu.com
 	fbezagu
 FG :
-	fgribreau
+	fgribreau@fgribreau.com
 	fgribreau
 
+// Méthode la plus propre pour les models:
+http://d.pr/xlFa
+
+// A exécuter
+INSERT INTO  `COVAMI`.`Member` (
+`id` ,
+`email` ,
+`firstname` ,
+`lastname` ,
+`password` ,
+`phone`
+)
+VALUES (
+NULL ,  'fgribreau@fgribreau.com',  'Francois-Guillaume',  'Ribreau',  'fgribreau', NULL
+), (
+NULL ,  'fbezagu@fbezagu.com',  'Florian',  'Bezagu',  'fbezagu', NULL
+);

@@ -18,7 +18,7 @@
 		    <ul id="tools">
 		        <li>
 		        	#{if security != null}
-						Hello ${user.login} ! 
+						Hello ${user.firstname} ! 
 						<a href="@{Secure.logout()}">Logout</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->
@@ -36,6 +36,6 @@
         </div>
     </body>
     <p id="footer">
-	    Propulsé par Florian Bezagu & François-Guillaume Ribreau
+	    Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
 	</p>
 </html>
