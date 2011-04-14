@@ -31,8 +31,10 @@ public class City extends Model {
 	@Column(nullable=true)
 	public int postalCode;
 	
+	/*
 	@ManyToMany
 	public List<City> neighborhood;
+	*/
 	
 	// Setters
 	public void setName(String value){

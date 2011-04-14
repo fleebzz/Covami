@@ -23,11 +23,13 @@ public class Trip extends Model {
 	
 	public double distance;
 	
+	/*
 	@OneToMany(mappedBy = "trip", cascade = CascadeType.DETACH)
 	public List<City> cities;
+	*/
 	
 	// Constructor
 	public Trip(){
-		this.cities = new ArrayList<City>();
+		//this.cities = new ArrayList<City>();
 	}
 }

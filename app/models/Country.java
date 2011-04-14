@@ -26,6 +26,6 @@ public class Country extends Model {
 	
 	public int width;
 	
-	@OneToMany
-	public List<City> cites;
+	/*@OneToMany
+	public List<City> cites;*/
 }
