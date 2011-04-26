@@ -7,19 +7,13 @@ import play.data.validation.Required;
 import play.db.jpa.*;
 
 @Entity
-
-public class Trip extends Model {
+public class VehicleModel extends Model {
 	@Required
-	@ManyToOne
-    public City from;
+	public String make;
 	
 	@Required
-	@ManyToOne
-    public City to;
+	public String model;
 	
 	@Required
-	public float distance;
-	
-	@OneToMany
-	public List<City> cities;
+	public int nbPlaces;
 }

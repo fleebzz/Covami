@@ -8,13 +8,6 @@ import play.db.jpa.*;
  
 @Entity
 public class Member extends Model {
-	// Le username à été fusionné avec l'email. 
-	// L'email servira de login
-	@SuppressWarnings("unused")
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
 	@Required
 	@Email
 	@MaxSize(200)

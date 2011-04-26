@@ -8,12 +8,7 @@ import play.data.validation.Required;
 import play.db.jpa.*;
 
 @Entity
-public class Country extends Model {
-	@SuppressWarnings("unused")
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+public class Country extends Model {	
 	@Required
 	public String name;
 	
@@ -25,7 +20,4 @@ public class Country extends Model {
 	public int height;
 	
 	public int width;
-	
-	/*@OneToMany
-	public List<City> cites;*/
 }
