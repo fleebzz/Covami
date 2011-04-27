@@ -1,6 +1,19 @@
 # You can specialize this file for each language.
 # For example, for French create a messages.fr file
 #
-secure.username=Login:
-secure.password=Mot de passe:
+
+application.slogan=Covoiturage en tout tranquilité !
+application.name=COVAMI
+application.copyright=Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
+
+secure.email=Email
+secure.username=Login
+secure.password=Mot de passe
 secure.signin=Se connecter
+secure.signout=Déconnexion
+
+members.signup=S'inscrire
+members.signup.formTitle=Inscrivez-vous !
+members.errorAuthenticate=Impossible de vous connecter
+
+members.signup.success=Votre compte à bien été créé

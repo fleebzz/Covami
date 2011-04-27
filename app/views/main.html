@@ -13,29 +13,46 @@
     <body>
 	    <div id="header">
 		    <div id="logo">
-		        COVAMI
+		        &{'application.name'}
 		    </div>
 		    <ul id="tools">
+		    	#{if security == null}
+		    	<li><a href="@{Members.signup()}">&{'members.signup'}</a></li>
+		    	#{/if}
+		    	
 		        <li>
 		        	#{if security != null}
-						Hello ${user.firstname} ! 
-						<a href="@{Secure.logout()}">Logout</a>
+						Bonjour ${user.firstname} ! 
+						<a href="@{Secure.logout()}">&{'secure.signout'}</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->
 					#{else}
-						<a href="@{Secure.login()}">Login</a>
+						<a href="@{Secure.login()}">&{'secure.signin'}</a>
 					#{/else}
 		        </li>
+		        
 		    </ul>
 		    <div id="title">
-		    	<h2>Covoiturage en tout tranquilité !</h2>
+		    	<h2>&{'application.slogan'}</h2>
 		    </div>
 		</div>
         <div id="main">
+        	#{if flash.error}
+				<p class="error">
+					&{flash.error}
+				</p>
+			#{/if}
+			
+			#{if flash.success}
+				<p class="success">
+					&{flash.success}
+				</p>
+			#{/if}
+		
             #{doLayout /} 
         </div>
     </body>
     <p id="footer">
-	    Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
+    	&{'application.copyright'}
 	</p>
 </html>

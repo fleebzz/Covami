@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div id="signup">
+	
+	<h1>&{'members.signup.formTitle'}</h1>
+		
+	#{form @dosignup()}
+		<p id="email-field">
+			<label for="email">&{'secure.email'}:</label>
+			<input type="email" name="m.email" id="email" placeholder="&{'secure.email'}" value="${flash.email}" />
+		</p>
+
+		<p id="password-field">
+			<label for="password">&{'secure.password'}:</label>
+			<input type="password" name="m.password" placeholder="&{'secure.password'}" id="password" value="" />
+		</p>
+		
+		<p id="signup-field">
+			<input type="submit" id="signup" value="&{'members.signup'}" />
+		</p>
+	#{/form}
+</div>
