@@ -8,7 +8,17 @@
 	#{form @dosignup()}
 		<p id="email-field">
 			<label for="email">&{'secure.email'}:</label>
-			<input type="email" name="m.email" id="email" placeholder="&{'secure.email'}" value="${flash.email}" />
+			<input type="text" name="m.email" id="email" placeholder="&{'secure.email'}" value="${flash.email}" />
+		</p>
+		
+		<p id="firstname-field">
+			<label for="firstname">&{'secure.firstname'}:</label>
+			<input type="text" name="m.firstname" id="firstname" placeholder="&{'secure.firstname'}" value="${flash.firstname}" />
+		</p>
+		
+		<p id="lastname-field">
+			<label for="lastname">&{'secure.lastname'}:</label>
+			<input type="text" name="m.lastname" id="lastname" placeholder="&{'secure.lastname'}" value="${flash.lastname}" />
 		</p>
 
 		<p id="password-field">

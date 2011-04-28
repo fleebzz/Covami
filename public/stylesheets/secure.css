@@ -27,11 +27,11 @@ html, body {
     margin: 3px;
 }
 
-#username-field {
+#username-field, #email-field {
     margin-top: 10px !important;
 }
 
-#username-field label, #password-field label {
+#username-field label, #password-field label, #email-field label {
     display: block;
     width: 150px;
     float: left;
@@ -41,7 +41,7 @@ html, body {
     font-size: 15px;
 }
 
-#username-field input {
+#username-field input, #email-field input {
     width: 200px;
     font-size: 13px;
 }

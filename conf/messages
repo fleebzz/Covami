@@ -7,6 +7,8 @@ application.name=COVAMI
 application.copyright=Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
 
 secure.email=Email
+secure.firstname=Firstname
+secure.lastname=Lastname
 secure.username=Login
 secure.password=Mot de passe
 secure.signin=Se connecter

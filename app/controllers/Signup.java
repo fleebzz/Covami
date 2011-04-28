@@ -18,16 +18,13 @@ public class Signup extends Controller {
 	 */
 	public static void dosignup(@Required Member m) throws Throwable {
 
-		m.firstname = m.email;
-
 		// Ajouter l'utilisateur à la bdd
 		if (!m.validateAndCreate()) {
 			flash.keep("url");
 			flash.error("secure.error");
 			params.flash();
-
-			render("Members/signup.html", m);
-			return;
+			
+			redirect("/signup");
 		}
 
 		// Connecter l'utilisateur
