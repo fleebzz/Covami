@@ -18,6 +18,12 @@ public class Signup extends Controller {
 	 */
 	public static void dosignup(@Required Member m) throws Throwable {
 
+		Member existMember = Member.find("byEmail", m.email).first();
+		
+		if(existMember.count() > 0){
+			redirect("/signup");
+		}
+		
 		// Ajouter l'utilisateur à la bdd
 		if (!m.validateAndCreate()) {
 			flash.keep("url");
