@@ -271,13 +271,8 @@ form {
 }
 
 form .error {
-    background: #c00;
-    color: #fff;
+    color: red;
     font-size: 90%;
-    padding: 3px 5px;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    -webkit-box-shadow: 0 2px 0 #800;
 }
 
 form p{
