@@ -1,0 +1,33 @@
+#{extends 'main.html' /}
+#{set title:'Mon profil' /}
+
+<div id="edit-profile">
+	<h1>Mon compte</h1> 
+	#{form @editProfile()}
+		<input type="hidden" name="member.id" value="${member.id}" />
+		
+		<p id="email-field">
+			<label for="email">&{'secure.email'}</label>
+			<input type="email" name="member.email" id="email" placeholder="&{'secure.email'}" value="${member.email}" />
+		</p>
+		
+		<p id="firstname-field">
+			<label for="firstname">&{'secure.firstname'}</label>
+			<input type="text" name="member.firstname" id="firstname" placeholder="&{'secure.firstname'}" value="${member.firstname}" />
+		</p>
+		
+		<p id="lastname-field">
+			<label for="lastname">&{'secure.lastname'}</label>
+			<input type="text" name="member.lastname" id="lastname" placeholder="&{'secure.lastname'}" value="${member.lastname}" />
+		</p>
+
+<!-- 		<p id="password-field"> -->
+<!-- 			<label for="password">&{'secure.password'}</label> -->
+<!-- 			<input type="password" name="m.password" id="password" placeholder="&{'secure.password'}" value="" /> -->
+<!-- 		</p> -->
+		
+		<p id="signup-field">
+			<input type="submit" id="signup" value="&{'members.edit.submit'}" />
+		</p>
+	#{/form}
+</div>

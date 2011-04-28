@@ -257,11 +257,17 @@ h3 span {
 /** Form **/
 
 form {
-    padding: 10px;
-    background: #253142;
-    background: -webkit-gradient(linear, left top, left 60%, from(#253142), to(#364B66));
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
+    background:#f7f7f7;
+	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
+	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
+	border:1px solid #aaa;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-box-shadow:0 0 15px #aaa;
+	-webkit-box-shadow:0 0 15px #aaa;
+	margin:60px auto 0;
+	padding:20px;
+	width:440px;
 }
 
 form .error {
@@ -274,8 +280,18 @@ form .error {
     -webkit-box-shadow: 0 2px 0 #800;
 }
 
-form p {
-    margin: 5px 0 0 0;
+form p{
+	margin-bottom:20px;
+}
+form p:last-child{ /* Sélecteur avancé pour sélectionner le dernier paragraphe du formulaire */
+	margin-bottom:0;
+}
+
+form p:hover label{
+	color:#0459b7;
+}
+form p:hover label:after{
+	content:" :";
 }
 
 form textarea {
@@ -288,11 +304,35 @@ form input, form textarea {
 }
 
 form label {
-    display: block;
-    font-weight: bold;
-    font-size: 90%;
-    color: #aaa;
-    margin-bottom: 3px;
+    cursor:pointer;
+	display:block;
+	float:left;
+	font-size:13px;
+	font-weight:bold;
+	line-height:28px;
+	margin-bottom:5px;
+	width:120px;
+}
+
+input[type=submit] {
+	background:#ddd;
+	background:-moz-linear-gradient(90deg, #0459b7, #08adff); /* Firefox */
+	background:-webkit-gradient(linear, left top, left bottom, from(#08adff), to(#0459b7)); /* Webkit */
+	border:1px solid #093c75;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	-moz-box-shadow:0 1px 0 #fff;
+	-webkit-box-shadow:0 1px 0 #fff;
+	color:#fff;
+	cursor:pointer;
+	font-family:Arial,sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	margin-left:120px;
+	padding:5px 10px;
+	text-decoration:none;
+	text-shadow:0 1px 1px #333;
+	text-transform:uppercase;
 }
 
 #captcha{
@@ -477,17 +517,17 @@ tr.odd {
 
 /** Login **/
 
-#login form {
-    background: #8B98AD !important;
-    border: 0 !important;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-}
+/* #login form { */
+/*     background: #8B98AD !important; */
+/*     border: 0 !important; */
+/*     -webkit-border-radius: 16px; */
+/*     -moz-border-radius: 16px; */
+/* } */
 
-#login label, #password-field label, #username-field label {
-    color: #161D28 !important;
-    font-size: 110% !important;
-}
+/* #login label, #username-field label { */
+/*     color: #161D28 !important; */
+/*     font-size: 110% !important; */
+/* } */
 
 
 #remember-field {

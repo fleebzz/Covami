@@ -4,6 +4,7 @@ import models.Member;
 import play.data.validation.Required;
 import play.mvc.Controller;
 
+
 public class Signup extends Controller {
 
 	/**
@@ -20,7 +21,8 @@ public class Signup extends Controller {
 
 		Member existMember = Member.find("byEmail", m.email).first();
 		
-		if(existMember.count() > 0){
+		if(existMember.count() > 1){
+			flash.error("");
 			redirect("/signup");
 		}
 		

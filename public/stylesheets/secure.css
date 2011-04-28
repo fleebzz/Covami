@@ -5,51 +5,51 @@ html, body {
     font-family: 'Lucida grande', verdana, sans-serif;
 }
 
-#login {
-    width: 500px;
-    margin: 50px auto;
-    text-align: center;
-}
+/* #login { */
+/*     width: 500px; */
+/*     margin: 50px auto; */
+/*     text-align: center; */
+/* } */
 
-#login h1 {
-    font-weight: bold;
-    color: #111;
-}
+/* #login h1 { */
+/*     font-weight: bold; */
+/*     color: #111; */
+/* } */
 
-#login form {
-    border: 10px solid #ccc;
-    background: #fff;
-    padding: 10px;
-    text-align: left;
-}
+/* #login form { */
+/*     border: 10px solid #ccc; */
+/*     background: #fff; */
+/*     padding: 10px; */
+/*     text-align: left; */
+/* } */
 
-#login form p {
-    margin: 3px;
-}
+/* #login form p { */
+/*     margin: 3px; */
+/* } */
 
-#username-field, #email-field {
-    margin-top: 10px !important;
-}
+/* #username-field, #email-field { */
+/*     margin-top: 10px !important; */
+/* } */
 
-#username-field label, #password-field label, #email-field label {
-    display: block;
-    width: 150px;
-    float: left;
-    text-align: right;
-    margin-right: 5px;
-    color: #333;
-    font-size: 15px;
-}
+/* #username-field label, #password-field label, #email-field label { */
+/*     display: block; */
+/*     width: 150px; */
+/*     float: left; */
+/*     text-align: right; */
+/*     margin-right: 5px; */
+/*     color: #333; */
+/*     font-size: 15px; */
+/* } */
 
-#username-field input, #email-field input {
-    width: 200px;
-    font-size: 13px;
-}
+/* #username-field input, #email-field input { */
+/*     width: 200px; */
+/*     font-size: 13px; */
+/* } */
 
-#password-field input {
-    width: 150px;
-    font-size: 13px;
-}
+/* #password-field input { */
+/*     width: 150px; */
+/*     font-size: 13px; */
+/* } */
 
 #remember-field input {
     margin-left: 155px;
