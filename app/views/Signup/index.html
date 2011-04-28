@@ -4,20 +4,41 @@
 <div id="signup">
 	
 	<h1>&{'members.signup.formTitle'}</h1>
+	
+	#{if flash.error}
+		<p class="error">
+			&{flash.error}
+		</p>
+	#{/if}
+	#{if flash.success}
+		<p class="success">
+			&{flash.success}
+		</p>
+	#{/if}
 		
 	#{form @dosignup()}
 		<p id="email-field">
-			<label for="email">&{'secure.email'}:</label>
+			<label for="email">&{'secure.email'}</label>
 			<input type="email" name="m.email" id="email" placeholder="&{'secure.email'}" value="${flash.email}" />
+		</p>
+		
+		<p id="firstname-field">
+			<label for="firstname">&{'secure.firstname'}</label>
+			<input type="text" name="m.firstname" id="firstname" placeholder="&{'secure.firstname'}" value="${flash.firstname}" />
+		</p>
+		
+		<p id="lastname-field">
+			<label for="lastname">&{'secure.lastname'}</label>
+			<input type="text" name="m.lastname" id="lastname" placeholder="&{'secure.lastname'}" value="${flash.lastname}" />
 		</p>
 
 		<p id="password-field">
-			<label for="password">&{'secure.password'}:</label>
-			<input type="password" name="m.password" placeholder="&{'secure.password'}" id="password" value="" />
+			<label for="password">&{'secure.password'}</label>
+			<input type="password" name="m.password" id="password" placeholder="&{'secure.password'}" value="" />
 		</p>
 		
 		<p id="signup-field">
-			<input type="submit" id="signup" value="&{'members.signup'}" />
+			<input type="submit" id="signup" value="&{'members.signup.submit'}" />
 		</p>
 	#{/form}
 </div>

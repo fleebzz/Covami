@@ -4,6 +4,7 @@ import models.Member;
 import play.data.validation.Required;
 import play.mvc.Controller;
 
+
 public class Signup extends Controller {
 
 	/**
@@ -18,16 +19,20 @@ public class Signup extends Controller {
 	 */
 	public static void dosignup(@Required Member m) throws Throwable {
 
-		m.firstname = m.email;
-
+		Member existMember = Member.find("byEmail", m.email).first();
+		
+		if(existMember.count() > 1){
+			flash.error("");
+			redirect("/signup");
+		}
+		
 		// Ajouter l'utilisateur à la bdd
 		if (!m.validateAndCreate()) {
 			flash.keep("url");
 			flash.error("secure.error");
 			params.flash();
-
-			render("Members/signup.html", m);
-			return;
+			
+			redirect("/signup");
 		}
 
 		// Connecter l'utilisateur

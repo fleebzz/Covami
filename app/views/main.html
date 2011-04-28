@@ -17,7 +17,7 @@
 		    </div>
 		    <ul id="tools">
 		    	#{if security == null}
-		    	<li><a href="/signup">&{'members.signup'}</a></li>
+		    	<li><a href="/signup">&{'members.signup.submit'}</a></li>
 		    	#{/if}
 		    	
 		        <li>
@@ -33,6 +33,11 @@
 		        
 		    </ul>
 		    <div id="title">
+		    	<ul id="adminMenu">
+		    		<li>
+		    			<a href="@{Members.profile()}">Mon compte</a>
+		    		</li>
+		    	</ul>
 		    	<h2>&{'application.slogan'}</h2>
 		    </div>
 		</div>
