@@ -4,19 +4,19 @@ import javax.persistence.Entity;
 
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
+import play.data.validation.Password;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class Member extends Model {
-	@Required
 	@Email
 	@MaxSize(200)
+	@Required(message = "member.bademail")
 	public String email;
 
-	@Required
-	// FIXME: Insérer la bonne regex
-	/* @Match("[A-Z]{6}") */
+	@Password
+	@Required(message = "member.badpassword")
 	@MaxSize(15)
 	public String password;
 

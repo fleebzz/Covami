@@ -14,7 +14,7 @@ GET     /public/                                staticDir:public
 # Import Secure routes
 *       /                                       module:secure
 
-*     /signup                                 Signup.index
+*		/signup                                 Signup.index
 
 # Catch all
-*       /{controller}/{action}                  {controller}.{action}
+*		/{controller}/{action}                  {controller}.{action}
