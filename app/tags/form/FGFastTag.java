@@ -40,6 +40,7 @@ import play.data.validation.Password;
 import play.data.validation.Range;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import play.db.Model;
 import play.templates.FastTags;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 
@@ -56,24 +57,43 @@ public class FGFastTag extends FastTags {
 			PrintWriter out, ExecutableTemplate template, int fromLine)
 			throws Exception {
 
-		if (args.get("model") == null) {
+		Model model = (Model) args.get("model");
+
+		if (model == null) {
 			throw new NullPointerException("You must specify a model.");
 		}
 
-		Class<?> clazz = args.get("model").getClass();
+		Class<?> clazz = model.getClass();
+
+		String modelName = clazz.getName()
+				.substring(clazz.getName().lastIndexOf(".") + 1).toLowerCase();
 
 		// Boucler sur les attributs
 		Field[] fields = clazz.getDeclaredFields();
 
-		for (Field field : fields) {
+		if (args.get("editable") == null
+				|| (args.get("editable") != null && args.get("editable")
+						.equals(true))) {
 
-			out.print("\n<p>\n\t<label>" + field.getName()
-					+ "</label>\n\t<input");
-			printValidationAttributes(field, out);
-			out.print("/>\n</p>\n");
+			for (Field field : fields) {
+
+				String fieldName = modelName + "." + field.getName();
+
+				Object fieldValue = clazz.getField(field.getName()).get(model);
+
+				out.print("\n<p>\n\t<label for='" + fieldName + "'>"
+						+ field.getName() + "</label>\n\t<input id='"
+						+ fieldName + "' name='" + fieldName + "'");
+
+				if (fieldValue != null) {
+					out.print("value='" + fieldValue + "'");
+				}
+
+				printValidationAttributes(field, out);
+				out.print("/>\n</p>\n");
+			}
+
 		}
-
-		out.println("OK");
 
 	}
 
