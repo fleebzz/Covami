@@ -13,8 +13,6 @@ public class Member extends Controller {
 			models.Member user = models.Member.find("byEmail", Security.connected()).first();
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
-		} else {
-			renderArgs.put("user", new models.Member("", "", "John", "Doe"));
 		}
 	}
 	

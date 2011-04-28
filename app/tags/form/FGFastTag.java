@@ -90,8 +90,10 @@ public class FGFastTag extends FastTags {
 				}
 
 				printValidationAttributes(field, out);
-				out.print("/>\n");
-				out.print("\n<span class=\"error\">#{error '" + fieldName + "' /}</span>");
+				out.print("/>");
+				out.print("\n\t<span class=\"error\">");
+				out.print("${error " + fieldName + "}"); 
+				out.print("</span>\n");
 				out.print("</p>\n");
 			}
 
@@ -121,7 +123,7 @@ public class FGFastTag extends FastTags {
 		// Ajout du type
 		if (field.isAnnotationPresent(URL.class)) {
 			printAttribute("type", "url", out);
-			printAttribute("placeholder", "http://fgribreau.com", out);
+			printAttribute("placeholder", "http://domain.com", out);
 		} else if (field.isAnnotationPresent(Email.class)) {
 			printAttribute("type", "email", out);
 			printAttribute("placeholder", "email@domain.com", out);
