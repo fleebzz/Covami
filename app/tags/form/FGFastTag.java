@@ -90,7 +90,9 @@ public class FGFastTag extends FastTags {
 				}
 
 				printValidationAttributes(field, out);
-				out.print("/>\n</p>\n");
+				out.print("/>\n");
+				out.print("\n<span class=\"error\">#{error '" + fieldName + "' /}</span>");
+				out.print("</p>\n");
 			}
 
 		}

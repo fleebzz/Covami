@@ -3,10 +3,13 @@
 
 <div id="profile">
 	
-	<h1>Visualisation du profil</h1>
+	<h1>Modification de mon profil</h1>
 	
-	#{form @Members.profile()}
+	#{form @Member.profile()}
 	#{DisplayForModel model:model /}
+	<p id="signup-field">
+		<input type="submit" id="signup" value="&{'members.edit.submit'}" />
+	</p>
 	#{/form}
 	
 	

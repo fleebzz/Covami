@@ -16,7 +16,7 @@ GET     /public/                                staticDir:public
 
 *		/signup                                 Signup.index
 
-*     /MonCompte                                 Members.profile
+*     /MonCompte                                 Member.profile
 
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}
