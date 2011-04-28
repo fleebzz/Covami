@@ -24,6 +24,7 @@ public class Member extends Model {
 	@MaxSize(100)
 	public String firstname;
 
+	@Required
 	@MaxSize(100)
 	public String lastname;
 
