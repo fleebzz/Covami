@@ -17,14 +17,7 @@ public class Members extends Controller {
 	}
 	
 	public static void editProfile(@Required Member member) throws Throwable {
-
-		Member m = Member.findById(member.id);
-		
-		m.email = member.email;
-		m.firstname = member.firstname;
-		m.lastname = member.lastname;
-		
-		m.save();
+		member.save();
 		
 		profile();
 	}
