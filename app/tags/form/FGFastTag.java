@@ -76,7 +76,7 @@ public class FGFastTag extends FastTags {
 						.equals(true))) {
 
 			for (Field field : fields) {
-
+				
 				String fieldName = modelName + "." + field.getName();
 
 				Object fieldValue = clazz.getField(field.getName()).get(model);
@@ -92,7 +92,7 @@ public class FGFastTag extends FastTags {
 				printValidationAttributes(field, out);
 				out.print("/>");
 				out.print("\n\t<span class=\"error\">");
-				out.print("${error " + fieldName + "}"); 
+				out.print("${error " + fieldName + "}");
 				out.print("</span>\n");
 				out.print("</p>\n");
 			}

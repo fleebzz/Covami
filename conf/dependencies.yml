@@ -1,3 +1,2 @@
 require:
     - play -> secure
-    - play -> crud

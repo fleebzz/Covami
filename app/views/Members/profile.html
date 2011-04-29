@@ -1,29 +1,16 @@
 #{extends 'main.html' /}
-#{set title:'Mon profil' /}
+#{set title:'Profile' /}
 
-<div id="edit-profile">
-	<h1>Mon compte</h1> 
-	#{form @editProfile()}
-		<input type="hidden" name="member.id" value="${member.id}" />
-		
-		<p id="email-field">
-			<label for="email">&{'secure.email'}</label>
-			<input type="email" name="member.email" id="email" placeholder="&{'secure.email'}" value="${member.email}" />
-		</p>
-		
-		<p id="firstname-field">
-			<label for="firstname">&{'secure.firstname'}</label>
-			<input type="text" name="member.firstname" id="firstname" placeholder="&{'secure.firstname'}" value="${member.firstname}" />
-		</p>
-		
-		<p id="lastname-field">
-			<label for="lastname">&{'secure.lastname'}</label>
-			<input type="text" name="member.lastname" id="lastname" placeholder="&{'secure.lastname'}" value="${member.lastname}" />
-			<span class="error">#{error 'member.lastname' /}</span>
-		</p>
-		
-		<p id="signup-field">
-			<input type="submit" id="signup" value="&{'members.edit.submit'}" />
-		</p>
+<div id="profile">
+	
+	<h1>Modification de mon profil</h1>
+	
+	#{form @Members.profile()}
+	#{DisplayForModel model:model /}
+	<p id="signup-field">
+		<input type="submit" id="signup" value="&{'members.edit.submit'}" />
+	</p>
 	#{/form}
+	
+	
 </div>

@@ -1,7 +1,10 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
@@ -27,6 +30,9 @@ public class Member extends Model {
 	@Required
 	@MaxSize(100)
 	public String lastname;
+
+	@ManyToMany
+	public List<Member> friends;
 
 	// FIXME: Insérer la bonne regex
 	/* @Match() */
