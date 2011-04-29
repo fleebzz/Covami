@@ -16,7 +16,9 @@ GET     /public/                                staticDir:public
 
 *		/signup                                 Signup.index
 
-*  		/MonCompte                              Members.profile
+*     /MonCompte                                Members.profile
+*     /Amis/MesAmis								Members.friends
+*     /Amis/TrouverDesAmis						Members.findFriends
 
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}

@@ -45,7 +45,6 @@ import play.db.Model;
 import play.i18n.Messages;
 import play.templates.FastTags;
 import play.templates.GroovyTemplate.ExecutableTemplate;
-import controllers.CRUD.Hidden;
 
 public class FGFastTag extends FastTags {
 
@@ -83,7 +82,7 @@ public class FGFastTag extends FastTags {
 				String fieldName = modelName + "." + field.getName();
 				Object fieldValue = clazz.getField(field.getName()).get(model);
 
-				if (!field.isAnnotationPresent(Hidden.class)) {
+				if (!field.isAnnotationPresent(HiddenField.class)) {
 
 					out.print("\n<p>\n\t<label for='" + fieldName + "'>"
 							+ Messages.get(field.getName())
@@ -106,7 +105,6 @@ public class FGFastTag extends FastTags {
 					out.print("<input type='hidden' name='" + fieldName
 							+ "' value='" + fieldValue + "'/>");
 				}
-
 			}
 
 		}
@@ -151,7 +149,7 @@ public class FGFastTag extends FastTags {
 		// Ajout du type
 		if (field.isAnnotationPresent(URL.class)) {
 			printAttribute("type", "url", out);
-			printAttribute("placeholder", "http://fgribreau.com", out);
+			printAttribute("placeholder", "http://domain.com", out);
 		} else if (field.isAnnotationPresent(Email.class)) {
 			printAttribute("type", "email", out);
 			printAttribute("placeholder", "email@domain.com", out);

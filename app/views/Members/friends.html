@@ -1,0 +1,15 @@
+#{extends 'main.html' /}
+#{set title:'Profile' /}
+
+<div id="profile">
+	
+	<h1>Mes amis</h1>
+	
+	#{list items:friends, as:'friend'}
+		<p>
+			${friend.firstname}
+		</p>
+	#{/list}
+	
+	
+</div>

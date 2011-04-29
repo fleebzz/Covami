@@ -1,8 +1,9 @@
 #{extends 'main.html' /}
-#{set title:'Mon profil' /}
+#{set title:'Profile' /}
+
 
 <div id="edit-profile">
-	<h1>Mon compte</h1> 
+	<h1>Modification de mon profil</h1> 
 	
 	#{form @editProfile()}
 		<input type="hidden" name="member.id" value="${model.id}" />
@@ -12,5 +13,4 @@
 		<p id="signup-field">
 			<input type="submit" id="signup" value="&{'members.edit.submit'}" />
 		</p>
-	#{/form}
 </div>

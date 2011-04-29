@@ -1,12 +1,15 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
-import play.data.validation.Password;
 import play.data.validation.Required;
 import play.db.jpa.Model;
+import tags.form.HiddenField;
 
 @Entity
 public class Member extends Model {
@@ -15,16 +18,19 @@ public class Member extends Model {
 	@Required(message = "member.bademail")
 	public String email;
 
-	@Password
-	@Required(message = "member.badpassword")
-	@MaxSize(15)
+	@HiddenField
 	public String password;
 
 	@MaxSize(100)
+	@HiddenField
 	public String firstname;
 
 	@MaxSize(100)
 	public String lastname;
+
+	@ManyToMany
+	@HiddenField
+	public List<Member> friends;
 
 	// FIXME: Insérer la bonne regex
 	/* @Match() */

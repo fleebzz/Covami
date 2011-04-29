@@ -15,10 +15,7 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.playframework.playclipse.playNature</nature>
 	</natures>
-	<linkedResources><link><name>crud</name><type>2</type><location>/opt/play/modules/crud/app</location></link>
-<link><name>conf/crud</name><type>2</type><location>/opt/play/modules/crud/conf</location></link>
-<link><name>public/crud</name><type>2</type><location>/opt/play/modules/crud/public</location></link>
-<link><name>secure</name><type>2</type><location>/opt/play/modules/secure/app</location></link>
+	<linkedResources><link><name>secure</name><type>2</type><location>/opt/play/modules/secure/app</location></link>
 <link><name>conf/secure</name><type>2</type><location>/opt/play/modules/secure/conf</location></link>
 <link><name>public/secure</name><type>2</type><location>/opt/play/modules/secure/public</location></link>
 </linkedResources>
