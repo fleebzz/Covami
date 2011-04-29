@@ -19,3 +19,5 @@ members.signup.formTitle=Inscrivez-vous !
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
+member.badpassword=Mauvais format de mot de passe
+member.bademail=Mauvais format d'email

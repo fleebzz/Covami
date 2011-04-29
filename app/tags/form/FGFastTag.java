@@ -40,9 +40,12 @@ import play.data.validation.Password;
 import play.data.validation.Range;
 import play.data.validation.Required;
 import play.data.validation.URL;
+import play.data.validation.Validation;
 import play.db.Model;
+import play.i18n.Messages;
 import play.templates.FastTags;
 import play.templates.GroovyTemplate.ExecutableTemplate;
+import controllers.CRUD.Hidden;
 
 public class FGFastTag extends FastTags {
 
@@ -78,19 +81,32 @@ public class FGFastTag extends FastTags {
 			for (Field field : fields) {
 
 				String fieldName = modelName + "." + field.getName();
-
 				Object fieldValue = clazz.getField(field.getName()).get(model);
 
-				out.print("\n<p>\n\t<label for='" + fieldName + "'>"
-						+ field.getName() + "</label>\n\t<input id='"
-						+ fieldName + "' name='" + fieldName + "'");
+				if (!field.isAnnotationPresent(Hidden.class)) {
 
-				if (fieldValue != null) {
-					out.print("value='" + fieldValue + "'");
+					out.print("\n<p>\n\t<label for='" + fieldName + "'>"
+							+ Messages.get(field.getName())
+							+ "</label>\n\t<input id='" + fieldName
+							+ "' name='" + fieldName + "'");
+
+					if (fieldValue != null) {
+						out.print("value='" + fieldValue + "'");
+					}
+
+					printValidationAttributes(field, out);
+
+					out.print("/>\n");
+
+					printErrorIfNeeded(fieldName, out);
+
+					out.print("</p>\n");
+
+				} else {// Hidden
+					out.print("<input type='hidden' name='" + fieldName
+							+ "' value='" + fieldValue + "'/>");
 				}
 
-				printValidationAttributes(field, out);
-				out.print("/>\n</p>\n");
 			}
 
 		}
@@ -98,9 +114,25 @@ public class FGFastTag extends FastTags {
 	}
 
 	/**
-	 * <p>
+	 * Affiche les erreurs d'un champ si besoin
+	 */
+	private static void printErrorIfNeeded(String fieldName, PrintWriter out) {
+		if (Validation.hasError(fieldName)) {
+
+			play.data.validation.Error error = Validation.error(fieldName);
+
+			if (error != null && !error.message().isEmpty()) {
+				out.print("<span class='error'>");
+				out.print(error.message());
+
+				out.print("</span>");
+			}
+
+		}
+	}
+
+	/**
 	 * Prints validation attributes for a given field.
-	 * </p>
 	 * 
 	 * @param args
 	 *            The tag attributes.

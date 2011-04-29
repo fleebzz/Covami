@@ -36,3 +36,22 @@ NULL ,  'fgribreau@fgribreau.com',  'Francois-Guillaume',  'Ribreau',  'fgribrea
 ), (
 NULL ,  'fbezagu@fbezagu.com',  'Florian',  'Bezagu',  'fbezagu', NULL
 );
+
+
+Ancien code du formulaire
+
+	<p id="email-field">
+			<label for="email">&{'secure.email'}</label>
+			<input type="email" name="member.email" id="email" placeholder="&{'secure.email'}" value="${member.email}" />
+		</p>
+		
+		<p id="firstname-field">
+			<label for="firstname">&{'secure.firstname'}</label>
+			<input type="text" name="member.firstname" id="firstname" placeholder="&{'secure.firstname'}" value="${member.firstname}" />
+		</p>
+		
+		<p id="lastname-field">
+			<label for="lastname">&{'secure.lastname'}</label>
+			<input type="text" name="member.lastname" id="lastname" placeholder="&{'secure.lastname'}" value="${member.lastname}" />
+			<span class="error">#{error 'member.lastname' /}</span>
+		</p>
