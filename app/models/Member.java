@@ -22,14 +22,13 @@ public class Member extends Model {
 	public String password;
 
 	@MaxSize(100)
-	@HiddenField
 	public String firstname;
 
 	@MaxSize(100)
 	public String lastname;
 
-	@ManyToMany
 	@HiddenField
+	@ManyToMany
 	public List<Member> friends;
 
 	// FIXME: Insérer la bonne regex
