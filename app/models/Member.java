@@ -2,8 +2,11 @@ package models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
@@ -28,8 +31,9 @@ public class Member extends Model {
 	public String lastname;
 
 	@HiddenField
-	@ManyToMany
+	@OneToMany
 	public List<Member> friends;
+	
 
 	// FIXME: Insérer la bonne regex
 	/* @Match() */

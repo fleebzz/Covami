@@ -6,9 +6,13 @@
 	<h1>Mes amis</h1>
 	
 	#{list items:friends, as:'friend'}
-		<p>
-			${friend.firstname}
-		</p>
+		#{form @deleteFriend()}
+			<input type="hidden" name="friend" value="${friend.id}" />
+			<p>
+				${friend.firstname} ${friend.lastname}
+			</p>
+			<input type="submit" value="&{'general.delete'}" />
+		#{/form}
 	#{/list}
 	
 	

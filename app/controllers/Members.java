@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import models.Member;
 import play.data.validation.Valid;
 import play.mvc.Before;
@@ -40,8 +43,7 @@ public class Members extends Controller {
 			profile(member);
 		} else {
 			member.save();
-			// FIXME: Ajouter ce message dans les traductions
-			flash.success("Membre enregistré avec succès");
+			flash.success("member.profile.success");
 			Application.index();
 		}
 	}
@@ -61,9 +63,11 @@ public class Members extends Controller {
 		if (m.id != null) {
 			member = m;
 		}
-		// Member florian = Member.find("byFirstname", "Florian").first();
-		// member.friends.add(florian);
-		// member.save();
-		render(member.friends);
+		List<Member> friends = member.friends;
+		render(friends);
+	}
+	
+	public static void deleteFriend(){
+		
 	}
 }

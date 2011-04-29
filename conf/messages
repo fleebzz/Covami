@@ -6,6 +6,8 @@ application.slogan=Covoiturage en tout tranquilité !
 application.name=COVAMI
 application.copyright=Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
 
+general.delete=Supprimer
+
 secure.email=Email
 secure.firstname=Firstname
 secure.lastname=Lastname
@@ -21,3 +23,4 @@ members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
 member.badpassword=Mauvais format de mot de passe
 member.bademail=Mauvais format d'email
+member.profile.success=Modification du profil effectuée avec succès
