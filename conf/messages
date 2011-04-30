@@ -2,9 +2,14 @@
 # For example, for French create a messages.fr file
 #
 
-application.slogan=Covoiturage en tout tranquilité !
+application.slogan=Covoiturage en toute tranquilité !
 application.name=COVAMI
 application.copyright=Propulsé par Florian Bezagu &amp; François-Guillaume Ribreau
+
+pages.title.findFriends=Trouver des amis
+pages.title.friends=Mes amis
+pages.title.profile=Modifier mon profil
+pages.title.myVehicles=Mes vehicules
 
 general.delete=Supprimer
 
@@ -24,3 +29,5 @@ members.edit.submit=Modifier mon profil
 member.badpassword=Mauvais format de mot de passe
 member.bademail=Mauvais format d'email
 member.profile.success=Modification du profil effectuée avec succès
+member.profile.see=Voir le profil de l'utilisateur
+member.friends.add=Demander en ami

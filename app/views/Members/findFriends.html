@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:'Profile' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.findFriends'}</h1>
+	
+	#{list items:members, as:'member'}
+		<div id="friend">
+			<p>
+				${member.firstname} ${member.lastname}
+			</p>
+			<a class="submit" href="@{Members.seeProfile(member.id)}" >&{'member.profile.see'}</a>
+		</div>
+	#{/list}
+	
+	
+</div>

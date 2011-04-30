@@ -1,10 +1,17 @@
 package controllers;
 
+import java.util.Date;
+import java.util.List;
+
+import org.joda.time.DateTime;
+
 import models.Member;
+import models.Vehicle;
+import models.VehicleModel;
 import play.mvc.Before;
 import play.mvc.Controller;
 
-public class Application extends Controller {
+public class Vehicles extends Controller {
 
 	@Before
 	static void setConnectedUser() {
@@ -16,6 +23,11 @@ public class Application extends Controller {
 	}
 
 	public static void index() {
-		render();
+		Application.index();
+	}
+	
+	public static void myVehicles(){
+		Member member = Member.find("byEmail", Security.connected()).first();
+		List<Vehicle> vehicles = member.vehicles;		
 	}
 }

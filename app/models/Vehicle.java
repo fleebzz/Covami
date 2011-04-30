@@ -11,15 +11,11 @@ public class Vehicle extends Model {
 	@Required
 	public String registration;
 	
-	@Required
+//	@Required
 	public Date techControlDate;
 	
 	@Required
 	@OneToOne
 	public VehicleModel model;
-
-	@Required
-	@OneToOne
-	public Member owner;
 	
 }

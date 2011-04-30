@@ -1,9 +1,9 @@
 #{extends 'main.html' /}
-#{set title:'Profile' /}
+#{set title:'Mes amis' /}
 
 <div id="profile">
 	
-	<h1>Mes amis</h1>
+	<h1>&{'pages.title.friends'}</h1>
 	
 	#{list items:friends, as:'friend'}
 		#{form @deleteFriend()}
@@ -11,6 +11,7 @@
 			<p>
 				${friend.firstname} ${friend.lastname}
 			</p>
+			<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
 			<input type="submit" value="&{'general.delete'}" />
 		#{/form}
 	#{/list}

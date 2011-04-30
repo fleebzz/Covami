@@ -64,10 +64,22 @@ public class Members extends Controller {
 			member = m;
 		}
 		List<Member> friends = member.friends;
+//		Member florian = Member.find("byFirstname", "Florian").first();
+//		member.friends.add(florian);
+//		member.save();
 		render(friends);
 	}
 	
 	public static void deleteFriend(){
+		
+	}
+	
+	public static void findFriends(){
+		List<Member> members = Member.findAll();
+		render(members);
+	}
+	
+	public static void seeProfile(long id){
 		
 	}
 }

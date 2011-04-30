@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Mes véhicules' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.myVehicles'}</h1>
+	
+	#{list items:vehicles, as:'vehicle'}
+		<div id="vehicle">
+			<p>
+				${vehicle.model.make} - ${vehicle.model.model}
+			</p>
+		</div>
+	#{/list}
+	
+	
+</div>

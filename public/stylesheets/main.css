@@ -29,6 +29,11 @@ body {
     text-shadow: 1px 2px 2px #000;
 }
 
+#logo a {
+	text-decoration: none;
+	color: #fff;
+}
+
 #logo span {
     color: #f00;
     font-size: 70%;
@@ -42,6 +47,7 @@ body {
     right: 0;
     top: 30px;
     right: 20px;
+    color: #B8C569;
 }
 
 #tools a {
@@ -73,6 +79,10 @@ body {
 	position: absolute;
 	top: -10px;
 	left: 60px;
+}
+
+h1 {
+    color: white;
 }
 
 #title h1 {
@@ -254,6 +264,21 @@ h3 span {
 	left: -4px;
 }
 
+
+div #friend, div #vehicle {
+    background:#f7f7f7;
+	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
+	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
+	border:1px solid #aaa;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-box-shadow:0 0 15px #aaa;
+	-webkit-box-shadow:0 0 15px #aaa;
+	margin:10px auto 0;
+	padding:20px;
+/* 	width:440px; */
+}
+
 /** Form **/
 
 form {
@@ -309,7 +334,7 @@ form label {
 	width:120px;
 }
 
-input[type=submit] {
+input[type=submit], a.submit {
 	background:#ddd;
 	background:-moz-linear-gradient(90deg, #0459b7, #08adff); /* Firefox */
 	background:-webkit-gradient(linear, left top, left bottom, from(#08adff), to(#0459b7)); /* Webkit */
@@ -328,6 +353,10 @@ input[type=submit] {
 	text-decoration:none;
 	text-shadow:0 1px 1px #333;
 	text-transform:uppercase;
+}
+
+a.submit {
+	margin:0;
 }
 
 #captcha{

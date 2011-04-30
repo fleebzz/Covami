@@ -13,7 +13,7 @@
     <body>
 	    <div id="header">
 		    <div id="logo">
-		        &{'application.name'}
+		        <a href="@{Application.index()}" >&{'application.name'}</a>
 		    </div>
 		    <ul id="tools">
 		    	#{if security == null}
@@ -23,7 +23,7 @@
 		        <li>
 		        	#{if security != null}
 						Bonjour ${user.firstname} ! 
-						<a href="@{Secure.logout()}">&{'secure.signout'}</a>
+						<a class="submit" href="@{Secure.logout()}">&{'secure.signout'}</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->
 					#{else}
@@ -35,10 +35,16 @@
 		    <div id="title">
 		    	<ul id="adminMenu">
 		    		<li>
-		    			<a href="@{Members.profile()}">Mon compte</a>
+		    			<a href="@{Members.findFriends()}">&{'pages.title.findFriends'}</a>
 		    		</li>
 		    		<li>
-		    			<a href="@{Members.friends()}">Mes amis</a>
+		    			<a href="@{Members.friends()}">&{'pages.title.friends'}</a>
+		    		</li>
+		    		<li>
+		    			<a href="@{Vehicles.myVehicles()}">&{'pages.title.myVehicles'}</a>
+		    		</li>
+		    		<li>
+		    			<a href="@{Members.profile()}">&{'pages.title.profile'}</a>
 		    		</li>
 		    	</ul>
 		    	<h2>&{'application.slogan'}</h2>
