@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import javassist.NotFoundException;
 import models.Member;
 import play.data.validation.Valid;
 import play.mvc.Before;
@@ -72,8 +73,19 @@ public class Members extends Controller {
 		render(friends);
 	}
 
-	public static void deleteFriend() {
+	public static void deleteFriend(long friendId) throws NotFoundException {
 
+		// Récupérer l'user actuel
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Member friend = Member.find("byId", friendId).first();
+
+		if (Member.removeFriend(member, friend)) {
+			flash.success("members.deleteFriendSuccess");
+		} else {
+			flash.error("members.deleteFriendFailed");
+		}
+
+		friends(null);
 	}
 
 	/**
@@ -84,11 +96,6 @@ public class Members extends Controller {
 		flash.success("members.inviteFriendSuccess");
 		redirect("/");
 	}
-
-	/*
-	 * public static void findFriends() { List<Member> members =
-	 * Member.findAll(); render(members); }
-	 */
 
 	public static void findFriends(String s) {
 		List<Member> members = null;
