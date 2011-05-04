@@ -80,7 +80,8 @@ public class FGFastTag extends FastTags {
 		for (Field field : fields) {
 
 			String fieldName = modelName + "." + field.getName();
-			Object fieldValue = clazz.getField(field.getName()).get(model);
+			Object fieldValue = Class.forName(field.getType().getName()).cast(
+					clazz.getField(field.getName()).get(model));
 
 			if (!field.isAnnotationPresent(HiddenField.class)) {
 
@@ -109,12 +110,12 @@ public class FGFastTag extends FastTags {
 		if (fieldValue != null) {
 			out.print(fieldValue);
 		} else {
-			out.print("/");
+			out.print("&nbsp;");
 		}
 
 		out.print("</span>");
 
-		printErrorIfNeeded(fieldName, out);
+		printErrorIfNeeded(out, fieldName);
 
 		out.print("</p>\n");
 	}
@@ -122,18 +123,19 @@ public class FGFastTag extends FastTags {
 	private static void renderFieldEditable(PrintWriter out, Field field,
 			String fieldName, Object fieldValue) {
 		out.print("\n<p>\n\t<label for='" + fieldName + "'>"
-				+ Messages.get(field.getName()) + "</label>\n\t<input id='"
-				+ fieldName + "' name='" + fieldName + "'");
+				+ Messages.get(field.getName()) + "</label>\n\t");
+
+		out.print("<input id='" + fieldName + "' name='" + fieldName + "'");
 
 		if (fieldValue != null) {
 			out.print("value='" + fieldValue + "'");
 		}
 
-		printValidationAttributes(field, out);
+		printValidationAttributes(out, field);
 
 		out.print("/>\n");
 
-		printErrorIfNeeded(fieldName, out);
+		printErrorIfNeeded(out, fieldName);
 
 		out.print("</p>\n");
 	}
@@ -141,7 +143,7 @@ public class FGFastTag extends FastTags {
 	/**
 	 * Affiche les erreurs d'un champ si besoin
 	 */
-	private static void printErrorIfNeeded(String fieldName, PrintWriter out) {
+	private static void printErrorIfNeeded(PrintWriter out, String fieldName) {
 		if (Validation.hasError(fieldName)) {
 
 			play.data.validation.Error error = Validation.error(fieldName);
@@ -163,6 +165,7 @@ public class FGFastTag extends FastTags {
 	 *            The tag attributes.
 	 * @param out
 	 *            The print writer to use.
+	 * @param fieldValue
 	 * @throws SecurityException
 	 *             Thrown when either the field or the getter for the field
 	 *             can't be reached.
@@ -171,7 +174,7 @@ public class FGFastTag extends FastTags {
 	 * @throws ClassNotFoundException
 	 *             Thrown when the class could not be found.
 	 */
-	private static void printValidationAttributes(Field field, PrintWriter out) {
+	private static void printValidationAttributes(PrintWriter out, Field field) {
 
 		// Ajout du type
 		if (field.isAnnotationPresent(URL.class)) {
@@ -184,6 +187,9 @@ public class FGFastTag extends FastTags {
 		} else if (field.isAnnotationPresent(Password.class)) {
 			printAttribute("type", "password", out);
 			printAttribute("placeholder", "password", out);
+
+		} else if (field.getType().getName().contains("Date")) {
+			printAttribute("type", "date", out);
 		} else {
 			printAttribute("type", "text", out);
 			printAttribute("placeholder", field.getName(), out);
