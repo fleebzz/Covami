@@ -45,6 +45,7 @@ member.addFriend=Ajouter un ami
 
 vehicle.addVehicle=Ajouter un véhicule
 vehicle.model=Modèle
+vehicle.modify=Modifier ce véhicule
 
 vehicles.add.submit=Ajouter ce véhicule
 vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà !

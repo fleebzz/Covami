@@ -9,9 +9,12 @@
 	
 	#{list items:vehicles, as:'vehicle'}
 		<div id="vehicle">
+			<input type="hidden" name="vehicle" value="${vehicle.id}" />
 			<p>
-				${vehicle.model.make} - ${vehicle.model.model}
+				${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}
 			</p>
+			<a class="submit" href="@{Vehicles.seeVehicle(vehicle.id)}">&{'vehicle.modify'}</a>
+			<input type="submit" value="&{'general.delete'}" />
 		</div>
 	#{/list}
 	

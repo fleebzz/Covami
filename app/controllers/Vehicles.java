@@ -47,7 +47,7 @@ public class Vehicles extends Controller {
 			flash.error("vehicles.add.alreadyExist");
 			index();
 		}
-//		
+		System.out.println(v.model);
 //		validation.valid(v);
 //		if (validation.hasErrors()) {
 //			params.flash();
@@ -70,5 +70,9 @@ public class Vehicles extends Controller {
 //		flash.success("members.signup.success");
 //		
 //		Application.index();
+	}
+	
+	public static void seeVehicle(long id) {
+		
 	}
 }

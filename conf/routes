@@ -20,6 +20,7 @@ GET		/Utilisateurs/VoirProfil/{id}			Members.seeProfile
 
 *		/Vehicules/MesVehicules					Vehicles.myVehicles
 *		/Vehicules/Ajouter						Vehicles.add
+*		/Vehicules/{id}							Vehicles.seeVehicle
 *     /MonCompte/Editer                         Members.profile
 GET     /Amis/MesAmis							Members.friends
 GET     /Amis/TrouverDesAmis						Members.findFriends
