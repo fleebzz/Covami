@@ -22,7 +22,7 @@ public class Signup extends Controller {
 		Member existMember = Member.find("byEmail", m.email).first();
 		
 		if(existMember.count() > 1){
-			flash.error("Existe deja");
+			flash.error("members.sugnup.alreadyExist");
 			index();
 		}
 		

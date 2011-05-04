@@ -8,7 +8,7 @@ application.copyright=Propulsé par Florian Bezagu &amp; François-Guillaume Rib
 
 pages.title.findFriends=Trouver des amis
 pages.title.friends=Mes amis
-pages.title.profile=Modifier mon profil
+pages.title.profile=Mon profil
 pages.title.myVehicles=Mes vehicules
 pages.title.seeprofile=Voir un profil
 
@@ -24,6 +24,7 @@ secure.signout=Déconnexion
 
 members.signup.submit=S'inscrire
 members.signup.formTitle=Inscrivez-vous !
+members.sugnup.alreadyExist=Un membre avec cette adresse e-mail existe déjà !
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
