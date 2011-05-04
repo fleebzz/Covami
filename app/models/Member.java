@@ -7,6 +7,7 @@ import javassist.NotFoundException;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
@@ -36,8 +37,7 @@ public class Member extends Model {
 	public List<Member> friends;
 
 	@HiddenField
-	@ManyToMany
-	@JoinTable(name = "MemberVehicles")
+	@OneToMany
 	public List<Vehicle> vehicles;
 
 	// FIXME: Insérer la bonne regex
