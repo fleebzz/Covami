@@ -28,6 +28,11 @@ public class Vehicles extends Controller {
 	
 	public static void myVehicles(){
 		Member member = Member.find("byEmail", Security.connected()).first();
-		List<Vehicle> vehicles = member.vehicles;		
+		List<Vehicle> vehicles = member.vehicles;
+//		System.out.println(vehicles.size());
+//		Vehicle v = Vehicle.find("byRegistration", "BC-833-YY").first();
+//		member.vehicles.add(v);
+//		member.save();
+		render(vehicles);
 	}
 }

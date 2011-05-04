@@ -22,8 +22,8 @@ public class Signup extends Controller {
 		Member existMember = Member.find("byEmail", m.email).first();
 		
 		if(existMember.count() > 1){
-			flash.error("");
-			redirect("/signup");
+			flash.error("Existe deja");
+			index();
 		}
 		
 		// Ajouter l'utilisateur à la bdd
