@@ -76,11 +76,11 @@ public class Member extends Model {
 			return false;
 		}
 
-		MemberFriends.delete("Member_id = ? and friends_id = ?",
-				member1.id.intValue(), member2.id.intValue());
+		MemberFriends.delete("Member_id = ? and friends_id = ?", member1.id,
+				member2.id);
 
-		MemberFriends.delete("Member_id = ? and friends_id = ?",
-				member2.id.intValue(), member1.id.intValue());
+		MemberFriends.delete("Member_id = ? and friends_id = ?", member2.id,
+				member1.id);
 
 		member1.refresh();
 		member2.refresh();
