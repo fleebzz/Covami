@@ -5,12 +5,16 @@
 	
 	<h1>&{'pages.title.friends'}</h1>
 	
+	<a class="submit" href="@{Members.findFriends()}" >&{'member.addFriend'}</a>
+	
 	#{list items:friends, as:'friend'}
 			<div class="item">
 				<p>
 					${friend.firstname} ${friend.lastname}
 				</p>
 				<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
+				
+				
 				
 				#{form @deleteFriend()}
 					<input type="hidden" name="friendId" value="${friend.id}" />

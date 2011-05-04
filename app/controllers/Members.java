@@ -4,6 +4,7 @@ import java.util.List;
 
 import javassist.NotFoundException;
 import models.Member;
+import models.MemberFriends;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -91,10 +92,26 @@ public class Members extends Controller {
 	/**
 	 * Envoi une demande d'invitation à un ami
 	 */
-	public static void inviteFriend(int friendId) {
-		// stub
-		flash.success("members.inviteFriendSuccess");
-		redirect("/");
+	public static void inviteFriend(long friendId) {
+
+		// TODO: envoyer une demande plutôt que d'ajouter directement l'amis
+		Member member1 = Member.find("byEmail", Security.connected()).first();
+		Member member2 = Member.find("byId", friendId).first();
+
+		if (member1 != null && member2 != null && member1.id != member2.id) {
+
+			(new MemberFriends(member1.id, member2.id)).save();
+			(new MemberFriends(member2.id, member1.id)).save();
+
+			member1.friends.add(member2);
+			member2.friends.add(member1);
+
+			flash.success("members.inviteFriendSuccess");
+		} else {
+			flash.error("members.inviteFriendError");
+		}
+
+		Members.friends(null);
 	}
 
 	public static void findFriends(String s) {
@@ -119,7 +136,13 @@ public class Members extends Controller {
 	}
 
 	public static void seeProfile(long id) {
-		models.Member model = models.Member.find("byId", id).first();
+		models.Member model = null;
+
+		if (id != 0) {
+			model = models.Member.find("byId", id).first();
+		} else {
+			model = models.Member.find("byEmail", Security.connected()).first();
+		}
 
 		renderArgs.put("me", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
