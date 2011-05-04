@@ -9,8 +9,8 @@
 		#{DisplayForModel model:model, ignore:'model' /}
 		
 		<p>
-			<label for="vehicle.model">&{'vehicle.model'}</label>
-			<select name="vechile.model">
+			<label>&{'vehicle.model'}</label>
+			<select name="vehicleModel.id">
 				#{list items:vehicleModels, as:'vehicleModel'}
 						<option value="${vehicleModel.id}">
 							${vehicleModel.make} ${vehicleModel.model}

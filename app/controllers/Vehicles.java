@@ -40,22 +40,29 @@ public class Vehicles extends Controller {
 		render(vehicleModels);
 	}
 	
-	public static void addVehicle(@Required Vehicle v) throws Throwable {
-		Vehicle existVehicle = Vehicle.find("byRegistration", v.registration).first();
+	public static void addVehicle(@Required Vehicle vehicle, @Required VehicleModel vehicleModel) throws Throwable {
+		Vehicle existVehicle = Vehicle.find("byRegistration", vehicle.registration).first();
+		models.Member member = models.Member.find("byEmail",Security.connected()).first();
 		
 		if(existVehicle.count() > 1){
 			flash.error("vehicles.add.alreadyExist");
 			index();
 		}
-		System.out.println(v.model);
+//		System.out.println(v.model);
+//		System.out.println(vehicleModel.id);
+//		System.out.println(vehicleModel.make);
 //		validation.valid(v);
 //		if (validation.hasErrors()) {
 //			params.flash();
 //			validation.keep();
 //		} else {
-//			v.save();
-//			flash.success("member.profile.success");
-//			myVehicles();
+			
+			vehicle.model = vehicleModel;
+			vehicle.save();
+			member.vehicles.add(vehicle);
+			member.save();
+			flash.success("member.profile.success");
+			myVehicles();
 //		}
 //		if (!v.validateAndCreate()) {
 //			flash.keep("url");
