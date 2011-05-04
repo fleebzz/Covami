@@ -281,18 +281,27 @@ div #friend, div #vehicle {
 
 /** Form **/
 
-form {
+form, .item {
     background:#f7f7f7;
 	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
 	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
 	border:1px solid #aaa;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	-moz-box-shadow:0 0 15px #aaa;
-	-webkit-box-shadow:0 0 15px #aaa;
+	/*-moz-box-shadow:0 0 15px #aaa;
+	-webkit-box-shadow:0 0 15px #aaa;*/
 	margin:60px auto 0;
 	padding:20px;
-	width:440px;
+	/*width:440px;*/
+}
+
+.item > form{
+	background:transparent;
+	padding:0;
+	margin:0;
+	border:0px;
+	width:auto;
+	display:inline-block;
 }
 
 form .error{
@@ -350,7 +359,7 @@ input[type=submit], a.submit {
 	font-family:Arial,sans-serif;
 	font-size:12px;
 	font-weight:bold;
-	margin-left:120px;
+	/*margin-left:120px;*/
 	padding:5px 10px;
 	text-decoration:none;
 	text-shadow:0 1px 1px #333;
