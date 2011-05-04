@@ -119,7 +119,13 @@ public class Members extends Controller {
 	}
 
 	public static void seeProfile(long id) {
-		models.Member model = models.Member.find("byId", id).first();
+		models.Member model = null;
+
+		if (id != 0) {
+			model = models.Member.find("byId", id).first();
+		} else {
+			model = models.Member.find("byEmail", Security.connected()).first();
+		}
 
 		renderArgs.put("me", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
