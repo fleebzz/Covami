@@ -6,16 +6,6 @@
 	<h1>&{'pages.title.friends'}</h1>
 	
 	#{list items:friends, as:'friend'}
-<<<<<<< HEAD
-		#{form @deletefriend()}
-			<input type="hidden" name="friend" value="${friend.id}" />
-			<p>
-				${friend.firstname} ${friend.lastname}
-			</p>
-			<a class="submit" href="@{members.seeprofile(friend.id)}">&{'member.profile.see'}</a>
-			<input type="submit" value="&{'general.delete'}" />
-		#{/form}
-=======
 			<div class="item">
 				<p>
 					${friend.firstname} ${friend.lastname}
@@ -27,7 +17,7 @@
 					<input type="submit" value="&{'general.delete'}" />
 				#{/form}
 			</div>
->>>>>>> f5802e4f63815f41938ebcaedcbda72a371b1265
+			
 	#{/list}
 	
 	
