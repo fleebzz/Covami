@@ -5,6 +5,7 @@
 	
 	<h1>&{'pages.title.friends'}</h1>
 	
+	#{if friends.size() > 0}
 	#{list items:friends, as:'friend'}
 		#{form @deleteFriend()}
 			<input type="hidden" name="friend" value="${friend.id}" />
@@ -15,6 +16,7 @@
 			<input type="submit" value="&{'general.delete'}" />
 		#{/form}
 	#{/list}
+	#{/if}
 	
 	
 </div>

@@ -14,7 +14,7 @@ public class Members extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			models.Member user = models.Member.find("byEmail",
+			Member user = Member.find("byEmail",
 					Security.connected()).first();
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
@@ -43,7 +43,7 @@ public class Members extends Controller {
 		} else {
 			member.save();
 			flash.success("member.profile.success");
-			Application.index();
+			profile();
 		}
 	}
 
@@ -63,9 +63,11 @@ public class Members extends Controller {
 			member = m;
 		}
 		List<Member> friends = member.friends;
-		// Member florian = Member.find("byFirstname", "Florian").first();
-		// member.friends.add(florian);
-		// member.save();
+//		Member florian = Member.find("byFirstname", "Florian").first();
+//		member.friends.add(florian);
+//		member.save();
+//		florian.friends.add(member);
+//		florian.save();
 		render(friends);
 	}
 
