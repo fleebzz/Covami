@@ -76,50 +76,14 @@ public class Member extends Model {
 			return false;
 		}
 
-		/*
-		 * Model.em().remove( Model.em() .createQuery(
-		 * "select m from MemberFriends m where m.Member_id =" +
-		 * String.valueOf(member1.id) + " and m.friends_id = " +
-		 * String.valueOf(member2.id)) .getSingleResult());
-		 * 
-		 * Model.em().remove( Model.em() .createQuery(
-		 * "select m from MemberFriends m where m.Member_id =" +
-		 * String.valueOf(member2.id) + " and m.friends_id = " +
-		 * String.valueOf(member1.id)) .getSingleResult());
-		 */
-
 		MemberFriends.delete("Member_id = ? and friends_id = ?",
 				member1.id.intValue(), member2.id.intValue());
 
 		MemberFriends.delete("Member_id = ? and friends_id = ?",
 				member2.id.intValue(), member1.id.intValue());
-		/*
-		 * Model.em() .createQuery(
-		 * "delete from MemberFriends m where m.Member_id = ? and m.friends_id = ?"
-		 * ) .setParameter(0, member1.id).setParameter(1, member2.id);
-		 */
-		/*
-		 * Model.em().createQuery(
-		 * "delete from MemberFriends m where m.Member_id =" +
-		 * String.valueOf(member2.id) + " and m.friends_id = " +
-		 * String.valueOf(member1.id));
-		 */
-		// Model.em().remove(Model.em().find("", member2.id, member1.id));
 
 		member1.refresh();
 		member2.refresh();
-
-		/*
-		 * int posFriend = member1.friends.indexOf(member2); // Trouver l'ami if
-		 * (posFriend >= 0) { member1.friends.get(posFriend).delete(); } else {
-		 * throw new NotFoundException(
-		 * "Member2 not found in Member1's friends"); }
-		 * 
-		 * posFriend = member2.friends.indexOf(member1); // Trouver l'ami if
-		 * (posFriend >= 0) { member2.friends.get(posFriend).delete(); } else {
-		 * throw new NotFoundException(
-		 * "Member1 not found in Member2's friends"); }
-		 */
 
 		return true;
 	}
