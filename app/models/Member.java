@@ -33,7 +33,7 @@ public class Member extends Model {
 	public List<Member> friends;
 
 	@HiddenField
-	@OneToMany
+	@ManyToMany
 	public List<Vehicle> vehicles;
 
 	// FIXME: Insérer la bonne regex
