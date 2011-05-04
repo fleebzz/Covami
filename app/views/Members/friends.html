@@ -5,6 +5,8 @@
 	
 	<h1>&{'pages.title.friends'}</h1>
 	
+	<a class="submit" href="@{Members.findFriends()}" >&{'member.addFriend'}</a>
+	
 	#{if friends.size() > 0}
 	#{list items:friends, as:'friend'}
 		#{form @deleteFriend()}

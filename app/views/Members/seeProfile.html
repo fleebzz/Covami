@@ -6,5 +6,9 @@
 	<h1>&{'pages.title.seeprofile'}</h1> 
 	#{form @editProfile()}
 	#{DisplayForModel model:model, editable:false /}
+	
+	#{if !isMe}
+		<a class="submit" href="@{Members.inviteFriend(model.id)}" >&{'member.friends.add'}</a>
+	#{/if}
 	#{/form}
 </div>

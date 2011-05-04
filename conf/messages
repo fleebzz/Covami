@@ -33,3 +33,4 @@ member.bademail=Mauvais format d'email
 member.profile.success=Modification du profil effectuée avec succès
 member.profile.see=Voir le profil de l'utilisateur
 member.friends.add=Demander en ami
+member.addFriend=Ajouter un ami

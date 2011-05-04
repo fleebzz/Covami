@@ -14,8 +14,7 @@ public class Members extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			Member user = Member.find("byEmail",
-					Security.connected()).first();
+			Member user = Member.find("byEmail", Security.connected()).first();
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 		}
@@ -63,16 +62,24 @@ public class Members extends Controller {
 			member = m;
 		}
 		List<Member> friends = member.friends;
-//		Member florian = Member.find("byFirstname", "Florian").first();
-//		member.friends.add(florian);
-//		member.save();
-//		florian.friends.add(member);
-//		florian.save();
+		// Member florian = Member.find("byFirstname", "Florian").first();
+		// member.friends.add(florian);
+		// member.save();
+		// florian.friends.add(member);
+		// florian.save();
 		render(friends);
 	}
 
 	public static void deleteFriend() {
 
+	}
+
+	/**
+	 * Envoi une demande d'invitation à un ami
+	 */
+	public static void inviteFriend(int friendId) {
+		// stub
+		redirect("/");
 	}
 
 	public static void findFriends() {
@@ -82,6 +89,8 @@ public class Members extends Controller {
 
 	public static void seeProfile(long id) {
 		models.Member model = models.Member.find("byId", id).first();
+
+		renderArgs.put("isMe", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
 		render();
 	}
