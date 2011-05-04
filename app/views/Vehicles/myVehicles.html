@@ -8,13 +8,16 @@
 	<a class="submit" href="@{Vehicles.add()}" >&{'vehicle.addVehicle'}</a>
 	
 	#{list items:vehicles, as:'vehicle'}
-		<div id="vehicle">
-			<input type="hidden" name="vehicle" value="${vehicle.id}" />
+		<div class="item">
 			<p>
 				${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}
 			</p>
 			<a class="submit" href="@{Vehicles.seeVehicle(vehicle.id)}">&{'vehicle.modify'}</a>
-			<input type="submit" value="&{'general.delete'}" />
+			
+			#{form @deleteVehicle()}
+				<input type="hidden" name="vehicleId" value="${vehicle.id}" />
+				<input type="submit" value="&{'general.delete'}" />
+			#{/form}
 		</div>
 	#{/list}
 	

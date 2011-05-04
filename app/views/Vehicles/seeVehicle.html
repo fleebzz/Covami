@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Vehicle' /}
+
+
+<div id="edit-vehicle">
+	<h1>&{'pages.title.vehicle'}</h1> 
+	
+	#{form @editVehicle()}
+		<input type="hidden" name="vehicle.id" value="${model.id}" />
+		
+		#{DisplayForModel model:model /}
+
+		<p id="signup-field">
+			<input type="submit" id="signup" value="&{'vehicles.edit.submit'}" />
+		</p>
+	#{/form}
+</div>

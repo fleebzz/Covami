@@ -9,6 +9,7 @@ import models.Member;
 import models.Vehicle;
 import models.VehicleModel;
 import play.data.validation.Required;
+import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -46,40 +47,35 @@ public class Vehicles extends Controller {
 		
 		if(existVehicle.count() > 1){
 			flash.error("vehicles.add.alreadyExist");
-			index();
+			add();
 		}
-//		System.out.println(v.model);
-//		System.out.println(vehicleModel.id);
-//		System.out.println(vehicleModel.make);
-//		validation.valid(v);
-//		if (validation.hasErrors()) {
-//			params.flash();
-//			validation.keep();
-//		} else {
-			
-			vehicle.model = vehicleModel;
-			vehicle.save();
-			member.vehicles.add(vehicle);
-			member.save();
-			flash.success("member.profile.success");
-			myVehicles();
-//		}
-//		if (!v.validateAndCreate()) {
-//			flash.keep("url");
-//			flash.error("secure.error");
-//			params.flash();
-//			
-//			index();
-//		}
-//
-//		// Tout est ok
-//		session.put("username", m.email);
-//		flash.success("members.signup.success");
-//		
-//		Application.index();
+		vehicle.model = vehicleModel;
+		vehicle.save();
+		member.vehicles.add(vehicle);
+		member.save();
+		flash.success("vehicles.add.success");
+		myVehicles();
 	}
 	
 	public static void seeVehicle(long id) {
+		Vehicle vehicle = Vehicle.findById(id);
+		List<VehicleModel> vehicleModels = VehicleModel.findAll();
+		renderArgs.put("model", vehicle);
+		render(vehicle, vehicleModels);
+	}
+
+	public static void editVehicle(@Valid Vehicle vehicle, @Required VehicleModel vehicleModel) throws Throwable {
+		Application.index();
+	}
+	
+	public static void deleteVehicle(long vehicleId) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Vehicle vehicle = Vehicle.findById(vehicleId);
 		
+		member.vehicles.remove(vehicle);
+		
+		member.save();
+
+		myVehicles();
 	}
 }

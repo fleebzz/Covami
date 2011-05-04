@@ -12,6 +12,7 @@ pages.title.profile=Mon profil
 pages.title.myVehicles=Mes vehicules
 pages.title.addVehicle=Ajouter un vehicule
 pages.title.seeprofile=Voir un profil
+pages.title.vehicle=Modifier un véhicule
 
 general.delete=Supprimer
 
@@ -52,3 +53,5 @@ vehicle.modify=Modifier ce véhicule
 
 vehicles.add.submit=Ajouter ce véhicule
 vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà !
+vehicles.add.success=Votre véhicule a correctement été ajouté !
+vehicles.edit.submit=Modifier ce véhicule

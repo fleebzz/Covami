@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'mes amis' /}
+#{set title:'Mes amis' /}
 
 <div id="profile">
 	
@@ -8,20 +8,17 @@
 	<a class="submit" href="@{Members.findFriends()}" >&{'member.addFriend'}</a>
 	
 	#{list items:friends, as:'friend'}
-			<div class="item">
-				<p>
-					${friend.firstname} ${friend.lastname}
-				</p>
-				<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
-				
-				
-				
-				#{form @deleteFriend()}
-					<input type="hidden" name="friendId" value="${friend.id}" />
-					<input type="submit" value="&{'general.delete'}" />
-				#{/form}
-			</div>
+		<div class="item">
+			<p>
+				${friend.firstname} ${friend.lastname}
+			</p>
+			<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
 			
+			#{form @deleteFriend()}
+				<input type="hidden" name="friendId" value="${friend.id}" />
+				<input type="submit" value="&{'general.delete'}" />
+			#{/form}
+		</div>
 	#{/list}
 	
 	
