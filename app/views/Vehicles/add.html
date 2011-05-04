@@ -6,7 +6,7 @@
 	<h1>&{'pages.title.addVehicle'}</h1>
 	
 	#{form @addVehicle()}
-		#{DisplayForModel model:model /}
+		#{DisplayForModel model:model, ignore:'model' /}
 		
 		<p>
 			<label for="vehicle.model">&{'vehicle.model'}</label>

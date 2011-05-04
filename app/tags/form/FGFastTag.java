@@ -29,6 +29,8 @@ import groovy.lang.Closure;
 
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import play.data.validation.Email;
@@ -61,6 +63,13 @@ public class FGFastTag extends FastTags {
 
 		Model model = (Model) args.get("model");
 
+		List<String> ignores = null;
+
+		if (args.get("ignore") != null) {
+			ignores = Arrays.asList(((String) args.get("ignore")).replaceAll(
+					" ", "").split(","));
+		}
+
 		if (model == null) {
 			throw new NullPointerException("You must specify a model.");
 		}
@@ -79,21 +88,25 @@ public class FGFastTag extends FastTags {
 
 		for (Field field : fields) {
 
-			String fieldName = modelName + "." + field.getName();
-			Object fieldValue = Class.forName(field.getType().getName()).cast(
-					clazz.getField(field.getName()).get(model));
+			if (ignores == null
+					|| (ignores != null && !ignores.contains(field.getName()))) {
 
-			if (!field.isAnnotationPresent(HiddenField.class)) {
+				String fieldName = modelName + "." + field.getName();
+				Object fieldValue = Class.forName(field.getType().getName())
+						.cast(clazz.getField(field.getName()).get(model));
 
-				if (editable) {
-					renderFieldEditable(out, field, fieldName, fieldValue);
-				} else {
-					renderFieldView(out, field, fieldName, fieldValue);
+				if (!field.isAnnotationPresent(HiddenField.class)) {
+
+					if (editable) {
+						renderFieldEditable(out, field, fieldName, fieldValue);
+					} else {
+						renderFieldView(out, field, fieldName, fieldValue);
+					}
+
+				} else {// Hidden
+					out.print("<input type='hidden' name='" + fieldName
+							+ "' value='" + fieldValue + "'/>");
 				}
-
-			} else {// Hidden
-				out.print("<input type='hidden' name='" + fieldName
-						+ "' value='" + fieldValue + "'/>");
 			}
 		}
 
@@ -180,6 +193,7 @@ public class FGFastTag extends FastTags {
 		if (field.isAnnotationPresent(URL.class)) {
 			printAttribute("type", "url", out);
 			printAttribute("placeholder", "http://domain.com", out);
+
 		} else if (field.isAnnotationPresent(Email.class)) {
 			printAttribute("type", "email", out);
 			printAttribute("placeholder", "email@domain.com", out);
@@ -190,6 +204,7 @@ public class FGFastTag extends FastTags {
 
 		} else if (field.getType().getName().contains("Date")) {
 			printAttribute("type", "date", out);
+
 		} else {
 			printAttribute("type", "text", out);
 			printAttribute("placeholder", field.getName(), out);
