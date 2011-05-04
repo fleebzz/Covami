@@ -21,7 +21,7 @@ GET		/Utilisateurs/VoirProfil/{id}			Members.seeProfile
 *		/Vehicules/MesVehicules					Vehicles.myVehicles
 *     /MonCompte/Editer                         Members.profile
 GET     /Amis/MesAmis							Members.friends
-*     /Amis/TrouverDesAmis						Members.findFriends
+GET     /Amis/TrouverDesAmis						Members.findFriends
 
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}

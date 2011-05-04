@@ -7,8 +7,8 @@
 	#{form @editProfile()}
 	#{DisplayForModel model:model, editable:false /}
 	
-	#{if !isMe}
+	#{ifnot me}
 		<a class="submit" href="@{Members.inviteFriend(model.id)}" >&{'member.friends.add'}</a>
-	#{/if}
+	#{/ifnot}
 	#{/form}
 </div>

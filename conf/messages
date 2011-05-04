@@ -28,6 +28,13 @@ members.sugnup.alreadyExist=Un membre avec cette adresse e-mail existe déjà !
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
+
+members.findFriends.input=Nom, prénom, ...
+members.findFriends.inputGo=Rechercher
+members.findFriends.nothingFound=Aucun membre trouvé pour cette requête
+
+members.inviteFriendSuccess=Demande d'ajout envoyée
+
 member.badpassword=Mauvais format de mot de passe
 member.bademail=Mauvais format d'email
 member.profile.success=Modification du profil effectuée avec succès

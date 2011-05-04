@@ -5,6 +5,12 @@
 	
 	<h1>&{'pages.title.findFriends'}</h1>
 	
+	#{form @findFriends()}
+		<input type="text" name="s" placeholder="&{'members.findFriends.input'}" value="${s}"/>
+		<input type="submit" value="&{'members.findFriends.inputGo'}"/>
+	#{/form}
+	
+	
 	#{list items:members, as:'member'}
 		<div id="friend">
 			<p>
@@ -15,5 +21,8 @@
 		</div>
 	#{/list}
 	
+	#{if members.size() == 0}
+		<p class="errorMsg">&{'members.findFriends.nothingFound'}</p>
+	#{/if}
 	
 </div>

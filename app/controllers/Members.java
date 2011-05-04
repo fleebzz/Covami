@@ -10,6 +10,8 @@ import play.mvc.With;
 
 @With(Secure.class)
 public class Members extends Controller {
+	// Récupérer 50 membres au maximum
+	private static int maxMembersToFind = 50;
 
 	@Before
 	static void setConnectedUser() {
@@ -79,18 +81,40 @@ public class Members extends Controller {
 	 */
 	public static void inviteFriend(int friendId) {
 		// stub
+		flash.success("members.inviteFriendSuccess");
 		redirect("/");
 	}
 
-	public static void findFriends() {
-		List<Member> members = Member.findAll();
+	/*
+	 * public static void findFriends() { List<Member> members =
+	 * Member.findAll(); render(members); }
+	 */
+
+	public static void findFriends(String s) {
+		List<Member> members = null;
+
+		if (s == null || s.isEmpty() || s.length() < 3) {
+
+			if (s != null && s.length() <= 4) {
+				flash.error("recherche trop petite");
+				s = "";
+			}
+
+			members = Member.all().fetch(maxMembersToFind);
+		} else {
+			// ByFirstnameLikeOrLastnameLike ne fonctionnait pas
+			members = Member.find("firstname like ? or lastname like ?",
+					"%" + s + "%", "%" + s + "%").fetch(maxMembersToFind);
+		}
+
+		renderArgs.put("s", s);
 		render(members);
 	}
 
 	public static void seeProfile(long id) {
 		models.Member model = models.Member.find("byId", id).first();
 
-		renderArgs.put("isMe", model.email.equals(Security.connected()));
+		renderArgs.put("me", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
 		render();
 	}
