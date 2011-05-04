@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import models.Member;
@@ -64,22 +63,24 @@ public class Members extends Controller {
 			member = m;
 		}
 		List<Member> friends = member.friends;
-//		Member florian = Member.find("byFirstname", "Florian").first();
-//		member.friends.add(florian);
-//		member.save();
+		// Member florian = Member.find("byFirstname", "Florian").first();
+		// member.friends.add(florian);
+		// member.save();
 		render(friends);
 	}
-	
-	public static void deleteFriend(){
-		
+
+	public static void deleteFriend() {
+
 	}
-	
-	public static void findFriends(){
+
+	public static void findFriends() {
 		List<Member> members = Member.findAll();
 		render(members);
 	}
-	
-	public static void seeProfile(long id){
-		
+
+	public static void seeProfile(long id) {
+		models.Member model = models.Member.find("byId", id).first();
+		renderArgs.put("model", model);
+		render();
 	}
 }

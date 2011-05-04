@@ -22,7 +22,7 @@
 		    	
 		        <li>
 		        	#{if security != null}
-						Bonjour ${user.firstname} ! 
+						Bonjour ${user?.firstname} ! 
 						<a class="submit" href="@{Secure.logout()}">&{'secure.signout'}</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->

@@ -73,42 +73,69 @@ public class FGFastTag extends FastTags {
 		// Boucler sur les attributs
 		Field[] fields = clazz.getDeclaredFields();
 
-		if (args.get("editable") == null
+		Boolean editable = args.get("editable") == null
 				|| (args.get("editable") != null && args.get("editable")
-						.equals(true))) {
+						.equals(true));
 
-			for (Field field : fields) {
+		for (Field field : fields) {
 
-				String fieldName = modelName + "." + field.getName();
-				Object fieldValue = clazz.getField(field.getName()).get(model);
+			String fieldName = modelName + "." + field.getName();
+			Object fieldValue = clazz.getField(field.getName()).get(model);
 
-				if (!field.isAnnotationPresent(HiddenField.class)) {
+			if (!field.isAnnotationPresent(HiddenField.class)) {
 
-					out.print("\n<p>\n\t<label for='" + fieldName + "'>"
-							+ Messages.get(field.getName())
-							+ "</label>\n\t<input id='" + fieldName
-							+ "' name='" + fieldName + "'");
-
-					if (fieldValue != null) {
-						out.print("value='" + fieldValue + "'");
-					}
-
-					printValidationAttributes(field, out);
-
-					out.print("/>\n");
-
-					printErrorIfNeeded(fieldName, out);
-
-					out.print("</p>\n");
-
-				} else {// Hidden
-					out.print("<input type='hidden' name='" + fieldName
-							+ "' value='" + fieldValue + "'/>");
+				if (editable) {
+					renderFieldEditable(out, field, fieldName, fieldValue);
+				} else {
+					renderFieldView(out, field, fieldName, fieldValue);
 				}
-			}
 
+			} else {// Hidden
+				out.print("<input type='hidden' name='" + fieldName
+						+ "' value='" + fieldValue + "'/>");
+			}
 		}
 
+	}
+
+	private static void renderFieldView(PrintWriter out, Field field,
+			String fieldName, Object fieldValue) {
+		out.print("\n<p>\n\t<label for='" + fieldName + "'>"
+				+ Messages.get(field.getName()) + "</label>\n\t<span id='"
+				+ fieldName + "' name='" + fieldName + "'");
+
+		out.print("/>\n");
+
+		if (fieldValue != null) {
+			out.print(fieldValue);
+		} else {
+			out.print("/");
+		}
+
+		out.print("</span>");
+
+		printErrorIfNeeded(fieldName, out);
+
+		out.print("</p>\n");
+	}
+
+	private static void renderFieldEditable(PrintWriter out, Field field,
+			String fieldName, Object fieldValue) {
+		out.print("\n<p>\n\t<label for='" + fieldName + "'>"
+				+ Messages.get(field.getName()) + "</label>\n\t<input id='"
+				+ fieldName + "' name='" + fieldName + "'");
+
+		if (fieldValue != null) {
+			out.print("value='" + fieldValue + "'");
+		}
+
+		printValidationAttributes(field, out);
+
+		out.print("/>\n");
+
+		printErrorIfNeeded(fieldName, out);
+
+		out.print("</p>\n");
 	}
 
 	/**
