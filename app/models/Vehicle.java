@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import play.data.validation.Required;
 import play.db.jpa.*;
+import tags.form.HiddenField;
 
 @Entity
 public class Vehicle extends Model {
@@ -16,6 +17,7 @@ public class Vehicle extends Model {
 	
 	@Required
 	@OneToOne
+	@HiddenField
 	public VehicleModel model;
 	
 }

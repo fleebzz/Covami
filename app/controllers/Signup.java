@@ -22,7 +22,7 @@ public class Signup extends Controller {
 		Member existMember = Member.find("byEmail", m.email).first();
 		
 		if(existMember.count() > 1){
-			flash.error("members.sugnup.alreadyExist");
+			flash.error("members.signup.alreadyExist");
 			index();
 		}
 		
@@ -32,7 +32,7 @@ public class Signup extends Controller {
 			flash.error("secure.error");
 			params.flash();
 			
-			redirect("/signup");
+			index();
 		}
 
 		// Connecter l'utilisateur
@@ -45,8 +45,8 @@ public class Signup extends Controller {
 		// Tout est ok
 		session.put("username", m.email);
 		flash.success("members.signup.success");
-
-		redirect("/");
+		
+		Application.index();
 	}
 
 }

@@ -10,6 +10,7 @@ pages.title.findFriends=Trouver des amis
 pages.title.friends=Mes amis
 pages.title.profile=Mon profil
 pages.title.myVehicles=Mes vehicules
+pages.title.addVehicle=Ajouter un vehicule
 pages.title.seeprofile=Voir un profil
 
 general.delete=Supprimer
@@ -24,7 +25,7 @@ secure.signout=Déconnexion
 
 members.signup.submit=S'inscrire
 members.signup.formTitle=Inscrivez-vous !
-members.sugnup.alreadyExist=Un membre avec cette adresse e-mail existe déjà !
+members.signup.alreadyExist=Un membre avec cette adresse e-mail existe déjà !
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
@@ -44,3 +45,9 @@ member.profile.success=Modification du profil effectuée avec succès
 member.profile.see=Voir le profil de l'utilisateur
 member.friends.add=Demander en ami
 member.addFriend=Ajouter un ami
+
+vehicle.addVehicle=Ajouter un véhicule
+vehicle.model=Modèle
+
+vehicles.add.submit=Ajouter ce véhicule
+vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà !

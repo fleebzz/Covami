@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+#{set title:'Ajouter un vehicule' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.addVehicle'}</h1>
+	
+	#{form @addVehicle()}
+		#{DisplayForModel model:model /}
+		
+		<p>
+			<label for="vehicle.model">&{'vehicle.model'}</label>
+			<select name="vechile.model">
+				#{list items:vehicleModels, as:'vehicleModel'}
+						<option value="${vehicleModel.id}">
+							${vehicleModel.make} ${vehicleModel.model}
+						</option>
+				#{/list}
+			</select>
+		</p>
+		<p id="signup-field">
+			<input type="submit" id="signup" value="&{'vehicles.add.submit'}" />
+		</p>
+	#{/form}
+</div>

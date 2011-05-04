@@ -19,6 +19,7 @@ GET     /public/                                staticDir:public
 GET		/Utilisateurs/VoirProfil/{id}			Members.seeProfile
 
 *		/Vehicules/MesVehicules					Vehicles.myVehicles
+*		/Vehicules/Ajouter						Vehicles.add
 *     /MonCompte/Editer                         Members.profile
 GET     /Amis/MesAmis							Members.friends
 GET     /Amis/TrouverDesAmis						Members.findFriends
