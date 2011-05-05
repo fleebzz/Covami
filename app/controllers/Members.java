@@ -95,26 +95,21 @@ public class Members extends Controller {
 		Member member1 = Member.find("byEmail", Security.connected()).first();
 		Member member2 = Member.find("byId", friendId).first();
 		
-		member2.applicants.add(member1);
-		member2.save();
-
 		if (member1 != null && member2 != null && member1.id != member2.id) {
-
-//			(new MemberFriends(member1.id, member2.id)).save();
-//			(new MemberFriends(member2.id, member1.id)).save();
-//
-//			member1.friends.add(member2);
-//			member2.friends.add(member1);
-
+			member2.applicants.add(member1);
+			member2.save();
+			
 			flash.success("members.inviteFriendSuccess");
 		} else {
 			flash.error("members.inviteFriendError");
+			Members.findFriends(null);
 		}
 
 		Members.friends(null);
 	}
 
-	public static void findFriends(String s) {
+	public static void findFriends(@Nullable String s) {
+		Member member = Member.find("byEmail", Security.connected()).first();
 		List<Member> members = null;
 
 		if (s == null || s.isEmpty() || s.length() < 3) {
@@ -132,10 +127,13 @@ public class Members extends Controller {
 		}
 
 		renderArgs.put("s", s);
-		render(members);
+		List<Member> applicants = member.applicants;
+		render(members, applicants);
 	}
 
 	public static void seeProfile(long id) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		boolean isApplicant = false;
 		models.Member model = null;
 
 		if (id != 0) {
@@ -146,6 +144,9 @@ public class Members extends Controller {
 
 		renderArgs.put("me", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
-		render();
+		if(member.applicants.contains(model)){
+			isApplicant = true;
+		}
+		render(isApplicant);
 	}
 }

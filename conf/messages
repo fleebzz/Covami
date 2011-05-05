@@ -36,6 +36,8 @@ members.findFriends.input=Nom, prénom, ...
 members.findFriends.inputGo=Rechercher
 members.findFriends.nothingFound=Aucun membre trouvé pour cette requête
 
+members.inviteFriendError=Vous ne pouvez pas inviter ce membre comme ami !
+
 members.deleteFriendSuccess=Amis supprimé avec succès
 members.deleteFriendFailed=Error lors de la suppression de l'amis
 

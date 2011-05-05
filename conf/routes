@@ -19,7 +19,7 @@ GET     /public/                                staticDir:public
 *		/vehicules/{id}							Vehicles.seeVehicle
 *		/vehicules/editer/{id}					Vehicles.myVehicle
 
-*		/compte/								Members.seeProfile
+*		/compte/{id}							Members.seeProfile
 *		/compte/editer							Members.profile
 
 GET		/membres/								Members.findFriends

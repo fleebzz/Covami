@@ -4,11 +4,24 @@
 
 <div id="edit-profile">
 	<h1>&{'pages.title.seeprofile'}</h1> 
-	#{form @editProfile()}
-	#{DisplayForModel model:model, editable:false /}
-	
-	#{ifnot me}
-		<a class="submit" href="@{Members.inviteFriend(model.id)}" >&{'member.friends.add'}</a>
-	#{/ifnot}
-	#{/form}
+	<div class="item">
+		#{DisplayForModel model:model, editable:false /}
+		
+		#{ifnot me}
+			#{if isApplicant}
+				#{form @Pending.acceptInvitation()}
+					<input type="hidden" name="applicantId" value="${model.id}" />
+					<input type="submit" value="&{'pendings.invitation.accept'}" />
+				#{/form}
+				
+				#{form @Pending.denyInvitation()}
+					<input type="hidden" name="applicantId" value="${model.id}" />
+					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+				#{/form}
+			#{/if}
+			#{else}
+				<a class="submit" href="@{Members.inviteFriend(model.id)}" >&{'member.friends.add'}</a>
+			#{/else}
+		#{/ifnot}
+	</div>
 </div>
