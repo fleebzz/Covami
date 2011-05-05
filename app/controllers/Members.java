@@ -114,6 +114,15 @@ public class Members extends Controller {
 	/**
 	 * Trouver des amis
 	 * 
+	 * - Ne pas afficher l'utilisateur connecté dans la liste.
+	 * 
+	 * - Si le membre à fait une demande d'amitié, afficher les boutons
+	 * 
+	 * - Si l'utilisateur à fait une demandé d'amitié pour le membre et qu'il
+	 * n'a pas encore répondu, afficher "demandé d'amitié envoyée"
+	 * 
+	 * - Si le membre est déjà un amis, ne rien afficher comme bouton
+	 * 
 	 * @param s
 	 */
 	public static void findFriends(String s) {
@@ -136,7 +145,7 @@ public class Members extends Controller {
 
 		renderArgs.put("s", s);
 		renderArgs.put("members", members);
-		renderArgs.put("applicants", member.applicants);
+		renderArgs.put("me", member);
 
 		render();
 	}
@@ -147,23 +156,17 @@ public class Members extends Controller {
 	 * @param id
 	 */
 	public static void seeProfile(long id) {
-		Member member = Member.find("byEmail", Security.connected()).first();
-		boolean isApplicant = false;
-		Member model = null;
+		Member me = Member.find("byEmail", Security.connected()).first();
+		Member member = null;
 
 		if (id != 0) {
-			model = Member.find("byId", id).first();
+			member = Member.find("byId", id).first();
 		} else {
-			model = member;
+			member = me;
 		}
 
-		if (member.applicants.contains(model)) {
-			isApplicant = true;
-		}
-
-		renderArgs.put("me", model.email.equals(Security.connected()));
-		renderArgs.put("model", model);
-		renderArgs.put("isApplicant", isApplicant);
+		renderArgs.put("me", me);
+		renderArgs.put("member", member);
 
 		render();
 	}

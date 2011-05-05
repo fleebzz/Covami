@@ -9,8 +9,7 @@
 		#{list items:applicants, as:'applicant'}
 			<div class="item">
 				<p>
-					${applicant.firstname} ${applicant.lastname} &{'pendings.invitation'}
-					<a class="submit" style="margin-left:1em" href="@{Members.seeProfile(applicant.id)}">&{'member.profile.see'}</a>
+					<a href="@{Members.seeProfile(applicant.id)}">${applicant.firstname} ${applicant.lastname}</a> &{'pendings.invitation'}
 				</p>
 				
 				

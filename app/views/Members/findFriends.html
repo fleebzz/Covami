@@ -12,16 +12,38 @@
 	
 	
 	#{list items:members, as:'member'}
+		#{ifnot member.id == me.id}
 		<div class="item">
 			<p>
-				${member.firstname} ${member.lastname}
+				<a href="@{Members.seeProfile(member.id)}" >${member.firstname} ${member.lastname}</a>
 			</p>
+
+			#{if me.applicants.contains(member)}
+				#{form @Pending.accept()}
+					<input type="hidden" name="applicantId" value="${member.id}" />
+					<input type="submit" value="&{'pendings.invitation.accept'}" />
+				#{/form}
+				
+				#{form @Pending.deny()}
+					<input type="hidden" name="applicantId" value="${member.id}" />
+					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+				#{/form}
+			#{/if}
+			
+			#{elseif member.applicants.contains(me)}
 			<p>
-			<a class="submit" href="@{Members.seeProfile(member.id)}" >&{'member.profile.see'}</a>
-			<a class="submit" href="@{Members.inviteFriend(member.id)}" >&{'member.friends.add'}</a>
+				&{'members.inviteFriendSuccess'}
 			</p>
+			#{/elseif}
+			
+			#{elseif !me.friends.contains(member)}
+			<p>
+				<a class="submit" href="@{Members.inviteFriend(member.id)}" >&{'member.friends.add'}</a>
+			</p>
+			#{/elseif}
+			
 		</div>
-		
+		#{/ifnot}
 	#{/list}
 	
 	#{if members.size() == 0}

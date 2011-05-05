@@ -41,7 +41,7 @@ members.inviteFriendError=Vous ne pouvez pas inviter ce membre comme ami !
 members.deleteFriendSuccess=Amis supprimé avec succès
 members.deleteFriendFailed=Error lors de la suppression de l'amis
 
-members.inviteFriendSuccess=Demande d'ajout envoyée
+members.inviteFriendSuccess=Demande d'amitié envoyée
 
 member.badpassword=Mauvais format de mot de passe
 member.bademail=Mauvais format d'email

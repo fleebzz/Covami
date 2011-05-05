@@ -10,11 +10,9 @@
 	#{list items:friends, as:'friend'}
 		<div class="item">
 			<p>
-				${friend.firstname} ${friend.lastname}
+				<a href="@{Members.seeProfile(friend.id)}">${friend.firstname} ${friend.lastname}</a>
 			</p>
-			
-			<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
-			
+
 			#{form @deleteFriend()}
 				<input type="hidden" name="friendId" value="${friend.id}" />
 				<input type="submit" value="&{'general.delete'}" />
