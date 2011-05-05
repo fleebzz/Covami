@@ -1,7 +1,7 @@
 #{extends 'main.html' /}
 #{set title:'Mes vehicules' /}
 
-<div id="profile">
+<div>
 	
 	<h1>&{'pages.title.myVehicles'}</h1>
 	
@@ -12,9 +12,9 @@
 			<p>
 				${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}
 			</p>
-			<a class="submit" href="@{Vehicles.myVehicle(vehicle.id)}">&{'vehicle.modify'}</a>
+			<a class="submit" href="@{Vehicles.edit(vehicle.id)}">&{'vehicle.modify'}</a>
 			
-			#{form @deleteVehicle()}
+			#{form @delete()}
 				<input type="hidden" name="vehicleId" value="${vehicle.id}" />
 				<input type="submit" value="&{'general.delete'}" />
 			#{/form}

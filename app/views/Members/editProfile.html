@@ -5,7 +5,7 @@
 <div id="edit-profile">
 	<h1>&{'pages.title.profile'}</h1> 
 	
-	#{form @editProfile()}
+	#{form @editProfilePost()}
 		<input type="hidden" name="member.id" value="${model.id}" />
 		
 		#{DisplayForModel model:model /}

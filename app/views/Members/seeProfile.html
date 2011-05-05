@@ -9,18 +9,20 @@
 		
 		#{ifnot me}
 			#{if isApplicant}
-				#{form @Pending.acceptInvitation()}
+				#{form @Pending.accept()}
 					<input type="hidden" name="applicantId" value="${model.id}" />
 					<input type="submit" value="&{'pendings.invitation.accept'}" />
 				#{/form}
 				
-				#{form @Pending.denyInvitation()}
+				#{form @Pending.deny()}
 					<input type="hidden" name="applicantId" value="${model.id}" />
 					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
 				#{/form}
 			#{/if}
 			#{else}
+				<p>
 				<a class="submit" href="@{Members.inviteFriend(model.id)}" >&{'member.friends.add'}</a>
+				</p>
 			#{/else}
 		#{/ifnot}
 	</div>

@@ -120,10 +120,10 @@ public class FGFastTag extends FastTags {
 
 		out.print("/>\n");
 
-		if (fieldValue != null) {
+		if (fieldValue != null && !fieldValue.toString().isEmpty()) {
 			out.print(fieldValue);
 		} else {
-			out.print("&nbsp;");
+			out.print("/");
 		}
 
 		out.print("</span>");

@@ -10,16 +10,16 @@
 			<div class="item">
 				<p>
 					${applicant.firstname} ${applicant.lastname} &{'pendings.invitation'}
+					<a class="submit" style="margin-left:1em" href="@{Members.seeProfile(applicant.id)}">&{'member.profile.see'}</a>
 				</p>
-				<a class="submit" href="@{Members.seeProfile(applicant.id)}">&{'member.profile.see'}</a>
-				&nbsp;&nbsp;|&nbsp;&nbsp;
 				
-				#{form @acceptInvitation()}
+				
+				#{form @accept()}
 					<input type="hidden" name="applicantId" value="${applicant.id}" />
 					<input type="submit" value="&{'pendings.invitation.accept'}" />
 				#{/form}
 				
-				#{form @denyInvitation()}
+				#{form @deny()}
 					<input type="hidden" name="applicantId" value="${applicant.id}" />
 					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
 				#{/form}

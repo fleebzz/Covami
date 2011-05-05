@@ -4,7 +4,6 @@ import java.util.List;
 
 import javassist.NotFoundException;
 import models.Member;
-import models.MemberFriends;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -27,26 +26,29 @@ public class Members extends Controller {
 	/**
 	 * Visualiser le profile de l'utilisateur
 	 */
-	public static void profile(Member m) {
+	public static void editProfile(Member m) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		if (m.id != null) {
 			member = m;
 		}
 
 		renderArgs.put("model", member);
+
 		render();
 	}
 
-	public static void editProfile(@Valid Member member) throws Throwable {
+	public static void editProfilePost(@Valid Member member) throws Throwable {
 		validation.valid(member);
 		if (validation.hasErrors()) {
 			params.flash();
 			validation.keep();
-			profile(member);
+			Members.editProfile(member);
+
 		} else {
 			member.save();
 			flash.success("member.profile.success");
 			profile();
+
 		}
 	}
 
@@ -56,17 +58,22 @@ public class Members extends Controller {
 	public static void profile() {
 		models.Member model = models.Member.find("byEmail",
 				Security.connected()).first();
+
 		renderArgs.put("model", model);
+
 		render();
 	}
 
-	public static void friends(Member m) {
+	public static void listFriends(Member m) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		if (m.id != null) {
 			member = m;
 		}
 		List<Member> friends = member.friends;
-		render(friends);
+
+		renderArgs.put("friends", friends);
+
+		render();
 	}
 
 	public static void deleteFriend(long friendId) throws NotFoundException {
@@ -81,31 +88,34 @@ public class Members extends Controller {
 			flash.error("members.deleteFriendFailed");
 		}
 
-		friends(null);
+		Members.listFriends(null);
 	}
 
 	/**
 	 * Envoi une demande d'invitation à un ami
 	 */
 	public static void inviteFriend(long friendId) {
-
-		// TODO: envoyer une demande plutôt que d'ajouter directement l'amis
 		Member member1 = Member.find("byEmail", Security.connected()).first();
 		Member member2 = Member.find("byId", friendId).first();
-		
+
 		if (member1 != null && member2 != null && member1.id != member2.id) {
 			member2.applicants.add(member1);
 			member2.save();
-			
+
 			flash.success("members.inviteFriendSuccess");
 		} else {
 			flash.error("members.inviteFriendError");
 			Members.findFriends(null);
 		}
 
-		Members.friends(null);
+		Members.listFriends(null);
 	}
 
+	/**
+	 * Trouver des amis
+	 * 
+	 * @param s
+	 */
 	public static void findFriends(String s) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		List<Member> members = null;
@@ -125,26 +135,36 @@ public class Members extends Controller {
 		}
 
 		renderArgs.put("s", s);
-		List<Member> applicants = member.applicants;
-		render(members, applicants);
+		renderArgs.put("members", members);
+		renderArgs.put("applicants", member.applicants);
+
+		render();
 	}
 
+	/**
+	 * Affiche le profile d'un utilisateur
+	 * 
+	 * @param id
+	 */
 	public static void seeProfile(long id) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		boolean isApplicant = false;
-		models.Member model = null;
+		Member model = null;
 
 		if (id != 0) {
-			model = models.Member.find("byId", id).first();
+			model = Member.find("byId", id).first();
 		} else {
-			model = models.Member.find("byEmail", Security.connected()).first();
+			model = member;
+		}
+
+		if (member.applicants.contains(model)) {
+			isApplicant = true;
 		}
 
 		renderArgs.put("me", model.email.equals(Security.connected()));
 		renderArgs.put("model", model);
-		if(member.applicants.contains(model)){
-			isApplicant = true;
-		}
-		render(isApplicant);
+		renderArgs.put("isApplicant", isApplicant);
+
+		render();
 	}
 }

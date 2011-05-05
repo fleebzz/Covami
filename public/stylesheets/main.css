@@ -1,5 +1,8 @@
 /** Main layout **/
-
+p{
+margin:0;
+padding:0.5em 0;
+}
 html, body {
     background: #364B66 !important;
     font-family: Helvetica, Arial, Sans !important;
@@ -264,21 +267,6 @@ h3 span {
 	left: -4px;
 }
 
-
-div #friend, div #vehicle {
-    background:#f7f7f7;
-	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
-	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
-	border:1px solid #aaa;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-box-shadow:0 0 15px #aaa;
-	-webkit-box-shadow:0 0 15px #aaa;
-	margin:10px auto 0;
-	padding:20px;
-/* 	width:440px; */
-}
-
 /** Form **/
 
 form, .item {
@@ -290,8 +278,8 @@ form, .item {
 	-webkit-border-radius:10px;
 	/*-moz-box-shadow:0 0 15px #aaa;
 	-webkit-box-shadow:0 0 15px #aaa;*/
-	margin:60px auto 0;
-	padding:20px;
+	margin:20px auto 0;
+	padding:10px 20px;
 	/*width:440px;*/
 }
 
@@ -316,10 +304,10 @@ form p:last-child{ /* Sélecteur avancé pour sélectionner le dernier paragraphe d
 	margin-bottom:0;
 }
 
-form p:hover label{
+form p:hover label, .item p:hover label{
 	color:#0459b7;
 }
-form p:hover label:after{
+form p:hover label:after, .item p:hover label:after{
 	content:" :";
 }
 
@@ -332,7 +320,7 @@ form input, form textarea {
     font-size: 14px;
 }
 
-form label {
+form label, .item label {
     cursor:pointer;
 	display:block;
 	float:left;

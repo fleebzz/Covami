@@ -14,18 +14,18 @@ GET     /public/                                staticDir:public
 *		/signup                                 Signup.index
 
 
-*		/vehicules/								Vehicles.myVehicles
+*		/vehicules/								Vehicles.list
 *		/vehicules/ajouter						Vehicles.add
-*		/vehicules/{id}							Vehicles.seeVehicle
-*		/vehicules/editer/{id}					Vehicles.myVehicle
+*		/vehicules/{id}							Vehicles.edit
 
-*		/compte/{id}							Members.seeProfile
-*		/compte/editer							Members.profile
+*		/compte/								Members.profile
 
 GET		/membres/								Members.findFriends
 GET		/membres/{id}							Members.seeProfile
 
-GET		/amis/									Members.friends
+GET		/amis/									Members.listFriends
+
+*		/demandes/								Pending.index
 
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}

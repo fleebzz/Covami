@@ -12,12 +12,14 @@
 	
 	
 	#{list items:members, as:'member'}
-		<div id="friend">
+		<div class="item">
 			<p>
 				${member.firstname} ${member.lastname}
 			</p>
+			<p>
 			<a class="submit" href="@{Members.seeProfile(member.id)}" >&{'member.profile.see'}</a>
 			<a class="submit" href="@{Members.inviteFriend(member.id)}" >&{'member.friends.add'}</a>
+			</p>
 		</div>
 		
 	#{/list}
