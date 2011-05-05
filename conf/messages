@@ -54,4 +54,5 @@ vehicle.modify=Modifier ce véhicule
 vehicles.add.submit=Ajouter ce véhicule
 vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà !
 vehicles.add.success=Votre véhicule a correctement été ajouté !
+vehicles.edit.success=Votre véhicule a correctement été modifié !
 vehicles.edit.submit=Modifier ce véhicule

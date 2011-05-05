@@ -9,6 +9,18 @@
 		<input type="hidden" name="vehicle.id" value="${model.id}" />
 		
 		#{DisplayForModel model:model /}
+		
+		<p>
+			<label>&{'vehicle.model'}</label>
+			<select name="vehicleModel.id">
+				#{list items:vehicleModels, as:'vehicleModel'}
+						<option value="${vehicleModel.id}" 
+						#{if vehicleModel.id == vehicle.model.id} selected="selected" #{/if} >
+							${vehicleModel.make} ${vehicleModel.model}
+						</option>
+				#{/list}
+			</select>
+		</p>
 
 		<p id="signup-field">
 			<input type="submit" id="signup" value="&{'vehicles.edit.submit'}" />

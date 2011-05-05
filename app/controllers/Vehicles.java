@@ -57,7 +57,7 @@ public class Vehicles extends Controller {
 		myVehicles();
 	}
 	
-	public static void seeVehicle(long id) {
+	public static void myVehicle(long id) {
 		Vehicle vehicle = Vehicle.findById(id);
 		List<VehicleModel> vehicleModels = VehicleModel.findAll();
 		renderArgs.put("model", vehicle);
@@ -65,7 +65,16 @@ public class Vehicles extends Controller {
 	}
 
 	public static void editVehicle(@Valid Vehicle vehicle, @Required VehicleModel vehicleModel) throws Throwable {
-		Application.index();
+		Vehicle existVehicle = Vehicle.find("byRegistrationAndIdNotEqual", vehicle.registration, vehicle.id).first();
+		
+		if(existVehicle != null){
+			flash.error("vehicles.add.alreadyExist");
+			myVehicle(vehicle.id);
+		}
+		vehicle.model = vehicleModel;
+		vehicle.save();
+		flash.success("vehicles.edit.success");
+		myVehicles();
 	}
 	
 	public static void deleteVehicle(long vehicleId) {
@@ -73,9 +82,10 @@ public class Vehicles extends Controller {
 		Vehicle vehicle = Vehicle.findById(vehicleId);
 		
 		member.vehicles.remove(vehicle);
-		
 		member.save();
 
+		vehicle.delete();
+		
 		myVehicles();
 	}
 }

@@ -12,7 +12,7 @@
 			<p>
 				${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}
 			</p>
-			<a class="submit" href="@{Vehicles.seeVehicle(vehicle.id)}">&{'vehicle.modify'}</a>
+			<a class="submit" href="@{Vehicles.myVehicle(vehicle.id)}">&{'vehicle.modify'}</a>
 			
 			#{form @deleteVehicle()}
 				<input type="hidden" name="vehicleId" value="${vehicle.id}" />
