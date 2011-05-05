@@ -2,6 +2,8 @@ package controllers;
 
 import java.util.List;
 
+import com.sun.istack.internal.Nullable;
+
 import javassist.NotFoundException;
 import models.Member;
 import models.MemberFriends;
@@ -60,17 +62,12 @@ public class Members extends Controller {
 		render();
 	}
 
-	public static void friends(Member m) {
+	public static void friends(@Nullable Member m) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		if (m.id != null) {
 			member = m;
 		}
 		List<Member> friends = member.friends;
-		// Member florian = Member.find("byFirstname", "Florian").first();
-		// member.friends.add(florian);
-		// member.save();
-		// florian.friends.add(member);
-		// florian.save();
 		render(friends);
 	}
 
@@ -97,14 +94,17 @@ public class Members extends Controller {
 		// TODO: envoyer une demande plutôt que d'ajouter directement l'amis
 		Member member1 = Member.find("byEmail", Security.connected()).first();
 		Member member2 = Member.find("byId", friendId).first();
+		
+		member2.applicants.add(member1);
+		member2.save();
 
 		if (member1 != null && member2 != null && member1.id != member2.id) {
 
-			(new MemberFriends(member1.id, member2.id)).save();
-			(new MemberFriends(member2.id, member1.id)).save();
-
-			member1.friends.add(member2);
-			member2.friends.add(member1);
+//			(new MemberFriends(member1.id, member2.id)).save();
+//			(new MemberFriends(member2.id, member1.id)).save();
+//
+//			member1.friends.add(member2);
+//			member2.friends.add(member1);
 
 			flash.success("members.inviteFriendSuccess");
 		} else {

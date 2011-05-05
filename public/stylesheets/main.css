@@ -370,6 +370,14 @@ a.submit {
 	margin:0;
 }
 
+input.pending, a.pending {
+	background:#F00;
+	background:-moz-linear-gradient(90deg, #C00, #F66); /* Firefox */
+	background:-webkit-gradient(linear, left top, left bottom, from(#F66), to(#C00)); /* Webkit */
+	-moz-box-shadow:0 1px 0 #000;
+	-webkit-box-shadow:0 1px 0 #000;
+}
+
 #captcha{
     display: block;
     height: 50px;  

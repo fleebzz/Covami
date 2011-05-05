@@ -1,0 +1,33 @@
+#{extends 'main.html' /}
+#{set title:'Mes notifications' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.pendings'}</h1>
+	
+	#{if applicants.size() > 0}	
+		#{list items:applicants, as:'applicant'}
+			<div class="item">
+				<p>
+					${applicant.firstname} ${applicant.lastname} &{'pendings.invitation'}
+				</p>
+				<a class="submit" href="@{Members.seeProfile(applicant.id)}">&{'member.profile.see'}</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				
+				#{form @acceptInvitation()}
+					<input type="hidden" name="applicantId" value="${applicant.id}" />
+					<input type="submit" value="&{'pendings.invitation.accept'}" />
+				#{/form}
+				
+				#{form @denyInvitation()}
+					<input type="hidden" name="applicantId" value="${applicant.id}" />
+					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+				#{/form}
+			</div>
+		#{/list}
+	#{/if}
+	#{else}
+		&{'pendings.noPendings'}
+	#{/else}
+	
+</div>

@@ -37,6 +37,11 @@ public class Member extends Model {
 	public List<Member> friends;
 
 	@HiddenField
+	@ManyToMany
+	@JoinTable(name = "PendingInvitations")
+	public List<Member> applicants;
+
+	@HiddenField
 	@OneToMany
 	public List<Vehicle> vehicles;
 

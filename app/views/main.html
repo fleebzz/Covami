@@ -22,7 +22,12 @@
 		    	
 		        <li>
 		        	#{if security != null}
-						Bonjour ${user?.firstname} ! 
+						Bonjour ${user?.firstname} !
+						<a class="submit
+							#{if user.applicants.size() > 0}
+								pending
+							#{/if}
+						" href="@{Pending.index()}">${user.applicants.size()}</a>
 						<a class="submit" href="@{Secure.logout()}">&{'secure.signout'}</a>
 					#{/if}
 					<!-- Sinon on propose de se logger -->

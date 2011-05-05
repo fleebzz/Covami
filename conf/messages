@@ -13,6 +13,7 @@ pages.title.myVehicles=Mes vehicules
 pages.title.addVehicle=Ajouter un vehicule
 pages.title.seeprofile=Voir un profil
 pages.title.vehicle=Modifier un véhicule
+pages.title.pendings=Mes notifications
 
 general.delete=Supprimer
 
@@ -56,3 +57,8 @@ vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà 
 vehicles.add.success=Votre véhicule a correctement été ajouté !
 vehicles.edit.success=Votre véhicule a correctement été modifié !
 vehicles.edit.submit=Modifier ce véhicule
+
+pendings.noPendings=Vous n'avez aucune nouvelle notification
+pendings.invitation= veut être ami avec vous.
+pendings.invitation.accept=Accepter
+pendings.invitation.deny=Refuser
