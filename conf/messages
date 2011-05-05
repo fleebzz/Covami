@@ -15,6 +15,7 @@ pages.title.seeprofile=Voir un profil
 pages.title.seeprofile.vehicles=Les véhicules de l'utilisateur
 pages.title.vehicle=Modifier un véhicule
 pages.title.pendings=Mes notifications
+pages.title.addAnnouncement=Poster une annonce
 
 general.delete=Supprimer
 
@@ -53,6 +54,7 @@ member.addFriend=Ajouter un ami
 
 vehicle.addVehicle=Ajouter un véhicule
 vehicle.model=Modèle
+vehicle.select=Véhicule
 vehicle.modify=Modifier ce véhicule
 
 vehicles.add.submit=Ajouter ce véhicule
@@ -66,3 +68,5 @@ pendings.noPendings=Vous n'avez aucune nouvelle notification
 pendings.invitation= veut être ami avec vous.
 pendings.invitation.accept=Accepter
 pendings.invitation.deny=Refuser
+
+announcements.add.submit=Poster cette annonce

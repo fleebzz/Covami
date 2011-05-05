@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+#{set title:'Poster une annonce' /}
+
+<div>
+	
+	<h1>&{'pages.title.addAnnouncement'}</h1>
+	
+	#{form @addPost()}
+		<p>
+			<label>&{'vehicle.select'}</label>
+			<select name="vehicle.id">
+				#{list items:vehicles, as:'vehicle'}
+						<option value="${vehicle.id}">
+							${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}  
+						</option>
+				#{/list}
+			</select>
+		</p>
+		<p id="signup-field">
+			<input type="submit" id="signup" value="&{'announcements.add.submit'}" />
+		</p>
+	#{/form}
+</div>
