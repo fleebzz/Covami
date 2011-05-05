@@ -297,9 +297,12 @@ form .error{
     font-size: 90%;
 }
 
+/*
 form p{
 	margin-bottom:20px;
 }
+*/
+
 form p:last-child{ /* Sélecteur avancé pour sélectionner le dernier paragraphe du formulaire */
 	margin-bottom:0;
 }
