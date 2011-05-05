@@ -47,7 +47,7 @@ public class Members extends Controller {
 		} else {
 			member.save();
 			flash.success("member.profile.success");
-			profile();
+			editProfile();
 
 		}
 	}
@@ -55,7 +55,7 @@ public class Members extends Controller {
 	/**
 	 * Visualiser le profile de l'utilisateur
 	 */
-	public static void profile() {
+	public static void editProfile() {
 		models.Member model = models.Member.find("byEmail",
 				Security.connected()).first();
 
