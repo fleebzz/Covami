@@ -2,8 +2,6 @@ package controllers;
 
 import java.util.List;
 
-import com.sun.istack.internal.Nullable;
-
 import javassist.NotFoundException;
 import models.Member;
 import models.MemberFriends;
@@ -62,7 +60,7 @@ public class Members extends Controller {
 		render();
 	}
 
-	public static void friends(@Nullable Member m) {
+	public static void friends(Member m) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		if (m.id != null) {
 			member = m;
@@ -108,7 +106,7 @@ public class Members extends Controller {
 		Members.friends(null);
 	}
 
-	public static void findFriends(@Nullable String s) {
+	public static void findFriends(String s) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		List<Member> members = null;
 
