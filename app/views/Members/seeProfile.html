@@ -3,7 +3,7 @@
 
 
 <div id="edit-profile">
-	<h1>&{'pages.title.seeprofile'}</h1> 
+	<h1>&{'pages.title.seeprofile'}</h1>
 	<div class="item">
 		#{DisplayForModel model:member, editable:false /}
 		
@@ -36,4 +36,15 @@
 			
 		#{/ifnot}
 	</div>
+	<h1>&{'pages.title.seeprofile.vehicles'}</h1>
+		#{if member.vehicles.size() > 0}
+			#{list items:member.vehicles, as:'vehicle'}
+				<div class="item">
+					${vehicle.model.make} ${vehicle.model.model} ${vehicle.model.nbPlaces} places
+				</div>
+			#{/list}
+		#{/if}
+		#{else}
+			<h2>&{'vehicles.noVehicle'}</h2>
+		#{/else}
 </div>
