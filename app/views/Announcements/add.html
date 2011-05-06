@@ -8,7 +8,7 @@
 	#{form @addPost()}
 		<p>
 			<label>&{'announcements.from'}</label>
-			<select name="from.id">
+			<select name="announcement.trip.from.id">
 				#{list items:cities, as:'city'}
 						<option value="${city.id}">
 							${city.name}
@@ -18,7 +18,7 @@
 		</p>
 		<p>
 			<label>&{'announcements.to'}</label>
-			<select name="to.id">
+			<select name="announcement.trip.to.id">
 				#{list items:cities, as:'city'}
 						<option value="${city.id}">
 							${city.name}
@@ -28,7 +28,7 @@
 		</p>
 		<p>
 			<label>&{'vehicle.select'}</label>
-			<select name="vehicle.id">
+			<select name="announcement.vehicle.id">
 				#{list items:vehicles, as:'vehicle'}
 						<option value="${vehicle.id}">
 							${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}  
@@ -38,13 +38,18 @@
 		</p>
 		<p>
 			<label>&{'announcements.nbPlaces'}</label>
-			<select name="nbPlaces">
+			<select name="announcement.freePlaces">
 				#{list items:1..8, as:'i'}
 					<option value="${i}">
 				    	${i} 
 					</option>
 				#{/list}
 			</select>
+		</p>
+		
+		<p>
+			<label for="announcement.startDate">&{'announcements.startDate'}</label>
+			<input id='announcement.startDate' name='announcement.startDate' type="datetime"/> 
 		</p>
 		<p id="signup-field">
 			<input type="submit" id="signup" value="&{'announcements.add.submit'}" />

@@ -1,10 +1,12 @@
 package models;
 
-import java.util.*;
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Required;
-import play.db.jpa.*;
+import play.db.jpa.Model;
 
 @Entity
 public class Announcement extends Model {
@@ -20,20 +22,20 @@ public class Announcement extends Model {
 	@Required
 	@OneToOne
 	public Trip trip;
-	
+
 	@Required
 	public Date publicationDate;
-	
+
 	@Required
 	public Date startDate;
-	
+
 	@Required
-	public int kilometers;
-	
+	public double kilometers;
+
 	@Required
 	public int freePlaces;
-	
+
 	@Required
-	public float totalCost;
-	
+	public double totalCost;
+
 }

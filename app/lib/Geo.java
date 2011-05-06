@@ -63,6 +63,11 @@ public class Geo {
 
 	public static double distanceBetween(double lat1, double lon1, double lat2,
 			double lon2) {
+
+		if (lat1 == lat2 && lon1 == lon2) {
+			return 0.0;
+		}
+
 		String key = String.format("%f%f%f%f", Math.max(lat1, lat2),
 				Math.max(lon1, lon2), Math.min(lat1, lat2),
 				Math.min(lon1, lon2));
@@ -79,7 +84,7 @@ public class Geo {
 		Double value = Math.acos(Math.sin(lat1) * Math.sin(lat2)
 				+ Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
 
-		if (Double.isNaN(value)) {// Se produit lorsque lat1:lon1 == lat2:lon2
+		if (Double.isNaN(value) || value < 0) {
 			value = 0.0;
 		} else {
 			// Ne pas mettre en cache une mauvaise valeur

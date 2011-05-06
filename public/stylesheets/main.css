@@ -283,6 +283,13 @@ form, .item {
 	/*width:440px;*/
 }
 
+form{
+	margin: 0 auto 1em;
+	display: inline-block;
+	text-align: center;	
+	margin-left: 25%;
+}
+
 .item > form{
 	background:transparent;
 	padding:0;
@@ -323,6 +330,13 @@ form input, form textarea {
     font-size: 14px;
 }
 
+form select,
+form input[type="text"],
+form input[type="date"],
+form input[type="datetime"], form textarea{
+	width:300px;
+}
+
 form label, .item label {
     cursor:pointer;
 	display:block;
@@ -332,6 +346,7 @@ form label, .item label {
 	line-height:28px;
 	margin-bottom:5px;
 	width:120px;
+	text-align:left;
 }
 
 input[type=submit], a.submit {
