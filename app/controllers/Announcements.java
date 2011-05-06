@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import models.City;
 import models.Member;
 import models.Vehicle;
 import models.VehicleModel;
@@ -29,10 +30,14 @@ public class Announcements extends Controller {
 	public static void add() {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		renderArgs.put("vehicles", member.vehicles);
+		renderArgs.put("cities", City.findAll());
 		render();
 	}
 	
-	public static void addPost(@Valid Vehicle vehicle) {
+	public static void addPost(@Valid Vehicle vehicle, City from, City to, int nbPlaces) {
 		System.out.println(vehicle.model.make);
+		System.out.println(from.name);
+		System.out.println(to.name);
+		System.out.println(nbPlaces);
 	}
 }

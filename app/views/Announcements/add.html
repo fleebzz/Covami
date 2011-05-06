@@ -7,12 +7,42 @@
 	
 	#{form @addPost()}
 		<p>
+			<label>&{'announcements.from'}</label>
+			<select name="from.id">
+				#{list items:cities, as:'city'}
+						<option value="${city.id}">
+							${city.name}
+						</option>
+				#{/list}
+			</select>
+		</p>
+		<p>
+			<label>&{'announcements.to'}</label>
+			<select name="to.id">
+				#{list items:cities, as:'city'}
+						<option value="${city.id}">
+							${city.name}
+						</option>
+				#{/list}
+			</select>
+		</p>
+		<p>
 			<label>&{'vehicle.select'}</label>
 			<select name="vehicle.id">
 				#{list items:vehicles, as:'vehicle'}
 						<option value="${vehicle.id}">
 							${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}  
 						</option>
+				#{/list}
+			</select>
+		</p>
+		<p>
+			<label>&{'announcements.nbPlaces'}</label>
+			<select name="nbPlaces">
+				#{list items:1..8, as:'i'}
+					<option value="${i}">
+				    	${i} 
+					</option>
 				#{/list}
 			</select>
 		</p>

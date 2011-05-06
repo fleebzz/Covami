@@ -70,3 +70,6 @@ pendings.invitation.accept=Accepter
 pendings.invitation.deny=Refuser
 
 announcements.add.submit=Poster cette annonce
+announcements.from=Départ
+announcements.to=Arrivée
+announcements.nbPlaces=Places libres
