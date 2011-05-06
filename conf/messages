@@ -28,8 +28,8 @@ secure.signin=Se connecter
 secure.signout=Déconnexion
 
 members.signup.submit=S'inscrire
-members.signup.formTitle=Inscrivez-vous !
-members.signup.alreadyExist=Un membre avec cette adresse e-mail existe déjà !
+members.signup.formTitle=Inscription
+members.signup.alreadyExist=Un membre avec cette adresse e-mail existe déjà
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
@@ -38,7 +38,7 @@ members.findFriends.input=Nom, prénom, ...
 members.findFriends.inputGo=Rechercher
 members.findFriends.nothingFound=Aucun membre trouvé pour cette requête
 
-members.inviteFriendError=Vous ne pouvez pas inviter ce membre comme ami !
+members.inviteFriendError=Vous ne pouvez pas inviter ce membre comme ami
 
 members.deleteFriendSuccess=Amis supprimé avec succès
 members.deleteFriendFailed=Error lors de la suppression de l'amis
@@ -58,11 +58,11 @@ vehicle.select=Véhicule
 vehicle.modify=Modifier ce véhicule
 
 vehicles.add.submit=Ajouter ce véhicule
-vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà !
-vehicles.add.success=Votre véhicule a correctement été ajouté !
-vehicles.edit.success=Votre véhicule a correctement été modifié !
+vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà
+vehicles.add.success=Votre véhicule a correctement été ajouté
+vehicles.edit.success=Votre véhicule a correctement été modifié
 vehicles.edit.submit=Modifier ce véhicule
-vehicles.noVehicle=Cet utilisateur n'a pas de véhicule !
+vehicles.noVehicle=Cet utilisateur n'a pas de véhicule
 
 pendings.noPendings=Vous n'avez aucune nouvelle notification
 pendings.invitation= veut être ami avec vous.
@@ -73,3 +73,7 @@ announcements.add.submit=Poster cette annonce
 announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres
+announcements.startDate=Date de départ
+announcements.sameCity=La ville de départ & d'arrivée sont identique
+announcements.successWhileSaving=Annonce enregistrée avec succès
+announcements.errorWhileSaving=Erreur lors de l'enregistrement de l'annonce

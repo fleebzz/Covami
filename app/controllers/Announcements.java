@@ -1,13 +1,12 @@
 package controllers;
 
-import java.util.List;
+import java.util.Date;
 
+import models.Announcement;
 import models.City;
 import models.Member;
-import models.Vehicle;
-import models.VehicleModel;
-import play.data.validation.Required;
-import play.data.validation.Valid;
+import models.Trip;
+import play.data.validation.Validation;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -26,18 +25,64 @@ public class Announcements extends Controller {
 
 	public static void index() {
 	}
-	
-	public static void add() {
+
+	public static void add(Announcement announcement) {
 		Member member = Member.find("byEmail", Security.connected()).first();
+
+		// if (announcement == null) { announcement = new Announcement(); }
+		// TODO: Prendre en compte announcement dans le form, s'il existe
+
 		renderArgs.put("vehicles", member.vehicles);
 		renderArgs.put("cities", City.findAll());
+		// renderArgs.put("annoucement", announcement);
+
 		render();
 	}
-	
-	public static void addPost(@Valid Vehicle vehicle, City from, City to, int nbPlaces) {
-		System.out.println(vehicle.model.make);
-		System.out.println(from.name);
-		System.out.println(to.name);
-		System.out.println(nbPlaces);
+
+	public static void addPost(Announcement announcement) {
+
+		if (announcement == null || announcement.trip == null) {
+			Announcements.add(null);
+		}
+
+		Trip trip = announcement.trip;
+
+		// Préciser les City dans Trip
+		// (elles ne sont pas automatiquement remplies)
+		trip.from = City.findById(trip.from.id);
+		trip.to = City.findById(trip.to.id);
+
+		if (trip.from.equals(trip.to)) {
+			flash.error("announcements.sameCity");
+
+			// BUG: Si on met Announcements.add(announcement); play bug !
+			// TODO: Reporter le bug
+			Announcements.add(new Announcement());
+		}
+
+		announcement.kilometers = trip.from.distanceBetween(trip.to);
+		announcement.publicationDate = new Date();
+		announcement.member = Member.find("byEmail", Security.connected())
+				.first();
+
+		// FIXME: Changer la valeur de calcul du prix
+		announcement.totalCost = announcement.kilometers * 1.5;
+
+		// TODO: remplir trip.cities
+		if (announcement.trip.validateAndSave()
+				&& announcement.validateAndSave()) {
+			flash.success("announcements.successWhileSaving");
+			Announcements.list();
+
+		} else {
+			Validation.errors();
+			flash.error("announcements.errorWhileSaving");
+			Announcements.add(new Announcement());
+		}
+
+	}
+
+	public static void list() {
+		render();
 	}
 }
