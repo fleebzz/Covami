@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -33,6 +34,7 @@ public class City extends Model implements Comparable<City> {
 	public Country country;
 
 	@ManyToMany
+	@JoinTable(name = "CityNeighborhood")
 	public List<City> neighborhood;
 
 	// Setters

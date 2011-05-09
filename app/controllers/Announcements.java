@@ -11,6 +11,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+// TODO: Empêcher de poster une annonce si l'utilisateur n'a pas enregistré de véhicule
 @With(Secure.class)
 public class Announcements extends Controller {
 
@@ -68,14 +69,18 @@ public class Announcements extends Controller {
 		// FIXME: Changer la valeur de calcul du prix
 		announcement.totalCost = announcement.kilometers * 1.5;
 
-		// TODO: remplir trip.cities
+		// Recherche du chemin via aStar
+		trip.generatePath();
+
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
 			flash.success("announcements.successWhileSaving");
 			Announcements.list();
 
 		} else {
-			Validation.errors();
+			for (play.data.validation.Error e : Validation.errors()) {
+				System.out.println(e);
+			}
 			flash.error("announcements.errorWhileSaving");
 			Announcements.add(new Announcement());
 		}
@@ -83,6 +88,10 @@ public class Announcements extends Controller {
 	}
 
 	public static void list() {
+		renderArgs.put("annoucements", Announcement
+				.find("byMember_id",
+						((Member) Member.find("byEmail", Security.connected())
+								.first()).id));
 		render();
 	}
 }
