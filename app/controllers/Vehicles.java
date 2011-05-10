@@ -117,7 +117,7 @@ public class Vehicles extends Controller {
 		vehicle.save();
 
 		flash.success("vehicles.edit.success");
-
+		
 		Vehicles.list();
 	}
 

@@ -1,0 +1,22 @@
+#{extends 'main.html' /}
+#{set title:'Mes amis' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.friends'}</h1>
+	
+	#{if friends.size() > 0}
+	#{list items:friends, as:'friend'}
+		#{form @deleteFriend()}
+			<input type="hidden" name="friend" value="${friend.id}" />
+			<p>
+				${friend.firstname} ${friend.lastname}
+			</p>
+			<a class="submit" href="@{Members.seeProfile(friend.id)}">&{'member.profile.see'}</a>
+			<input type="submit" value="&{'general.delete'}" />
+		#{/form}
+	#{/list}
+	#{/if}
+	
+	
+</div>

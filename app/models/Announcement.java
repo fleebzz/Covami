@@ -1,8 +1,13 @@
 package models;
 
+import java.util.List;
+
+import tags.form.HiddenField;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import play.data.validation.Required;
@@ -35,7 +40,10 @@ public class Announcement extends Model {
 	@Required
 	public int freePlaces;
 
-	@Required
-	public double totalCost;
+	@HiddenField
+	@ManyToMany
+	@JoinTable(name = "PendingAnnouncements")
+	public List<Member> applicants;
 
+	public double totalCost;
 }

@@ -6,16 +6,15 @@ import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
-public class PendingInvitations extends Model {
-
+public class PendingAnnouncements extends Model {
 	@Required
-	public Long Member_id;
+	public Long Announcement_id;
 
 	@Required
 	public Long applicants_id;
 
-	public PendingInvitations(Long memberId, Long applicantId) {
-		this.Member_id = memberId;
+	public PendingAnnouncements(Long announcementId, Long applicantId) {
+		this.Announcement_id = announcementId;
 		this.applicants_id = applicantId;
 	}
 }

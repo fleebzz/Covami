@@ -48,7 +48,6 @@ public class Members extends Controller {
 			member.save();
 			flash.success("member.profile.success");
 			editProfile();
-
 		}
 	}
 
