@@ -14,8 +14,8 @@ public class PendingInvitations extends Model {
 	@Required
 	public Long applicants_id;
 
-	public PendingInvitations(Long member1Id, Long applicantId) {
-		this.Member_id = member1Id;
+	public PendingInvitations(Long memberId, Long applicantId) {
+		this.Member_id = memberId;
 		this.applicants_id = applicantId;
 	}
 }
