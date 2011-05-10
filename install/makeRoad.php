@@ -58,9 +58,15 @@ class Db{
 	  return $a[0];
 	}
 	
-	public function makeRoad($City_id, $neighborhood_id){
+	public function makeRoad($cityA, $cityB){
+	  $this->createRoad($cityA, $cityB);
+	  $this->createRoad($cityB, $cityA);
 	  
-	  $query = "INSERT INTO  `COVAMI`.`City_City` (
+	}
+	
+	private function createRoad($City_id, $neighborhood_id){
+	  
+	  $query = "INSERT INTO  `COVAMI`.`CityNeighborhood` (
     `City_id` ,
     `neighborhood_id`
     )
@@ -89,21 +95,36 @@ for ($i=0, $iM = count($lines); $i < $iM; $i++) {
   
   $insees = explode(";", trim($lines[$i]));
   
-  $City_id = $db->getIdFromInsee($insees[0]);
+  //$City_id = $db->getIdFromInsee($insees[0]);
   
-  for ($x= 1, $xM = count($insees); $x < $xM; $x++) { 
+  $cityA = 0;
+  $cityB = 0;
+  for ($x= 0, $xM = count($insees); $x < $xM; $x++) { 
     
-    if(!empty($insees[$x])){
+		$cityB = $db->getIdFromInsee($insees[$x]);
+		
+		if($cityA == 0) {
+			$cityA = $cityB;
+			$cityB = 0;
+		}
+		
+		if($cityA != 0 && $cityB != 0) {
+			$db->makeRoad($cityA, $cityB);
+			
+			echo $cityA.' - '. $cityB ."</br>";
+			
+			$cityA = $cityB;
+			$cityB = 0;
+		}
+	}
+		
+    /*if(!empty($insees[$x])){
       $neighborhood_id = $db->getIdFromInsee($insees[$x]);
       
-      //echo $insees[0].' - '. $insees[$x] ."</br>";
+      echo $insees[0].'('.$City_id.') - '. $insees[$x] ."(".$neighborhood_id.")</br>";
       //echo $City_id. ' - '. $neighborhood_id."</br>";
       $db->makeRoad($City_id, $neighborhood_id);
-    }
-    
-    
-    //
-  }
+    }*/
   
 }
 
