@@ -16,6 +16,8 @@ pages.title.seeprofile.vehicles=Les véhicules de l'utilisateur
 pages.title.vehicle=Modifier un véhicule
 pages.title.pendings=Mes notifications
 pages.title.addAnnouncement=Poster une annonce
+pages.title.myAnnouncements=Mes annonces
+pages.title.findAnnouncements=Chercher une annonce
 
 general.delete=Supprimer
 
@@ -70,6 +72,7 @@ pendings.invitation.accept=Accepter
 pendings.invitation.deny=Refuser
 
 announcements.add.submit=Poster cette annonce
+announcements.add=Poster une nouvelle annonce
 announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres

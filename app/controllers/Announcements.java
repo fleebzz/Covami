@@ -99,4 +99,7 @@ public class Announcements extends Controller {
 		renderArgs.put("annoucements", annoucements);
 		render();
 	}
+
+	public static void search() {
+	}
 }

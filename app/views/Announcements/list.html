@@ -1,11 +1,11 @@
 #{extends 'main.html' /}
-#{set title:'Mes vehicules' /}
+#{set title:'Mes annonces' /}
 
 <div>
 	
 	<h1>&{'pages.title.myAnnouncements'}</h1>
 	
-	<a class="submit" href="@{Announcements.add()}" >&{'announcement.addAnnouncement'}</a>
+	<a class="submit" href="@{Announcements.add()}" >&{'announcements.add'}</a>
 	
 	#{list items:annoucements, as:'announcement'}
 		<div class="item">

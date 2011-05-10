@@ -6,7 +6,7 @@ class Db{
 	private $cnx = null;
 	
 	private function __construct(){
-		$this->cnx = mysql_connect('127.0.0.1', 'root', 'root');
+		$this->cnx = mysql_connect('127.0.0.1', 'root', '');
 		if(!$this->cnx){
 			echo 'Database error';
 			echo "<br/>".mysql_error();
