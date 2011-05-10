@@ -5,8 +5,13 @@ import java.util.List;
 import java.util.TreeSet;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import lib._Trip;
+import lib._TripComparator;
+
+import org.hibernate.annotations.IndexColumn;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -24,7 +29,8 @@ public class Trip extends Model {
 	@Required
 	public double distance;
 
-	@OneToMany
+	@ManyToMany
+	@IndexColumn(name = "")
 	public List<City> cities;
 
 	private double heuristic;
@@ -110,10 +116,6 @@ public class Trip extends Model {
 		return this.cities.get(this.cities.size() - 1);
 	}
 
-	public boolean generatePath() {
-		return this.generatePath(from, to);
-	}
-
 	/**
 	 * Algorithme de recherche a* entre 2 villes
 	 * 
@@ -123,7 +125,8 @@ public class Trip extends Model {
 	 *            Ville d'arrivée
 	 * @return Retourne le plus court trajet entre ces deux villes
 	 */
-	public boolean generatePath(City from, City to) {
+	public boolean generatePath() {
+
 		if (this.cities != null) {
 			this.cities.clear();
 		}
@@ -140,13 +143,14 @@ public class Trip extends Model {
 			return true;
 		}
 
-		Trip curTrip = null;
+		_Trip curTrip = null;
 		City curCity = null;
 		// TripComparator tripComp = new TripComparator();
-		TreeSet<Trip> fileOpen = new TreeSet<Trip>(new TripComparator());
+		TreeSet<_Trip> fileOpen = new TreeSet<_Trip>(new _TripComparator());
 
 		// Ajouter la ville de départ dans la file
-		fileOpen.add(new Trip(from, City.distanceBetween(from, to)));
+		fileOpen.add(new _Trip(this.getFrom(), this.getTo(), City
+				.distanceBetween(this.getFrom(), this.getTo())));
 
 		do {
 
@@ -164,22 +168,43 @@ public class Trip extends Model {
 				City neighbour = (City) City.find("byId", cn.neighborhood_id)
 						.first();
 
+				System.out.println("-- " + neighbour.name + " --");
+
 				// Ajouter la route à la file
-				if (!curTrip.getCities().contains(neighbour)) {// Ne pas ajouter
-																// une ville
-																// déjà dans le
-																// trajet
-					fileOpen.add(curTrip.clone().addCity(neighbour,
-							City.distanceBetween(neighbour, to)));
+				if (!curTrip.cities.contains(neighbour)) {// Ne pas ajouter
+															// une ville
+															// déjà dans le
+															// trajet
+
+					_Trip t = curTrip.clone().addCity(neighbour,
+							City.distanceBetween(neighbour, this.getTo()));
+					System.out.println(t.toString());
+					fileOpen.add(t);
+
 				}
 			}
 
 		} while (!fileOpen.isEmpty()
-				&& !fileOpen.first().getLastCity().equals(to));
+				&& !fileOpen.first().getLastCity().equals(this.getTo()));
 
-		this.cities = fileOpen.first().cities;
+		List<City> tmpCities = fileOpen.first().cities;
+
+		// Maintenant il faut rechercher ces villes via un contexte
+		// EntityManager
+		// Sinon la sauvegarde ne pourra pas avoir lieu
+		for (City c : tmpCities) {
+			this.cities.add((City) City.find("byId", c.id).first());
+		}
 
 		return true;
+	}
+
+	public City getFrom() {
+		return this.from;
+	}
+
+	public City getTo() {
+		return this.to;
 	}
 
 	/**
@@ -213,12 +238,16 @@ public class Trip extends Model {
 	 */
 	@Override
 	public String toString() {
-		// Affiche le trajet
-		String str = "Trajet de " + this.cities.get(0).name + "("
-				+ this.cities.get(0).insee + ") ";
 
-		str += "à " + this.cities.get(this.cities.size() - 1).name + "("
-				+ this.cities.get(this.cities.size() - 1).insee + "):\n";
+		// Affiche le trajet
+		String str = "Trajet de " + this.from.name + "(" + this.from.insee
+				+ ") ";
+
+		str += "à " + this.to.name + "(" + this.to.insee + "):\n";
+
+		if (this.cities.size() == 0) {
+			return str;
+		}
 
 		for (City c : this.cities) {
 			str += "\n - " + c.insee + "\t" + c.name;

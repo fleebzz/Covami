@@ -9,7 +9,16 @@
 	
 	#{list items:annoucements, as:'announcement'}
 		<div class="item">
-			todo !
+			<p>${announcement.trip.from.name} -> ${announcement.trip.to.name} (${announcement.kilometers}km)</p>
+			
+			<ul>
+			#{list items:announcement.trip.cities, as:'city'}
+				<li>${city.name}</li>
+			#{/list}
+			</ul>
+			
+			<p>${announcement.vehicle.model.make} ${announcement.vehicle.model.model} 
+			(${announcement.freePlaces}/${announcement.vehicle.model.nbPlaces})</p>
 		</div>
 	#{/list}
 	

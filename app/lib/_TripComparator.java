@@ -1,4 +1,4 @@
-package models;
+package lib;
 
 import java.util.Comparator;
 
@@ -8,7 +8,7 @@ import java.util.Comparator;
  * @author FG
  * 
  */
-public class TripComparator implements Comparator<Trip> {
+public class _TripComparator implements Comparator<_Trip> {
 
 	private static final long serialVersionUID = 5439474719803196476L;
 
@@ -16,8 +16,7 @@ public class TripComparator implements Comparator<Trip> {
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public int compare(Trip a, Trip b) {
+	public int compare(_Trip a, _Trip b) {
 		return Double.compare(a.getHeuristic(), b.getHeuristic());
 	}
-
 }

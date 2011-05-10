@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import models.Announcement;
 import models.City;
@@ -25,6 +26,7 @@ public class Announcements extends Controller {
 	}
 
 	public static void index() {
+		Announcements.list();
 	}
 
 	public static void add(Announcement announcement) {
@@ -50,7 +52,7 @@ public class Announcements extends Controller {
 
 		// Préciser les City dans Trip
 		// (elles ne sont pas automatiquement remplies)
-		trip.from = City.findById(trip.from.id);
+		trip.from = City.findById(trip.getFrom().id);
 		trip.to = City.findById(trip.to.id);
 
 		if (trip.from.equals(trip.to)) {
@@ -88,10 +90,13 @@ public class Announcements extends Controller {
 	}
 
 	public static void list() {
-		renderArgs.put("annoucements", Announcement
+
+		List<Announcement> annoucements = Announcement
 				.find("byMember_id",
 						((Member) Member.find("byEmail", Security.connected())
-								.first()).id));
+								.first()).id).fetch();
+
+		renderArgs.put("annoucements", annoucements);
 		render();
 	}
 }
