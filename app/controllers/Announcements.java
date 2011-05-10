@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import models.Announcement;
 import models.City;
@@ -11,6 +12,7 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
+// TODO: Empêcher de poster une annonce si l'utilisateur n'a pas enregistré de véhicule
 @With(Secure.class)
 public class Announcements extends Controller {
 
@@ -24,6 +26,7 @@ public class Announcements extends Controller {
 	}
 
 	public static void index() {
+		Announcements.list();
 	}
 
 	public static void add(Announcement announcement) {
@@ -49,7 +52,7 @@ public class Announcements extends Controller {
 
 		// Préciser les City dans Trip
 		// (elles ne sont pas automatiquement remplies)
-		trip.from = City.findById(trip.from.id);
+		trip.from = City.findById(trip.getFrom().id);
 		trip.to = City.findById(trip.to.id);
 
 		if (trip.from.equals(trip.to)) {
@@ -68,14 +71,18 @@ public class Announcements extends Controller {
 		// FIXME: Changer la valeur de calcul du prix
 		announcement.totalCost = announcement.kilometers * 1.5;
 
-		// TODO: remplir trip.cities
+		// Recherche du chemin via aStar
+		trip.generatePath();
+
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
 			flash.success("announcements.successWhileSaving");
 			Announcements.list();
 
 		} else {
-			Validation.errors();
+			for (play.data.validation.Error e : Validation.errors()) {
+				System.out.println(e);
+			}
 			flash.error("announcements.errorWhileSaving");
 			Announcements.add(new Announcement());
 		}
@@ -83,6 +90,13 @@ public class Announcements extends Controller {
 	}
 
 	public static void list() {
+
+		List<Announcement> annoucements = Announcement
+				.find("byMember_id",
+						((Member) Member.find("byEmail", Security.connected())
+								.first()).id).fetch();
+
+		renderArgs.put("annoucements", annoucements);
 		render();
 	}
 }

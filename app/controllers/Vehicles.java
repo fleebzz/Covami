@@ -58,15 +58,18 @@ public class Vehicles extends Controller {
 	 */
 	public static void addPost(@Required Vehicle vehicle,
 			@Required VehicleModel vehicleModel) throws Throwable {
+
 		Vehicle existVehicle = Vehicle.find("byRegistration",
 				vehicle.registration).first();
+
 		models.Member member = models.Member.find("byEmail",
 				Security.connected()).first();
 
-		if (existVehicle.count() > 1) {
+		if (existVehicle != null) {
 			flash.error("vehicles.add.alreadyExist");
 			Vehicles.add();
 		}
+
 		vehicle.model = vehicleModel;
 		vehicle.save();
 		member.vehicles.add(vehicle);
