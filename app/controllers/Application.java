@@ -1,6 +1,10 @@
 package controllers;
 
+import java.util.List;
+
+import models.Announcement;
 import models.Member;
+import models.PendingAnnouncements;
 import play.mvc.Before;
 import play.mvc.Controller;
 

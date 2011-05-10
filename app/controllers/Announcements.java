@@ -90,11 +90,10 @@ public class Announcements extends Controller {
 	}
 
 	public static void list() {
-
+		Member member = Member.find("byEmail", Security.connected()).first();
+		
 		List<Announcement> annoucements = Announcement
-				.find("byMember_id",
-						((Member) Member.find("byEmail", Security.connected())
-								.first()).id).fetch();
+				.find("byMember_id", member.id).fetch();
 
 		renderArgs.put("annoucements", annoucements);
 		render();

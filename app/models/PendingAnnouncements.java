@@ -2,6 +2,9 @@ package models;
 
 import javax.persistence.Entity;
 
+import controllers.Application;
+import controllers.Security;
+
 import play.data.validation.Required;
 import play.db.jpa.Model;
 

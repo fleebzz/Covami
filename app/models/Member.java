@@ -43,6 +43,10 @@ public class Member extends Model {
 
 	@HiddenField
 	@OneToMany
+	public List<PendingAnnouncements> pendingAnnouncements;
+
+	@HiddenField
+	@OneToMany
 	public List<Vehicle> vehicles;
 
 	// FIXME: Insérer la bonne regex
