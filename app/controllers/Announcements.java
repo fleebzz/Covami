@@ -137,6 +137,11 @@ public class Announcements extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(announcementId);
 		
+		if(announcement.member == member) {
+			flash.error("announcements.apply.selfError");
+			Announcements.see(announcementId);
+		}
+		
 		PendingAnnouncement existPending = PendingAnnouncement.find("byAnnouncement_idAndApplicant_id", announcement.id, member.id).first();
 		if(existPending == null) {
 			PendingAnnouncement pending = new PendingAnnouncement(announcement, member);

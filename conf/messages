@@ -110,4 +110,5 @@ announcements.propose=Annonce proposée par
 announcements.propose.short=Proposée par 
 announcements.apply=Postuler à cette annonce
 announcements.apply.success=Demande de participation au voyage envoyée au propriétaire.
+announcements.apply.selfError=Vous ne pouvez pas postuler à une annonce qui vous appartient !
 announcements.member.willParticipate=Vous y participez !
