@@ -1,7 +1,10 @@
 package controllers;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import models.Announcement;
 import models.City;
@@ -43,7 +46,8 @@ public class Announcements extends Controller {
 		render();
 	}
 
-	public static void addPost(Announcement announcement) {
+	public static void addPost(Announcement announcement, String startDate)
+			throws ParseException {
 
 		if (announcement == null || announcement.trip == null) {
 			Announcements.add(null);
@@ -63,6 +67,10 @@ public class Announcements extends Controller {
 			// TODO: Reporter le bug
 			Announcements.add(new Announcement());
 		}
+
+		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+				DateFormat.SHORT, Locale.FRENCH);
+		announcement.startDate = df.parse(startDate);
 
 		announcement.kilometers = trip.from.distanceBetween(trip.to);
 		announcement.publicationDate = new Date();
@@ -92,29 +100,30 @@ public class Announcements extends Controller {
 
 	public static void list() {
 		Member member = Member.find("byEmail", Security.connected()).first();
-		
-		List<Announcement> annoucements = Announcement
-				.find("byMember_id", member.id).fetch();
+
+		List<Announcement> annoucements = Announcement.find("byMember_id",
+				member.id).fetch();
 
 		renderArgs.put("annoucements", annoucements);
 		render();
 	}
-	
+
 	public static void see(long id) {
-		
+
 	}
 
 	public static void search() {
-		
+
 	}
 
 	public static void apply(long id) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(id);
-		
-		PendingAnnouncement pending = new PendingAnnouncement(announcement, member);
+
+		PendingAnnouncement pending = new PendingAnnouncement(announcement,
+				member);
 		pending.save();
-		
+
 		announcement.member.pendingAnnouncements.add(pending);
 		announcement.member.save();
 	}

@@ -80,6 +80,7 @@ announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres
 announcements.startDate=Date de départ
+announcements.startHour=Heure de départ
 announcements.sameCity=La ville de départ & d'arrivée sont identique
 announcements.successWhileSaving=Annonce enregistrée avec succès
 announcements.errorWhileSaving=Erreur lors de l'enregistrement de l'annonce
