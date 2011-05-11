@@ -100,16 +100,21 @@ public class Announcements extends Controller {
 
 	public static void list() {
 		Member member = Member.find("byEmail", Security.connected()).first();
+		
+		List<Announcement> announcements = Announcement
+				.find("byMember_id", member.id).fetch();
 
-		List<Announcement> annoucements = Announcement.find("byMember_id",
-				member.id).fetch();
-
-		renderArgs.put("annoucements", annoucements);
+		renderArgs.put("announcements", announcements);
 		render();
 	}
 
 	public static void see(long id) {
 
+	}
+
+	public static void byMember(long id) {
+		List<Announcement> announcements = Announcement.find("byMember", Member.findById(id)).fetch();
+		renderArgs.put("annoucements", announcements);
 	}
 
 	public static void search() {

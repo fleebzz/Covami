@@ -25,12 +25,13 @@ GET		/membres/{id}							Members.seeProfile
 
 GET		/amis/									Members.listFriends
 
-*		/demandes/								Pending.index
+GET		/notifications/							Pending.index
 
 GET		/annonces/								Announcements.list
 *		/annonces/ajouter						Announcements.add
 GET		/annonces/rechercher					Announcements.search
 GET		/annonces/{id}							Announcements.see
+GET		/annonces/membre/{id}					Announcements.byMember
 
 *		/annonces/api							Announcements.api
 
