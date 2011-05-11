@@ -1,9 +1,11 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javassist.NotFoundException;
 import models.Member;
+import models.PendingInvitation;
 import play.data.validation.Valid;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -98,7 +100,9 @@ public class Members extends Controller {
 		Member member2 = Member.find("byId", friendId).first();
 
 		if (member1 != null && member2 != null && member1.id != member2.id) {
-			member2.applicants.add(member1);
+			PendingInvitation invitation = new PendingInvitation(member2, member1);
+			invitation.save();
+			member2.pendingInvitations.add(invitation);
 			member2.save();
 
 			flash.success("members.inviteFriendSuccess");
@@ -141,6 +145,23 @@ public class Members extends Controller {
 			members = Member.find("firstname like ? or lastname like ?",
 					"%" + s + "%", "%" + s + "%").fetch(maxMembersToFind);
 		}
+		
+		List<PendingInvitation> pendingInvitations = PendingInvitation.find("byApplicant_id", member.id).fetch();
+		List<Member> pendings = new ArrayList<Member>();
+		for (PendingInvitation pi : pendingInvitations) {
+			if (members.contains(pi.Member)) {
+				pendings.add(pi.Member);
+			}
+		}
+		
+		List<PendingInvitation> pendingApplicants = member.pendingInvitations;
+		List<Member> applicants = new ArrayList<Member>();
+		for (PendingInvitation pa : pendingApplicants) {
+			applicants.add(pa.applicant);
+		}
+		
+		renderArgs.put("pendings", pendings);
+		renderArgs.put("applicants", applicants);
 
 		renderArgs.put("s", s);
 		renderArgs.put("members", members);
@@ -155,17 +176,33 @@ public class Members extends Controller {
 	 * @param id
 	 */
 	public static void seeProfile(long id) {
-		Member me = Member.find("byEmail", Security.connected()).first();
-		Member member = null;
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Member memberToSee = null;
 
 		if (id != 0) {
-			member = Member.find("byId", id).first();
+			memberToSee = Member.findById(id);
 		} else {
-			member = me;
+			memberToSee = member;
 		}
 
-		renderArgs.put("me", me);
-		renderArgs.put("member", member);
+		List<Member> applicants = new ArrayList<Member>();
+		List<Member> pendings = new ArrayList<Member>();
+
+		PendingInvitation applicantsTemp = PendingInvitation.find("byMember_idAndApplicant_id", member.id, memberToSee.id).first();
+		PendingInvitation pendingsTemp = PendingInvitation.find("byMember_idAndApplicant_id", memberToSee.id, member.id).first();
+
+		if(applicantsTemp != null){
+			applicants.add(memberToSee);
+		}
+
+		if(pendingsTemp != null){
+			pendings.add(memberToSee);
+		}
+
+		renderArgs.put("pendings", pendings);
+		renderArgs.put("applicants", applicants);
+		renderArgs.put("me", member);
+		renderArgs.put("member", memberToSee);
 
 		render();
 	}

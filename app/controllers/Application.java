@@ -4,7 +4,7 @@ import java.util.List;
 
 import models.Announcement;
 import models.Member;
-import models.PendingAnnouncements;
+import models.PendingAnnouncement;
 import play.mvc.Before;
 import play.mvc.Controller;
 

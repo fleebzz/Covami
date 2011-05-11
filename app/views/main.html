@@ -22,7 +22,7 @@
 		    	
 		        <li>
 		        	#{if security != null}
-						#{userControl user:user, applicants:user.applicants, announcements:user.pendingAnnouncements /}
+						#{userControl user:user, applicants:user.pendingInvitations, announcements:user.pendingAnnouncements /}
 					#{/if}
 					#{else}
 						<a href="@{Secure.login()}">&{'secure.signin'}</a>

@@ -36,14 +36,18 @@ public class Member extends Model {
 	@JoinTable(name = "MemberFriends")
 	public List<Member> friends;
 
-	@HiddenField
-	@ManyToMany
-	@JoinTable(name = "PendingInvitations")
-	public List<Member> applicants;
+//	@HiddenField
+//	@ManyToMany
+//	@JoinTable(name = "PendingInvitations")
+//	public List<Member> applicants;
 
 	@HiddenField
 	@OneToMany
-	public List<PendingAnnouncements> pendingAnnouncements;
+	public List<PendingInvitation> pendingInvitations;
+
+	@HiddenField
+	@OneToMany
+	public List<PendingAnnouncement> pendingAnnouncements;
 
 	@HiddenField
 	@OneToMany

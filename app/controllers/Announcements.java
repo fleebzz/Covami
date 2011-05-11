@@ -6,6 +6,7 @@ import java.util.List;
 import models.Announcement;
 import models.City;
 import models.Member;
+import models.PendingAnnouncement;
 import models.Trip;
 import play.data.validation.Validation;
 import play.mvc.Before;
@@ -98,7 +99,23 @@ public class Announcements extends Controller {
 		renderArgs.put("annoucements", annoucements);
 		render();
 	}
+	
+	public static void see(long id) {
+		
+	}
 
 	public static void search() {
+		
+	}
+
+	public static void apply(long id) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Announcement announcement = Announcement.findById(id);
+		
+		PendingAnnouncement pending = new PendingAnnouncement(announcement, member);
+		pending.save();
+		
+		announcement.member.pendingAnnouncements.add(pending);
+		announcement.member.save();
 	}
 }
