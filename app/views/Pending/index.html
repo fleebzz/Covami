@@ -5,52 +5,63 @@
 	
 	<h1>&{'pages.title.pendings'}</h1>
 	
-	#{if pendingInvitations.size() > 0}	
-		<h2>&{'pages.titles.pendings.friends'}</h2>
-		#{list items:pendingInvitations, as:'invitation'}
-			<div class="item">
-				<p>
-					<a href="@{Members.seeProfile(invitation.applicant.id)}">${invitation.applicant.firstname} ${invitation.applicant.lastname}</a> &{'pendings.invitation'}
-				</p>
-				
-				
-				#{form @acceptFriend()}
-					<input type="hidden" name="applicantId" value="${invitation.applicant.id}" />
-					<input type="submit" value="&{'pendings.invitation.accept'}" />
-				#{/form}
-				
-				#{form @denyFriend()}
-					<input type="hidden" name="applicantId" value="${invitation.applicant.id}" />
-					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
-				#{/form}
-			</div>
-		#{/list}
-	#{/if}
-	#{if pendingAnnouncements.size() > 0}
-		<h2>&{'pages.titles.pendings.announcements'}</h2>
-		#{list items:pendingAnnouncements, as:'pendingAnnouncement'}
-			<div class="item">
-				<p>
-					<a href="@{Members.seeProfile(pendingAnnouncement.applicant.id)}">${pendingAnnouncement.applicant.firstname} ${pendingAnnouncement.applicant.lastname}</a> &{'pendings.announcement'}
-				</p>
-				<p>
-					<a href="@{Announcements.see(pendingAnnouncement.Announcement.id)}">
-						${pendingAnnouncement.Announcement.startDate} - ${pendingAnnouncement.Announcement.trip.from.name} => ${pendingAnnouncement.Announcement.trip.to.name} 
-					</a>
-				</p>
-				
-				
-				#{form @acceptAnnouncement()}
-					<input type="hidden" name="pendingAnnouncementId" value="${pendingAnnouncement.id}" />
-					<input type="submit" value="&{'pendings.invitation.accept'}" />
-				#{/form}
-				
-				#{form @denyAnnouncement()}
-					<input type="hidden" name="pendingAnnouncementId" value="${pendingAnnouncement.id}" />
-					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
-				#{/form}
-			</div>
-		#{/list}
+	#{if pendingInvitations.size() > 0 || pendingAnnouncements.size() > 0 || comingAnnouncements.size() > 0}
+		#{if pendingInvitations.size() > 0}	
+			<h2>&{'pages.titles.pendings.friends'}</h2>
+			#{list items:pendingInvitations, as:'invitation'}
+				<div class="item">
+					<p>
+						<a href="@{Members.seeProfile(invitation.applicant.id)}">${invitation.applicant.firstname} ${invitation.applicant.lastname}</a> &{'pendings.invitation'}
+					</p>
+					
+					#{pendingFriend invitation:invitation, as:"pending" /}
+									
+				</div>
+			#{/list}
+		#{/if}
+		#{if pendingAnnouncements.size() > 0}
+			<h2>&{'pages.titles.pendings.announcements'}</h2>
+			#{list items:pendingAnnouncements, as:'pendingAnnouncement'}
+				<div class="item">
+					<p>
+						<a href="@{Members.seeProfile(pendingAnnouncement.applicant.id)}">${pendingAnnouncement.applicant.firstname} ${pendingAnnouncement.applicant.lastname}</a> &{'pendings.announcement'}
+					</p>
+					<p>
+						#{displayAnnouncement announcement:pendingAnnouncement.Announcement, as:'teaser' /}
+					</p>
+					
+					
+					#{form @acceptAnnouncement()}
+						<input type="hidden" name="pendingAnnouncementId" value="${pendingAnnouncement.id}" />
+						<input type="submit" value="&{'pendings.invitation.accept'}" />
+					#{/form}
+					
+					#{form @denyAnnouncement()}
+						<input type="hidden" name="pendingAnnouncementId" value="${pendingAnnouncement.id}" />
+						<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+					#{/form}
+				</div>
+			#{/list}
+		#{/if}
+		#{if comingAnnouncements.size() > 0}
+			<h2>&{'pages.titles.pendings.comingAnnouncements'}</h2>
+			#{list items:comingAnnouncements, as:'comingAnnouncement'}
+				<div class="item">
+					<p>
+						&{'pendings.flash.announcement.participe'} #{memberLink member:comingAnnouncement.member /}
+					</p>
+					<p>
+						#{displayAnnouncement announcement:comingAnnouncement, as:"teaser" /}
+					</p>
+					#{if comingAnnouncementsReadOk.contains(comingAnnouncement)}
+						#{form @pendingReadOnlyOk()}
+							<input type="hidden" name="announcementId" value="${comingAnnouncement.id}" />
+							<input type="submit" class="pending" value="&{'pendings.readOnly.ok'}" />
+						#{/form}
+					#{/if}
+				</div>
+			#{/list}
+		#{/if}
 	#{/if}
 	#{else}
 		&{'pendings.noPendings'}

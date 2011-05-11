@@ -1,0 +1,86 @@
+#{if _as == 'full'}
+	<p>
+		<label for='announcement.member'>&{'announcements.propose.short'}</label>
+		<span name="announcement.member">
+			<a href="@{Members.seeProfile(_announcement.member.id)}">
+				${_announcement.member.firstname} ${_announcement.member.lastname}
+			</a>
+		</span>
+	</p>
+	<p>
+		<label for='announcement.startDate'>&{'announcements.startDate'}</label>
+		<span name="announcement.startDate">${_announcement.startDate.format('dd / MM / yyyy')}</span>
+	</p>
+	<p>
+		<label for='announcement.startHour'>&{'announcements.startHour'}</label>
+		<span name="announcement.startHour">${_announcement.startDate.format('HH:mm')}</span>
+	</p>
+	<p>
+		<label for='announcement.startCity'>&{'announcements.startCity'}</label>
+		<span name="announcement.startCity">${_announcement.trip.from.name}</span>
+	</p>
+	<p>
+		<label for='announcement.endCity'>&{'announcements.endCity'}</label>
+		<span name="announcement.endCity">${_announcement.trip.to.name}</span>
+	</p>
+	<p></p>
+	<p>
+		<label>&{'announcements.steps'}</label>
+		<span>&nbsp;</span>
+	</p>
+		
+	#{list items:_announcement.trip.cities, as:'city'}
+		#{if city != _announcement.trip.from && city != _announcement.trip.to}
+			<p>
+				<label for="announcement.steps"></label>
+				<span name="announcement.steps">${city.name}</span>
+			</p>
+		#{/if}
+	#{/list}
+	<p></p>
+	
+	<p>
+		<label for='announcement.length'>&{'announcements.length'}</label>
+		<span name="announcement.length">${_announcement.kilometers} kms</span>
+	</p>
+	<p>
+		<label for='announcement.vehicle'>&{'announcements.vehicle'}</label>
+		<span name="announcement.vehicle">${_announcement.vehicle.model.make} ${_announcement.vehicle.model.model} ${_announcement.vehicle.model.nbPlaces} &{'vehicle.places'}</span>
+	</p>
+	<p>
+	
+	${_announcement.vehicle.model.make} ${_announcement.vehicle.model.model} 
+	(${_announcement.freePlaces}/${_announcement.vehicle.model.nbPlaces})</p>
+	
+	#{if _announcement.passengers.contains(_me)}
+		&{'announcements.member.willParticipate'}
+	#{/if}
+	#{else}
+		#{form @Announcements.apply()}
+			<input type="hidden" name="announcementId" value="${_announcement.id}" />
+			<input type="submit" value="&{'announcements.apply'}" />
+		#{/form}
+	#{/else}
+	
+#{/if}
+#{elseif _as == 'teaser' || _as == 'searchResult'}
+	#{if _as == 'searchResult'}
+		<p>
+			 &{'announcements.propose'}
+			<a href="@{Members.seeProfile(_announcement.member.id)}">
+				${_announcement.member.firstname} ${_announcement.member.lastname}
+			</a>
+			:
+		</p>
+	#{/if}
+	<p>
+		<a href="@{Announcements.see(_announcement.id)}">
+			${_announcement.startDate.format('dd / MM / yyyy - HH:mm')} - ${_announcement.trip.from.name} => ${_announcement.trip.to.name}
+		</a>
+	</p>
+	<p>
+		#{if _me != null && _announcement.passengers.contains(_me)}
+			&{'announcements.member.willParticipate'}
+		#{/if}
+	</p>
+#{/elseif}

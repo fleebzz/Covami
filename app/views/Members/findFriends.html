@@ -1,8 +1,7 @@
 #{extends 'main.html' /}
-#{set title:'Profile' /}
+#{set title:'Trouver des amis' /}
 
 <div id="profile">
-	
 	<h1>&{'pages.title.findFriends'}</h1>
 	
 	#{form @findFriends()}
@@ -10,38 +9,14 @@
 		<input type="submit" value="&{'members.findFriends.inputGo'}"/>
 	#{/form}
 	
-	
 	#{list items:members, as:'member'}
 		#{ifnot member.id == me.id}
 		<div class="item">
 			<p>
 				<a href="@{Members.seeProfile(member.id)}" >${member.firstname} ${member.lastname}</a>
 			</p>
-
-			#{if applicants.contains(member)}
-				#{form @Pending.accept()}
-					<input type="hidden" name="applicantId" value="${member.id}" />
-					<input type="submit" value="&{'pendings.invitation.accept'}" />
-				#{/form}
-				
-				#{form @Pending.deny()}
-					<input type="hidden" name="applicantId" value="${member.id}" />
-					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
-				#{/form}
-			#{/if}
 			
-			#{elseif pendings.contains(member)}
-			<p>
-				&{'members.inviteFriendSuccess'}
-			</p>
-			#{/elseif}
-			
-			#{elseif !me.friends.contains(member)}
-			<p>
-				<a class="submit" href="@{Members.inviteFriend(member.id)}" >&{'member.friends.add'}</a>
-			</p>
-			#{/elseif}
-			
+			#{pendingFriend me:me, member:member, applicants:applicants, pendings:pendings, as:"full" /}
 		</div>
 		#{/ifnot}
 	#{/list}
@@ -49,5 +24,4 @@
 	#{if members.size() == 0}
 		<p class="errorMsg">&{'members.findFriends.nothingFound'}</p>
 	#{/if}
-	
 </div>
