@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import play.data.validation.Required;
@@ -41,9 +42,8 @@ public class Announcement extends Model {
 	public int freePlaces;
 
 	@HiddenField
-	@ManyToMany
-	@JoinTable(name = "PendingAnnouncements")
-	public List<Member> applicants;
+	@OneToMany
+	public List<Member> passengers;
 
 	public double totalCost;
 }

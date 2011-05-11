@@ -1,0 +1,7 @@
+Bonjour ${_user?.firstname} !
+<a class="submit
+	#{if _applicants.size() > 0 || _announcements.size() > 0}
+		pending
+	#{/if}
+" href="@{Pending.index()}">${_applicants.size()+_announcements.size()}</a>
+<a class="submit" href="@{Secure.logout()}">&{'secure.signout'}</a>

@@ -27,5 +27,7 @@ GET		/amis/									Members.listFriends
 
 *		/demandes/								Pending.index
 
+GET		/annonces/{id}							Announcements.see
+
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}

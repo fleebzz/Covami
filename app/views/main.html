@@ -20,15 +20,8 @@
 		    	
 		        <li>
 		        	#{if security != null}
-						Bonjour ${user?.firstname} !
-						<a class="submit
-							#{if user.applicants.size() > 0}
-								pending
-							#{/if}
-						" href="@{Pending.index()}">${user.applicants.size()}</a>
-						<a class="submit" href="@{Secure.logout()}">&{'secure.signout'}</a>
+						#{userControl user:user, applicants:user.pendingInvitations, announcements:user.pendingAnnouncements /}
 					#{/if}
-					<!-- Sinon on propose de se logger -->
 					#{else}
 						<a href="@{Secure.login()}">&{'secure.signin'}</a>
 					#{/else}

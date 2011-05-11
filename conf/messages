@@ -15,6 +15,8 @@ pages.title.seeprofile=Voir un profil
 pages.title.seeprofile.vehicles=Les véhicules de l'utilisateur
 pages.title.vehicle=Modifier un véhicule
 pages.title.pendings=Mes notifications
+pages.titles.pendings.friends=Demandes d'amitié
+pages.titles.pendings.announcements=À propos de vos annonces
 pages.title.addAnnouncement=Poster une annonce
 pages.title.myAnnouncements=Mes annonces
 pages.title.findAnnouncements=Chercher une annonce
@@ -70,6 +72,7 @@ pendings.noPendings=Vous n'avez aucune nouvelle notification
 pendings.invitation= veut être ami avec vous.
 pendings.invitation.accept=Accepter
 pendings.invitation.deny=Refuser
+pendings.announcement= veut participer à une de vos annonces :
 
 announcements.add.submit=Poster cette annonce
 announcements.add=Poster une nouvelle annonce

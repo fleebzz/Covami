@@ -9,7 +9,7 @@
 		
 		#{ifnot me.id == member.id}
 			
-			#{if me.applicants.contains(member)}
+			#{if applicants.contains(member)}
 				#{form @Pending.accept()}
 					<input type="hidden" name="applicantId" value="${member.id}" />
 					<input type="submit" value="&{'pendings.invitation.accept'}" />
@@ -21,7 +21,7 @@
 				#{/form}
 			#{/if}
 			
-			#{elseif member.applicants.contains(me)}
+			#{elseif pendings.contains(member)}
 			<p>
 				&{'members.inviteFriendSuccess'}
 			</p>
