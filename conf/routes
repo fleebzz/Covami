@@ -18,7 +18,9 @@ GET     /public/                                staticDir:public
 *		/vehicules/ajouter						Vehicles.add
 *		/vehicules/{id}							Vehicles.edit
 
-*		/compte/								Members.profile
+*		/compte/								Members.editProfile
+
+GET		/live									Live.index
 
 GET		/membres/								Members.findFriends
 GET		/membres/{id}							Members.seeProfile

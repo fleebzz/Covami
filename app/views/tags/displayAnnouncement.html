@@ -55,12 +55,12 @@
 	#{if _announcement.passengers.contains(_me)}
 		&{'announcements.member.willParticipate'}
 	#{/if}
-	#{else}
+	#{elseif _announcement.member != _me}
 		#{form @Announcements.apply()}
 			<input type="hidden" name="announcementId" value="${_announcement.id}" />
 			<input type="submit" value="&{'announcements.apply'}" />
 		#{/form}
-	#{/else}
+	#{/elseif}
 	
 #{/if}
 #{elseif _as == 'teaser' || _as == 'searchResult'}

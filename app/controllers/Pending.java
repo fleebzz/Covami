@@ -32,7 +32,6 @@ public class Pending extends Controller {
 		List<Passenger> memberPassengerAnnouncements = Passenger.find("byPassengers_id", member.id).fetch();
 		List<Announcement> comingAnnouncementsReadOk = new ArrayList<Announcement>();
 		List<Announcement> comingAnnouncements = new ArrayList<Announcement>();
-		System.out.println(memberPassengerAnnouncements.size());
 		for (Passenger memberPassengerAnnouncement : memberPassengerAnnouncements) {
 			Announcement announcement = Announcement.findById(memberPassengerAnnouncement.Announcement_id);
 			if(announcement.startDate.after(new Date())) {
@@ -44,8 +43,6 @@ public class Pending extends Controller {
 				}
 			}
 		}
-
-		System.out.println(comingAnnouncements.size());
 
 		renderArgs.put("pendingInvitations", pendingInvitations);
 		renderArgs.put("pendingAnnouncements", pendingAnnouncements);
@@ -105,6 +102,9 @@ public class Pending extends Controller {
 		member.save();
 		pendingAnnouncement.delete();
 		
+		pendingAnnouncement.Announcement.freePlaces -=1;
+		pendingAnnouncement.Announcement.save();
+		
 		PendingReadOnly pending = new PendingReadOnly(pendingAnnouncement.applicant);
 		pending.type = "announcementParticipation";
 		pending.announcement = pendingAnnouncement.Announcement;
@@ -131,7 +131,6 @@ public class Pending extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		
 		PendingReadOnly pending = PendingReadOnly.find("byAnnouncement_idAndMember_id", announcementId, member.id).first();
-//		System.out.println("-------------------Type : " + pending.type);
 		member.pendings.remove(pending);
 		member.save();
 		pending.delete();
