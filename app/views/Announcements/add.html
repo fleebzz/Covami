@@ -47,12 +47,35 @@
 			</select>
 		</p>
 		
+		
+		
 		<p>
-			<label for="announcement.startDate">&{'announcements.startDate'}</label>
-			<input id='announcement.startDate' name='announcement.startDate' type="datetime"/> 
+			<label for="startDate">&{'announcements.startDate'}</label>
+			<input id='startDate' name='startDate' type="text"/> 
 		</p>
+		
 		<p id="signup-field">
 			<input type="submit" id="signup" value="&{'announcements.add.submit'}" />
 		</p>
 	#{/form}
 </div>
+
+<script type="text/javascript" charset="utf-8">
+
+
+	$(function() {
+		$("#startDate").datetimepicker({
+			dateFormat:'dd/mm/yy', 
+			timeFormat:'hh:mm:ss',
+			showAnim:'fadeIn',
+			dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+			monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+			autoSize: true,
+			minDate: '0',
+			showTime: true,
+			duration: '',
+			constrainInput: true
+		});
+
+	});
+</script>
