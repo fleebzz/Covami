@@ -9,30 +9,7 @@
 			
 		#{ifnot me.id == member.id}
 			
-			#{if applicants.contains(member)}
-				#{form @Pending.accept()}
-					<input type="hidden" name="applicantId" value="${member.id}" />
-					<input type="submit" value="&{'pendings.invitation.accept'}" />
-				#{/form}
-				
-				#{form @Pending.deny()}
-					<input type="hidden" name="applicantId" value="${member.id}" />
-					<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
-				#{/form}
-			#{/if}
-			
-			#{elseif pendings.contains(member)}
-			<p>
-				&{'members.inviteFriendSuccess'}
-			</p>
-			#{/elseif}
-			
-			#{elseif !me.friends.contains(member)}
-			<p>
-				<a class="submit" href="@{Members.inviteFriend(member.id)}" >&{'member.friends.add'}</a>
-			</p>
-			#{/elseif}
-			
+			#{pendingFriend me:me, member:member, applicants:applicants, pendings:pendings, as:"full" /}
 			
 		#{/ifnot}
 	</div>

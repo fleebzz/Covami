@@ -1,0 +1,36 @@
+#{if _as == "full"}
+	#{if _applicants.contains(_member)}
+		#{form @Pending.acceptFriend()}
+			<input type="hidden" name="applicantId" value="${_member.id}" />
+			<input type="submit" value="&{'pendings.invitation.accept'}" />
+		#{/form}
+		
+		#{form @Pending.denyFriend()}
+			<input type="hidden" name="applicantId" value="${_member.id}" />
+			<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+		#{/form}
+	#{/if}
+	
+	#{elseif _pendings.contains(_member)}
+	<p>
+		&{'members.inviteFriendSuccess'}
+	</p>
+	#{/elseif}
+	
+	#{elseif !_me.friends.contains(_member)}
+	<p>
+		<a class="submit" href="@{Members.inviteFriend(_member.id)}" >&{'member.friends.add'}</a>
+	</p>
+	#{/elseif}
+#{/if}
+#{elseif _as == "pending"}
+	#{form @acceptFriend()}
+		<input type="hidden" name="applicantId" value="${_invitation.applicant.id}" />
+		<input type="submit" value="&{'pendings.invitation.accept'}" />
+	#{/form}
+	
+	#{form @denyFriend()}
+		<input type="hidden" name="applicantId" value="${_invitation.applicant.id}" />
+		<input type="submit" class="pending" value="&{'pendings.invitation.deny'}" />
+	#{/form}
+#{/elseif}

@@ -24,6 +24,5 @@ public class PendingInvitation extends Model {
 	public PendingInvitation(Member member, Member applicant) {
 		this.Member = member;
 		this.applicant = applicant;
-		System.out.println(new Date());
 	}
 }

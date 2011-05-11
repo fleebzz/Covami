@@ -43,6 +43,7 @@ public class Announcement extends Model {
 
 	@HiddenField
 	@OneToMany
+	@JoinTable(name = "Passenger")
 	public List<Member> passengers;
 
 	public double totalCost;

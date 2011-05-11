@@ -27,6 +27,7 @@ GET		/amis/									Members.listFriends
 
 GET		/notifications/							Pending.index
 
+POST	/annonces/postuler/{id}					Announcements.apply
 GET		/annonces/								Announcements.list
 *		/annonces/ajouter						Announcements.add
 GET		/annonces/rechercher					Announcements.search

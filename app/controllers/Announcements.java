@@ -109,19 +109,23 @@ public class Announcements extends Controller {
 	}
 
 	public static void see(long id) {
-
+		renderArgs.put("announcement", Announcement.findById(id));
+		render();
 	}
 
 	public static void byMember(long id) {
-		List<Announcement> announcements = Announcement.find("byMember",
-				Member.findById(id)).fetch();
-		renderArgs.put("annoucements", announcements);
+		List<Announcement> announcements = Announcement.find("byMember_id", id).fetch();
+		renderArgs.put("announcements", announcements);
+		render();
 	}
 
 	public static void search() {
-
+		List<Announcement> announcements = Announcement.findAll();
+		renderArgs.put("announcements", announcements);
+		render();
 	}
 
+	
 	public static void api() {
 		List<Announcement> announcements = Announcement.find("startDate >= ?",
 				new Date()).fetch();
@@ -129,15 +133,21 @@ public class Announcements extends Controller {
 		renderXml(announcements);
 	}
 
-	public static void apply(long id) {
+	public static void apply(long announcementId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
-		Announcement announcement = Announcement.findById(id);
-
-		PendingAnnouncement pending = new PendingAnnouncement(announcement,
-				member);
-		pending.save();
-
-		announcement.member.pendingAnnouncements.add(pending);
-		announcement.member.save();
+		Announcement announcement = Announcement.findById(announcementId);
+		
+		PendingAnnouncement existPending = PendingAnnouncement.find("byAnnouncement_idAndApplicant_id", announcement.id, member.id).first();
+		if(existPending == null) {
+			PendingAnnouncement pending = new PendingAnnouncement(announcement, member);
+			pending.save();
+	
+			announcement.member.pendingAnnouncements.add(pending);
+			announcement.member.save();
+		}
+		
+		flash.success("announcements.apply.success");
+		
+		Announcements.see(announcementId);
 	}
 }
