@@ -14,6 +14,7 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import tags.form.HiddenField;
+import tags.form.IgnoreField;
 
 @Entity
 public class Member extends Model {
@@ -31,25 +32,25 @@ public class Member extends Model {
 	@MaxSize(100)
 	public String lastname;
 
-	@HiddenField
+	@IgnoreField
 	@ManyToMany
 	@JoinTable(name = "MemberFriends")
 	public List<Member> friends;
 
-	@HiddenField
-	@ManyToMany
-	@JoinTable(name = "MemberReadOnlyPending")
-	public List<PendingReadOnly> pendings;
+  @IgnoreField
+  @ManyToMany
+  @JoinTable(name = "MemberReadOnlyPending")
+  public List<PendingReadOnly> pendings;
 
-	@HiddenField
+	@IgnoreField
 	@OneToMany
 	public List<PendingInvitation> pendingInvitations;
 
-	@HiddenField
+	@IgnoreField
 	@OneToMany
 	public List<PendingAnnouncement> pendingAnnouncements;
 
-	@HiddenField
+	@IgnoreField
 	@OneToMany
 	public List<Vehicle> vehicles;
 

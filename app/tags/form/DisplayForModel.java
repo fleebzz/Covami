@@ -1,13 +1,13 @@
 /* Project: play-framework-form
  * Package: tags.form
- * File   : FGFastTag
+ * File   : DisplayForModel
  * Created: Apr 28, 2011 - 7:27:42 PM
  *
  *
  * Copyright 2011 Francois-Guillaume Ribreau
  *
  * Based on HTML5-Validation
- * see: https://github.com/oasits/play-html5-validation/blob/8adf38e1729e6994705245cd4fabf5d957e26b0d/app/tags/html5validation/HTML5ValidationTags.java
+ * see: http://bit.ly/mHdUux 
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
+ * Usage:
+ * 
+ * Render the Model instance myModel
+ * 		#{DisplayForModel model:myModel /}
+ * 
+ * Render a Model without myModel.field1 and myModel.field2
+ * 		#{DisplayForModel model:myModel, ignore:'field1, field2' /}
+ * 
+ * Render a Model in view mode only
+ *		#{DisplayForModel model:myModel, editable:false /}
  */
 
 package tags.form;
@@ -51,44 +61,36 @@ import play.templates.GroovyTemplate.ExecutableTemplate;
 public class DisplayForModel extends FastTags {
 
 	/**
-	 * Affiche les données d'un model
+	 * Returns HTML markup for each property in the model
+	 * 
+	 * This method is typically used to display values from the object that is
+	 * exposed by the Model property.
 	 * 
 	 * @param o
-	 * @return
+	 * @return The HTML markup for each property in the model.
 	 * @throws Exception
 	 */
 	public static void _DisplayForModel(Map<?, ?> args, Closure body,
 			PrintWriter out, ExecutableTemplate template, int fromLine)
-			throws Exception {
+			throws NullPointerException, ClassNotFoundException,
+			IllegalAccessException, NoSuchFieldException {
 
-		Model model = (Model) args.get("model");
-
-		List<String> ignores = null;
-
-		if (args.get("ignore") != null) {
-			ignores = Arrays.asList(((String) args.get("ignore")).replaceAll(
-					" ", "").split(","));
-		}
-
-		if (model == null) {
-			throw new NullPointerException("You must specify a model.");
-		}
+		// Parameters
+		Model model = getModel(args);
+		List<String> ignores = getIgnores(args);
+		Boolean editable = getEditable(args);
 
 		Class<?> clazz = model.getClass();
 
 		String modelName = clazz.getName()
 				.substring(clazz.getName().lastIndexOf(".") + 1).toLowerCase();
 
-		// Boucler sur les attributs
 		Field[] fields = clazz.getDeclaredFields();
-
-		Boolean editable = args.get("editable") == null
-				|| (args.get("editable") != null && args.get("editable")
-						.equals(true));
 
 		for (Field field : fields) {
 
-			if (ignores == null
+			if ((ignores == null && !field
+					.isAnnotationPresent(IgnoreField.class))
 					|| (ignores != null && !ignores.contains(field.getName()))) {
 
 				String fieldName = modelName + "." + field.getName();
@@ -268,5 +270,51 @@ public class DisplayForModel extends FastTags {
 		if (value != null) {
 			out.print(" " + name + "=\"" + value + "\"");
 		}
+	}
+
+	/**
+	 * Get the editable parameter
+	 * 
+	 * @param args
+	 * @return
+	 */
+	private static Boolean getEditable(Map<?, ?> args) {
+		return (args.get("editable") == null || (args.get("editable") != null && args
+				.get("editable").equals(true)));
+	}
+
+	/**
+	 * Get the ignores parameter
+	 * 
+	 * @param args
+	 * @return
+	 */
+	private static List<String> getIgnores(Map<?, ?> args) {
+		List<String> ignores = null;
+
+		if (args.get("ignore") != null) {
+			ignores = Arrays.asList(((String) args.get("ignore")).replaceAll(
+					" ", "").split(","));
+		}
+
+		return ignores;
+	}
+
+	/**
+	 * Get the model parameter
+	 * 
+	 * @param args
+	 * @return
+	 * @throws NullPointerException
+	 */
+	private static Model getModel(Map<?, ?> args) throws NullPointerException {
+		Model m = (Model) args.get("model");
+
+		if (m == null) {
+			throw new NullPointerException(
+					"You must specify a model. \nE.g: #{DisplayForModel model:yourModelInstance /}");
+		}
+
+		return m;
 	}
 }
