@@ -341,6 +341,7 @@ form input, form textarea {
 form select,
 form input[type="text"],
 form input[type="date"],
+form input[type="email"],
 form input[type="password"],
 form input[type="datetime"], form textarea{
 	width:300px;

@@ -35,6 +35,12 @@ secure.password=Mot de passe
 secure.signin=Se connecter
 secure.signout=Déconnexion
 
+member.email=Email
+member.password=Mot de passe
+member.firstname=Prénom
+member.lastname=Nom
+member.phone=Téléphone
+
 members.signup.submit=S'inscrire
 members.signup.formTitle=Inscription
 members.signup.alreadyExist=Un membre avec cette adresse e-mail existe déjà
@@ -57,6 +63,7 @@ member.badpassword=Mauvais format de mot de passe
 member.bademail=Mauvais format d'email
 member.profile.success=Modification du profil effectuée avec succès
 member.profile.see=Voir le profil de l'utilisateur
+member.profile.edit=Editer le profil
 member.friends.add=Demander en ami
 member.addFriend=Ajouter un ami
 
@@ -65,6 +72,9 @@ vehicle.model=Modèle
 vehicle.select=Véhicule
 vehicle.modify=Modifier ce véhicule
 vehicle.places=Places
+
+vehicle.registration=Registration
+vehicle.techControlDate=Dernière révision
 
 vehicles.add.submit=Ajouter ce véhicule
 vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà

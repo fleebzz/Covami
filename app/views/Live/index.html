@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Live' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.live'}</h1>
+	
+	<applet codebase="." code="main.App" archive="@{'/public/applet/App.jar'}" width="800" height="800">
+	<param name="bgcolor" value="ffffff">
+	<param name="fontcolor" value="000000">
+	Your browser is not Java enabled.
+	</applet>
+</div>

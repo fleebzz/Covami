@@ -100,9 +100,9 @@ public class Announcements extends Controller {
 
 	public static void list() {
 		Member member = Member.find("byEmail", Security.connected()).first();
-		
-		List<Announcement> announcements = Announcement
-				.find("byMember_id", member.id).fetch();
+
+		List<Announcement> announcements = Announcement.find("byMember_id",
+				member.id).fetch();
 
 		renderArgs.put("announcements", announcements);
 		render();
@@ -123,6 +123,14 @@ public class Announcements extends Controller {
 		List<Announcement> announcements = Announcement.findAll();
 		renderArgs.put("announcements", announcements);
 		render();
+	}
+
+	
+	public static void api() {
+		List<Announcement> announcements = Announcement.find("startDate >= ?",
+				new Date()).fetch();
+
+		renderXml(announcements);
 	}
 
 	public static void apply(long announcementId) {
