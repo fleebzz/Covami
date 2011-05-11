@@ -116,6 +116,13 @@ public class Announcements extends Controller {
 
 	}
 
+	public static void api() {
+		List<Announcement> announcements = Announcement.find("startDate >= ?",
+				new Date()).fetch();
+
+		renderXml(announcements);
+	}
+
 	public static void apply(long id) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(id);
