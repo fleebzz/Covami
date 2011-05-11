@@ -48,7 +48,7 @@ import play.i18n.Messages;
 import play.templates.FastTags;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 
-public class FGFastTag extends FastTags {
+public class DisplayForModel extends FastTags {
 
 	/**
 	 * Affiche les données d'un model
@@ -114,9 +114,12 @@ public class FGFastTag extends FastTags {
 
 	private static void renderFieldView(PrintWriter out, Field field,
 			String fieldName, Object fieldValue) {
-		out.print("\n<p>\n\t<label for='" + fieldName + "'>"
-				+ Messages.get(field.getName()) + "</label>\n\t<span id='"
-				+ fieldName + "' name='" + fieldName + "'");
+
+		out.print("\n<p>\n\t<label for='" + fieldName.replace(".", "") + "'>"
+				+ Messages.get(fieldName) + "</label>\n");
+
+		out.print("\t<span id='" + fieldName.replace(".", "") + "' name='"
+				+ fieldName + "'");
 
 		out.print("/>\n");
 
@@ -135,16 +138,18 @@ public class FGFastTag extends FastTags {
 
 	private static void renderFieldEditable(PrintWriter out, Field field,
 			String fieldName, Object fieldValue) {
-		out.print("\n<p>\n\t<label for='" + fieldName + "'>"
-				+ Messages.get(field.getName()) + "</label>\n\t");
 
-		out.print("<input id='" + fieldName + "' name='" + fieldName + "'");
+		out.print("\n<p>\n\t<label for='" + fieldName.replace(".", "") + "'>"
+				+ Messages.get(fieldName) + "</label>\n\t");
+
+		out.print("<input id='" + fieldName.replace(".", "") + "' name='"
+				+ fieldName + "'");
 
 		if (fieldValue != null) {
 			out.print("value='" + fieldValue + "'");
 		}
 
-		printValidationAttributes(out, field);
+		printValidationAttributes(out, field, fieldName);
 
 		out.print("/>\n");
 
@@ -178,6 +183,7 @@ public class FGFastTag extends FastTags {
 	 *            The tag attributes.
 	 * @param out
 	 *            The print writer to use.
+	 * @param fieldName
 	 * @param fieldValue
 	 * @throws SecurityException
 	 *             Thrown when either the field or the getter for the field
@@ -187,7 +193,8 @@ public class FGFastTag extends FastTags {
 	 * @throws ClassNotFoundException
 	 *             Thrown when the class could not be found.
 	 */
-	private static void printValidationAttributes(PrintWriter out, Field field) {
+	private static void printValidationAttributes(PrintWriter out, Field field,
+			String fieldName) {
 
 		// Ajout du type
 		if (field.isAnnotationPresent(URL.class)) {
@@ -207,9 +214,10 @@ public class FGFastTag extends FastTags {
 
 		} else {
 			printAttribute("type", "text", out);
-			printAttribute("placeholder", field.getName(), out);
+			printAttribute("placeholder", Messages.get(fieldName), out);
 		}
 
+		// Champs supplémentaire
 		if (field.isAnnotationPresent(Required.class)) {
 			printAttribute("required", "required", out);
 		}

@@ -23,3 +23,20 @@
 		</p>
 	#{/form}
 </div>
+
+<script type="text/javascript" charset="utf-8">
+
+	$(function() {
+		$("#vehicletechControlDate").datepicker({
+			dateFormat:'yy-mm-dd', 
+			showAnim:'fadeIn',
+			dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+			monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+			autoSize: true,
+			minDate: '0',
+			showTime: false,
+			constrainInput: true
+		});
+
+	});
+</script>

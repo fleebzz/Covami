@@ -6,7 +6,7 @@
 	<h1>&{'pages.title.seeprofile'}</h1>
 	<div class="item">
 		#{DisplayForModel model:member, editable:false /}
-		
+			
 		#{ifnot me.id == member.id}
 			
 			#{if applicants.contains(member)}
