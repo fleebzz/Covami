@@ -25,9 +25,10 @@ GET		/membres/{id}							Members.seeProfile
 
 GET		/amis/									Members.listFriends
 
-*		/demandes/								Pending.index
+GET		/notifications/							Pending.index
 
 GET		/annonces/{id}							Announcements.see
+GET		/annonces/membre/{id}					Announcements.byMember
 
 # Catch all
 *		/{controller}/{action}                  {controller}.{action}

@@ -7,7 +7,7 @@
 	
 	<a class="submit" href="@{Announcements.add()}" >&{'announcements.add'}</a>
 	
-	#{list items:annoucements, as:'announcement'}
+	#{list items:announcements, as:'announcement'}
 		<div class="item">
 			<p>${announcement.trip.from.name} -> ${announcement.trip.to.name} (${announcement.kilometers}km)</p>
 			

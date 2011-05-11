@@ -17,17 +17,12 @@
 		    </div>
 		    <ul id="tools">
 		    	#{if security == null}
-		    	<li><a href="/signup">&{'members.signup.submit'}</a></li>
+			    	<a class="submit" href="/signup">&{'members.signup.submit'}</a>
+			    	<a class="submit" href="@{Secure.login()}">&{'secure.signin'}</a>
 		    	#{/if}
-		    	
-		        <li>
-		        	#{if security != null}
+				#{else}
 						#{userControl user:user, applicants:user.pendingInvitations, announcements:user.pendingAnnouncements /}
-					#{/if}
-					#{else}
-						<a href="@{Secure.login()}">&{'secure.signin'}</a>
-					#{/else}
-		        </li>
+				#{/else}
 		        
 		    </ul>
 		    <div id="title">
