@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -110,8 +111,19 @@ public class Announcements extends Controller {
 	}
 
 	public static void see(long id) {
-		renderArgs.put("announcement", Announcement.findById(id));
-		render();
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Announcement announcement = Announcement.findById(id);
+		if(announcement != null && member.friends.contains(announcement.member)){
+			renderArgs.put("announcement", Announcement.findById(id));
+			render();
+		}
+		if(announcement == null){
+			flash.error("Cette annonce n'existe pas !");
+		}
+		else{
+			flash.error("Vous ne pouvez pas visualiser cette annonce !");
+		}
+		Announcements.search();
 	}
 
 	public static void byMember(long id) {
@@ -121,7 +133,14 @@ public class Announcements extends Controller {
 	}
 
 	public static void search() {
-		List<Announcement> announcements = Announcement.findAll();
+		Member member = Member.find("byEmail", Security.connected()).first();
+		List<Announcement> announcements = new ArrayList<Announcement>();
+		List<Announcement> allAnnouncements = Announcement.findAll();
+		for (Announcement announcement : allAnnouncements) {
+			if(member.friends.contains(announcement.member)){
+				announcements.add(announcement);
+			}
+		}
 		renderArgs.put("announcements", announcements);
 		render();
 	}
