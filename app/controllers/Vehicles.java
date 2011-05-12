@@ -1,7 +1,9 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
+import models.Announcement;
 import models.Member;
 import models.Vehicle;
 import models.VehicleModel;
@@ -129,11 +131,18 @@ public class Vehicles extends Controller {
 	public static void delete(long vehicleId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Vehicle vehicle = Vehicle.findById(vehicleId);
+		
+		Announcement announcement = Announcement.find("byStartDateGreaterThanAndVehicle_id", new Date(), vehicle.id).first();
 
-		member.vehicles.remove(vehicle);
-		member.save();
-
-		vehicle.delete();
+		if(announcement == null) {
+			member.vehicles.remove(vehicle);
+			member.save();
+			vehicle.delete();
+			flash.success("vehciles.delete.success");
+		}
+		else{
+			flash.error("vehciles.delete.error.hasAnnouncement");
+		}
 
 		Vehicles.list();
 	}
