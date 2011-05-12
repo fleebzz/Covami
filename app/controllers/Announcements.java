@@ -35,7 +35,7 @@ public class Announcements extends Controller {
 		Announcements.list();
 	}
 
-	public static void add(Announcement announcement) {
+	public static void add(Announcement announcement, String startDate) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 
 		// if (announcement == null) { announcement = new Announcement(); }
@@ -43,6 +43,7 @@ public class Announcements extends Controller {
 
 		renderArgs.put("vehicles", member.vehicles);
 		renderArgs.put("cities", City.findAll());
+		renderArgs.put("startDate", startDate);
 		// renderArgs.put("annoucement", announcement);
 
 		render();
@@ -52,7 +53,12 @@ public class Announcements extends Controller {
 			throws ParseException {
 
 		if (announcement == null || announcement.trip == null) {
-			Announcements.add(null);
+			Announcements.add(null, null);
+		}
+
+		if (Validation.hasErrors()) {
+			Announcements.add(announcement, startDate);
+
 		}
 
 		Trip trip = announcement.trip;
@@ -67,7 +73,7 @@ public class Announcements extends Controller {
 
 			// BUG: Si on met Announcements.add(announcement); play bug !
 			// TODO: Reporter le bug
-			Announcements.add(new Announcement());
+			Announcements.add(new Announcement(), null);
 		}
 
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,
@@ -95,7 +101,7 @@ public class Announcements extends Controller {
 				System.out.println(e);
 			}
 			flash.error("announcements.errorWhileSaving");
-			Announcements.add(new Announcement());
+			Announcements.add(new Announcement(), null);
 		}
 
 	}
@@ -127,7 +133,8 @@ public class Announcements extends Controller {
 	}
 
 	public static void byMember(long id) {
-		List<Announcement> announcements = Announcement.find("byMember_id", id).fetch();
+		List<Announcement> announcements = Announcement.find("byMember_id", id)
+				.fetch();
 		renderArgs.put("announcements", announcements);
 		render();
 	}
@@ -145,7 +152,6 @@ public class Announcements extends Controller {
 		render();
 	}
 
-	
 	public static void api() {
 		List<Announcement> announcements = Announcement.find("startDate >= ?",
 				new Date()).fetch();
@@ -156,43 +162,48 @@ public class Announcements extends Controller {
 	public static void apply(long announcementId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(announcementId);
-		
-		if(announcement.member == member) {
+
+		if (announcement.member == member) {
 			flash.error("announcements.apply.selfError");
 			Announcements.see(announcementId);
 		}
-		
-		PendingAnnouncement existPending = PendingAnnouncement.find("byAnnouncement_idAndApplicant_id", announcement.id, member.id).first();
-		if(existPending == null) {
-			PendingAnnouncement pending = new PendingAnnouncement(announcement, member);
+
+		PendingAnnouncement existPending = PendingAnnouncement.find(
+				"byAnnouncement_idAndApplicant_id", announcement.id, member.id)
+				.first();
+		if (existPending == null) {
+			PendingAnnouncement pending = new PendingAnnouncement(announcement,
+					member);
 			pending.save();
-	
+
 			announcement.member.pendingAnnouncements.add(pending);
 			announcement.member.save();
 		}
-		
+
 		flash.success("announcements.apply.success");
-		
+
 		Announcements.see(announcementId);
 	}
 
 	public static void desist(long announcementId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(announcementId);
-		
+
 		announcement.freePlaces += 1;
 		announcement.passengers.remove(member);
 		announcement.save();
-		
-		PendingReadOnly pending = PendingReadOnly.find("byAnnouncement_idAndMember_id", announcement.id, member.id).first();
-		if(pending != null) {
+
+		PendingReadOnly pending = PendingReadOnly.find(
+				"byAnnouncement_idAndMember_id", announcement.id, member.id)
+				.first();
+		if (pending != null) {
 			member.pendings.remove(pending);
 			member.save();
 			pending.delete();
 		}
-		
+
 		flash.success("announcements.desist.success");
-		
+
 		Announcements.see(announcementId);
 	}
 }

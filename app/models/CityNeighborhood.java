@@ -11,4 +11,9 @@ public class CityNeighborhood extends Model {
 
 	public Long neighborhood_id;
 
+	public Double kms;
+
+	// autoroute
+	public String highway;
+
 }
