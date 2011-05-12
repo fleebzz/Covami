@@ -81,6 +81,8 @@ vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà
 vehicles.add.success=Votre véhicule a correctement été ajouté
 vehicles.edit.success=Votre véhicule a correctement été modifié
 vehicles.edit.submit=Modifier ce véhicule
+vehciles.delete.success=Votre véhicule a correctement été supprimé !
+vehciles.delete.error.hasAnnouncement=Vous ne pouvez pas supprimer ce véhicule car des annonces futures en dépendent !
 vehicles.noVehicle=Cet utilisateur n'a pas de véhicule
 
 pendings.noPendings=Vous n'avez aucune nouvelle notification
