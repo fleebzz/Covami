@@ -15,29 +15,23 @@
 		<label for='announcement.startHour'>&{'announcements.startHour'}</label>
 		<span name="announcement.startHour">${_announcement.startDate.format('HH:mm')}</span>
 	</p>
-	<p>
-		<label for='announcement.startCity'>&{'announcements.startCity'}</label>
-		<span name="announcement.startCity">${_announcement.trip.from.name}</span>
-	</p>
-	<p>
-		<label for='announcement.endCity'>&{'announcements.endCity'}</label>
-		<span name="announcement.endCity">${_announcement.trip.to.name}</span>
-	</p>
-	<p></p>
+
 	<p>
 		<label>&{'announcements.steps'}</label>
 		<span>&nbsp;</span>
 	</p>
-		
+	
+	<ul>
+		<li>${_announcement.trip.from.name} (<strong>&{'announcements.startCity'}</strong>)</li>
 	#{list items:_announcement.trip.cities, as:'city'}
 		#{if city != _announcement.trip.from && city != _announcement.trip.to}
-			<p>
-				<label for="announcement.steps"></label>
-				<span name="announcement.steps">${city.name}</span>
-			</p>
+			<li>
+				${city.name}
+			</li>
 		#{/if}
 	#{/list}
-	<p></p>
+		<li>${_announcement.trip.to.name} (<strong>&{'announcements.endCity'}</strong>)</li>
+	</ul>
 	
 	<p>
 		<label for='announcement.length'>&{'announcements.length'}</label>
