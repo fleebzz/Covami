@@ -93,6 +93,7 @@ pendings.flash.announcement.participe=Vous participerez au voyage de
 
 announcements.add.submit=Poster cette annonce
 announcements.add=Poster une nouvelle annonce
+announcements.add.error.noVehicle=Vous ne pouvez pas créer d'annonce car vous n'avez pas de véhicule !
 announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres

@@ -5,59 +5,69 @@
 	
 	<h1>&{'pages.title.addAnnouncement'}</h1>
 	
-	#{form @addPost()}
-		<p>
-			<label>&{'announcements.from'}</label>
-			<select name="announcement.trip.from.id">
-				#{list items:cities, as:'city'}
-						<option value="${city.id}">
-							${city.name}
+	#{if user.vehicles.size() > 0}
+		#{form @addPost()}
+			<p>
+				<label>&{'announcements.from'}</label>
+				<select name="announcement.trip.from.id">
+					#{list items:cities, as:'city'}
+							<option value="${city.id}">
+								${city.name}
+							</option>
+					#{/list}
+				</select>
+			</p>
+			<p>
+				<label>&{'announcements.to'}</label>
+				<select name="announcement.trip.to.id">
+					#{list items:cities, as:'city'}
+							<option value="${city.id}">
+								${city.name}
+							</option>
+					#{/list}
+				</select>
+			</p>
+			<p>
+				<label>&{'vehicle.select'}</label>
+				<select name="announcement.vehicle.id">
+					#{list items:vehicles, as:'vehicle'}
+							<option value="${vehicle.id}">
+								${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}  
+							</option>
+					#{/list}
+				</select>
+			</p>
+			<p>
+				<label>&{'announcements.nbPlaces'}</label>
+				<select name="announcement.freePlaces">
+					#{list items:1..8, as:'i'}
+						<option value="${i}">
+					    	${i} 
 						</option>
-				#{/list}
-			</select>
+					#{/list}
+				</select>
+			</p>
+			
+			
+			
+			<p>
+				<label for="startDate">&{'announcements.startDate'}</label>
+				<input id='startDate' name='startDate' type="text"/> 
+			</p>
+			
+			<p id="signup-field">
+				<input type="submit" id="signup" value="&{'announcements.add.submit'}" />
+			</p>
+		#{/form}
+	#{/if}
+	#{else}
+		<p class="errorMsg">
+			&{'announcements.add.error.noVehicle'}
 		</p>
 		<p>
-			<label>&{'announcements.to'}</label>
-			<select name="announcement.trip.to.id">
-				#{list items:cities, as:'city'}
-						<option value="${city.id}">
-							${city.name}
-						</option>
-				#{/list}
-			</select>
+			<a class="submit" href="@{Vehicles.add()}" >&{'pages.title.addVehicle'}</a>
 		</p>
-		<p>
-			<label>&{'vehicle.select'}</label>
-			<select name="announcement.vehicle.id">
-				#{list items:vehicles, as:'vehicle'}
-						<option value="${vehicle.id}">
-							${vehicle.model.make} ${vehicle.model.model} - ${vehicle.registration}  
-						</option>
-				#{/list}
-			</select>
-		</p>
-		<p>
-			<label>&{'announcements.nbPlaces'}</label>
-			<select name="announcement.freePlaces">
-				#{list items:1..8, as:'i'}
-					<option value="${i}">
-				    	${i} 
-					</option>
-				#{/list}
-			</select>
-		</p>
-		
-		
-		
-		<p>
-			<label for="startDate">&{'announcements.startDate'}</label>
-			<input id='startDate' name='startDate' type="text"/> 
-		</p>
-		
-		<p id="signup-field">
-			<input type="submit" id="signup" value="&{'announcements.add.submit'}" />
-		</p>
-	#{/form}
+	#{/else}
 </div>
 
 <script type="text/javascript" charset="utf-8">
