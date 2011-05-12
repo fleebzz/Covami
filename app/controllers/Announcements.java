@@ -92,16 +92,16 @@ public class Announcements extends Controller {
 				DateFormat.SHORT, Locale.FRENCH);
 		announcement.startDate = df.parse(startDate);
 
-		announcement.kilometers = trip.from.distanceBetween(trip.to);
+		// = trip.from.distanceBetween(trip.to);
 		announcement.publicationDate = new Date();
 		announcement.member = Member.find("byEmail", Security.connected())
 				.first();
 
-		// FIXME: Changer la valeur de calcul du prix
-		announcement.totalCost = announcement.kilometers * 1.5;
+		// Recherche du chemin via aStar qui retourne la distance totale en KM
+		announcement.kilometers = trip.generatePath();
 
-		// Recherche du chemin via aStar
-		trip.generatePath();
+		// 1€ pour 10Km
+		announcement.totalCost = (announcement.kilometers / 10);
 
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
@@ -131,15 +131,15 @@ public class Announcements extends Controller {
 	public static void see(long id) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(id);
-		if(announcement != null && member.friends.contains(announcement.member)){
+		if (announcement != null
+				&& member.friends.contains(announcement.member)) {
 			renderArgs.put("announcement", Announcement.findById(id));
 			render();
 		}
-		if(announcement == null){
-			flash.error("announcements.error.notExist");
-		}
-		else{
-			flash.error("announcements.error.cannotView");
+		if (announcement == null) {
+			flash.error("announcements.error.notFound");
+		} else {
+			flash.error("announcements.error.forbidden");
 		}
 		Announcements.search(null, null, null);
 	}
@@ -147,6 +147,7 @@ public class Announcements extends Controller {
 	public static void byMember(long id) {
 		List<Announcement> announcements = Announcement.find("byMember_id", id)
 				.fetch();
+
 		renderArgs.put("announcements", announcements);
 		render();
 	}
@@ -178,7 +179,7 @@ public class Announcements extends Controller {
 			allAnnouncements = Announcement.find("startDate > ? and startDate < ? order by startDate", startDateMin, startDateMax).fetch();
 		}
 		for (Announcement announcement : allAnnouncements) {
-			if(member.friends.contains(announcement.member)){
+			if (member.friends.contains(announcement.member)) {
 				announcements.add(announcement);
 			}
 		}

@@ -121,7 +121,7 @@ public class Vehicles extends Controller {
 		vehicle.save();
 
 		flash.success("vehicles.edit.success");
-		
+
 		Vehicles.list();
 	}
 
@@ -133,17 +133,18 @@ public class Vehicles extends Controller {
 	public static void delete(long vehicleId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Vehicle vehicle = Vehicle.findById(vehicleId);
-		
-		Announcement announcement = Announcement.find("byStartDateGreaterThanAndVehicle_id", new Date(), vehicle.id).first();
 
-		if(announcement == null) {
+		Announcement announcement = Announcement.find(
+				"byStartDateGreaterThanAndVehicle_id", new Date(), vehicle.id)
+				.first();
+
+		if (announcement == null) {
 			member.vehicles.remove(vehicle);
 			member.save();
 			vehicle.delete();
-			flash.success("vehciles.delete.success");
-		}
-		else{
-			flash.error("vehciles.delete.error.hasAnnouncement");
+			flash.success("vehicles.delete.success");
+		} else {
+			flash.error("vehicles.delete.error.hasAnnouncement");
 		}
 
 		Vehicles.list();

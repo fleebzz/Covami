@@ -59,61 +59,10 @@ public class Trip extends Model {
 	}
 
 	/**
-	 * Constructeur de Trajet (utilisé par la méthode static aStar)
-	 * 
-	 * @param cities
-	 * @param distance
-	 */
-	private Trip(List<City> cities, double distance, double heuristic) {
-		this.cities = cities;
-		this.distance = distance;
-		this.heuristic = heuristic;
-	}
-
-	/**
 	 * @return Les listes des villes
 	 */
 	public List<City> getCities() {
 		return cities;
-	}
-
-	/**
-	 * (chainable) Ajoute une ville au trajet
-	 * 
-	 * @param a
-	 *            La ville à ajouter à la fin du trajet
-	 * @return True si l'ajout à réussi, False sinon
-	 */
-	public Trip addCity(City a, double heuristic) {
-		City lastCity = this.getLastCity();
-		double distance = 0;
-
-		if (lastCity != null) {
-			distance = lastCity.distanceBetween(a);
-		}
-
-		// MAJ la distance parcourue
-		this.distance = this.distance + distance;
-
-		// MAJ le coup du chemin
-		this.setHeuristic(this.distance + distance + heuristic);
-
-		this.cities.add(a);
-
-		return this;
-	}
-
-	/**
-	 * Retourne la dernière ville d'un trajet
-	 * 
-	 * @return La dernière ville
-	 */
-	public City getLastCity() {
-		if (this.cities.size() == 0) {
-			return null;
-		}
-
-		return this.cities.get(this.cities.size() - 1);
 	}
 
 	/**
@@ -123,9 +72,9 @@ public class Trip extends Model {
 	 *            Ville de départ
 	 * @param to
 	 *            Ville d'arrivée
-	 * @return Retourne le plus court trajet entre ces deux villes
+	 * @return Retourne la distance du plus court trajet entre les 2 villes
 	 */
-	public boolean generatePath() {
+	public double generatePath() {
 
 		if (this.cities != null) {
 			this.cities.clear();
@@ -134,13 +83,12 @@ public class Trip extends Model {
 		this.cities = new ArrayList();
 
 		if (from == null || to == null) {
-			return false;
+			return 0;
 		}
 
 		// Si le départ == l'arrivée
 		if (from.equals(to)) {
-			this.cities.add(from);
-			return true;
+			return 0;
 		}
 
 		_Trip curTrip = null;
@@ -179,6 +127,8 @@ public class Trip extends Model {
 					_Trip t = curTrip.clone().addCity(neighbour,
 							City.distanceBetween(neighbour, this.getTo()));
 					System.out.println(t.toString());
+
+					t.realDistance += cn.kms;
 					fileOpen.add(t);
 
 				}
@@ -187,7 +137,8 @@ public class Trip extends Model {
 		} while (!fileOpen.isEmpty()
 				&& !fileOpen.first().getLastCity().equals(this.getTo()));
 
-		List<City> tmpCities = fileOpen.first().cities;
+		_Trip finalTrip = fileOpen.first();
+		List<City> tmpCities = finalTrip.cities;
 
 		// Maintenant il faut rechercher ces villes via un contexte
 		// EntityManager
@@ -196,7 +147,7 @@ public class Trip extends Model {
 			this.cities.add((City) City.find("byId", c.id).first());
 		}
 
-		return true;
+		return finalTrip.realDistance;
 	}
 
 	public City getFrom() {
@@ -205,32 +156,6 @@ public class Trip extends Model {
 
 	public City getTo() {
 		return this.to;
-	}
-
-	/**
-	 * Clone un trajet
-	 * 
-	 * @return L'objet cloné
-	 */
-	@Override
-	public Trip clone() {
-		Trip t = Trip.clone(this);
-
-		// FIX: Les modèles play semble avoir un problème avec le clone
-		// d'entités
-		// contenant des List<T>
-		t.cities = (List<City>) ((ArrayList<City>) t.cities).clone();
-		return t;
-	}
-
-	/**
-	 * Clone un trajet
-	 * 
-	 * @return L'objet cloné
-	 */
-	@SuppressWarnings("unchecked")
-	public static Trip clone(Trip a) {
-		return new Trip(a.getCities(), a.distance, a.getHeuristic());
 	}
 
 	/**
