@@ -10,6 +10,7 @@ import models.Announcement;
 import models.City;
 import models.Member;
 import models.PendingAnnouncement;
+import models.PendingReadOnly;
 import models.Trip;
 import play.data.validation.Validation;
 import play.mvc.Before;
@@ -152,6 +153,26 @@ public class Announcements extends Controller {
 		}
 		
 		flash.success("announcements.apply.success");
+		
+		Announcements.see(announcementId);
+	}
+
+	public static void desist(long announcementId) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Announcement announcement = Announcement.findById(announcementId);
+		
+		announcement.freePlaces += 1;
+		announcement.passengers.remove(member);
+		announcement.save();
+		
+		PendingReadOnly pending = PendingReadOnly.find("byAnnouncement_idAndMember_id", announcement.id, member.id).first();
+		if(pending != null) {
+			member.pendings.remove(pending);
+			member.save();
+			pending.delete();
+		}
+		
+		flash.success("announcements.desist.success");
 		
 		Announcements.see(announcementId);
 	}

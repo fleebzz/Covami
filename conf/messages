@@ -114,3 +114,5 @@ announcements.apply=Postuler à cette annonce
 announcements.apply.success=Demande de participation au voyage envoyée au propriétaire.
 announcements.apply.selfError=Vous ne pouvez pas postuler à une annonce qui vous appartient !
 announcements.member.willParticipate=Vous y participez !
+announcements.member.desist=Je ne peux plus y participer, me désister !
+announcements.desist.success=Vous avez correctement été supprimé de ce voyage !

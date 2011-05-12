@@ -56,7 +56,15 @@
 	<p></p>
 	
 	#{if _announcement.passengers.contains(_me)}
-		&{'announcements.member.willParticipate'}
+		<p>
+			&{'announcements.member.willParticipate'}
+		</p>
+		<p>
+			#{form @Announcements.desist()}
+				<input type="hidden" name="announcementId" value="${_announcement.id}" />
+				<input class="pending" type="submit" value="&{'announcements.member.desist'}" />
+			#{/form}
+		</p>
 	#{/if}
 	#{elseif _announcement.member != _me}
 		#{if _announcement.freePlaces > 0}
