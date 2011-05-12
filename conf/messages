@@ -22,7 +22,7 @@ pages.title.addAnnouncement=Poster une annonce
 pages.title.myAnnouncements=Mes annonces
 pages.title.findAnnouncements=Chercher une annonce
 pages.title.seeAnnouncement=Détails d'une annonce
-pages.title.searchAnnouncements=Chercher d'une annonce
+pages.title.searchAnnouncements=Chercher une annonce
 
 general.delete=Supprimer
 general.dateFormat=fr
@@ -96,6 +96,8 @@ announcements.add=Poster une nouvelle annonce
 announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres
+announcements.full=Désolé, il n'y a plus de place
+announcements.full.short=Voyage plein
 announcements.startDate=Date de départ
 announcements.startHour=Heure de départ
 announcements.startCity=Ville de départ

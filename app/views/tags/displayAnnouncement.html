@@ -48,18 +48,26 @@
 		<span name="announcement.vehicle">${_announcement.vehicle.model.make} ${_announcement.vehicle.model.model} ${_announcement.vehicle.model.nbPlaces} &{'vehicle.places'}</span>
 	</p>
 	<p>
-	
-	${_announcement.vehicle.model.make} ${_announcement.vehicle.model.model} 
-	(${_announcement.freePlaces}/${_announcement.vehicle.model.nbPlaces})</p>
+		<label for='announcement.nbPlaces'>&{'announcements.nbPlaces'}</label>
+		<span name="announcement.nbPlaces">
+			${_announcement.freePlaces}
+		</span>
+	</p>
+	<p></p>
 	
 	#{if _announcement.passengers.contains(_me)}
 		&{'announcements.member.willParticipate'}
 	#{/if}
 	#{elseif _announcement.member != _me}
-		#{form @Announcements.apply()}
-			<input type="hidden" name="announcementId" value="${_announcement.id}" />
-			<input type="submit" value="&{'announcements.apply'}" />
-		#{/form}
+		#{if _announcement.freePlaces > 0}
+			#{form @Announcements.apply()}
+				<input type="hidden" name="announcementId" value="${_announcement.id}" />
+				<input type="submit" value="&{'announcements.apply'}" />
+			#{/form}
+		#{/if}
+		#{else}
+			&{'announcements.full'}
+		#{/else}
 	#{/elseif}
 	
 #{/if}
@@ -77,6 +85,14 @@
 		<a href="@{Announcements.see(_announcement.id)}">
 			${_announcement.startDate.format('dd / MM / yyyy - HH:mm')} - ${_announcement.trip.from.name} => ${_announcement.trip.to.name}
 		</a>
+		(
+		#{if _announcement.freePlaces > 0}
+			&{'announcements.nbPlaces'} : ${_announcement.freePlaces} 
+		#{/if}
+		#{else}
+			&{'announcements.full.short'}
+		#{/else}
+		)
 	</p>
 	<p>
 		#{if _me != null && _announcement.passengers.contains(_me)}
