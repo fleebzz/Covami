@@ -14,6 +14,8 @@ public class _Trip {
 	public List<City> cities;
 
 	private double distance;
+
+	public double realDistance;
 	private double heuristic;
 
 	public _Trip(City from, City to, double distance) {
@@ -21,17 +23,19 @@ public class _Trip {
 		this.from = from;
 		this.to = to;
 		this.heuristic = 0;
+		this.realDistance = 0;
 		this.cities = new ArrayList<City>();
 		this.cities.add(from);
 	}
 
 	public _Trip(List<City> cities, double distance, double heuristic,
-			City from, City to) {
+			City from, City to, double realDistance) {
 		this.cities = cities;
 		this.from = from;
 		this.distance = distance;
 		this.heuristic = heuristic;
 		this.to = to;
+		this.realDistance = realDistance;
 	}
 
 	public double getHeuristic() {
@@ -53,7 +57,8 @@ public class _Trip {
 	@Override
 	public _Trip clone() {
 		return new _Trip((List<City>) ((ArrayList<City>) this.cities).clone(),
-				this.distance, this.getHeuristic(), this.from, this.to);
+				this.distance, this.getHeuristic(), this.from, this.to,
+				this.realDistance);
 	}
 
 	public _Trip addCity(City a, double heuristic) {
