@@ -2,7 +2,10 @@ package controllers;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -13,6 +16,7 @@ import models.Member;
 import models.PendingAnnouncement;
 import models.PendingReadOnly;
 import models.Trip;
+import play.data.validation.Required;
 import play.data.validation.Validation;
 import play.mvc.Before;
 import play.mvc.Controller;
@@ -38,13 +42,11 @@ public class Announcements extends Controller {
 	public static void add(Announcement announcement, String startDate) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 
-		// if (announcement == null) { announcement = new Announcement(); }
-		// TODO: Prendre en compte announcement dans le form, s'il existe
-
+		List<City> cities = City.find("order by name").fetch();
+		
 		renderArgs.put("vehicles", member.vehicles);
-		renderArgs.put("cities", City.findAll());
+		renderArgs.put("cities", cities);
 		renderArgs.put("startDate", startDate);
-		// renderArgs.put("annoucement", announcement);
 
 		render();
 	}
@@ -74,6 +76,16 @@ public class Announcements extends Controller {
 			// BUG: Si on met Announcements.add(announcement); play bug !
 			// TODO: Reporter le bug
 			Announcements.add(new Announcement(), null);
+		}
+		
+		if(announcement.freePlaces > (announcement.vehicle.model.nbPlaces-1)){
+			flash.error("announcements.add.error.nbPlaces");
+			Announcements.add(null, null);
+		}
+		
+		if(startDate.isEmpty()){
+			flash.error("announcements.add.error.dateEmpty");
+			Announcements.add(null, null);
 		}
 
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.SHORT,
@@ -124,12 +136,12 @@ public class Announcements extends Controller {
 			render();
 		}
 		if(announcement == null){
-			flash.error("Cette annonce n'existe pas !");
+			flash.error("announcements.error.notExist");
 		}
 		else{
-			flash.error("Vous ne pouvez pas visualiser cette annonce !");
+			flash.error("announcements.error.cannotView");
 		}
-		Announcements.search();
+		Announcements.search(null, null, null);
 	}
 
 	public static void byMember(long id) {
@@ -139,16 +151,46 @@ public class Announcements extends Controller {
 		render();
 	}
 
-	public static void search() {
+	public static void search(String searchFrom, String searchTo, String startDate) {
 		Member member = Member.find("byEmail", Security.connected()).first();
+		
+		List<City> cities = City.find("order by name").fetch();
+		
 		List<Announcement> announcements = new ArrayList<Announcement>();
-		List<Announcement> allAnnouncements = Announcement.findAll();
+		List<Announcement> allAnnouncements = new ArrayList<Announcement>();
+		
+		if(searchFrom == null){
+			allAnnouncements = Announcement.find("order by startDate").fetch();
+		}
+		else if(searchFrom.equalsIgnoreCase(searchTo)){
+			flash.error("announcements.search.error.sameCitys");
+		}
+		else if(startDate == null){
+			flash.error("announcements.search.error.noDate");
+		}
+		else{
+			String startDateMinString = startDate + " 00:00:00";
+			String startDateMaxString = startDate + " 23:59:59";
+			SimpleDateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Date startDateMin = formatterDate.parse(startDateMinString, new ParsePosition(0));
+			Date startDateMax = formatterDate.parse(startDateMaxString, new ParsePosition(0));
+			System.out.println(startDateMin + "---------" + startDateMax);
+			allAnnouncements = Announcement.find("startDate > ? and startDate < ? order by startDate", startDateMin, startDateMax).fetch();
+		}
 		for (Announcement announcement : allAnnouncements) {
 			if(member.friends.contains(announcement.member)){
 				announcements.add(announcement);
 			}
 		}
+		
+//		if(searchDateMin == null || searchDateMin.isEmpty()){
+//		}
+	
 		renderArgs.put("announcements", announcements);
+		renderArgs.put("cities", cities);
+		renderArgs.put("searchFrom", searchFrom);
+		renderArgs.put("searchTo", searchTo);
+		renderArgs.put("startDate", startDate);
 		render();
 	}
 

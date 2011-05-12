@@ -25,7 +25,6 @@ pages.title.seeAnnouncement=Détails d'une annonce
 pages.title.searchAnnouncements=Chercher une annonce
 
 general.delete=Supprimer
-general.dateFormat=fr
 
 secure.email=Email
 secure.firstname=Firstname
@@ -47,16 +46,12 @@ members.signup.alreadyExist=Un membre avec cette adresse e-mail existe déjà
 members.signup.success=Votre compte à bien été créé
 members.errorAuthenticate=Impossible de vous connecter
 members.edit.submit=Modifier mon profil
-
 members.findFriends.input=Nom, prénom, ...
 members.findFriends.inputGo=Rechercher
 members.findFriends.nothingFound=Aucun membre trouvé pour cette requête
-
 members.inviteFriendError=Vous ne pouvez pas inviter ce membre comme ami
-
 members.deleteFriendSuccess=Amis supprimé avec succès
 members.deleteFriendFailed=Error lors de la suppression de l'amis
-
 members.inviteFriendSuccess=Demande d'amitié envoyée
 
 member.badpassword=Mauvais format de mot de passe
@@ -73,8 +68,8 @@ vehicle.select=Véhicule
 vehicle.modify=Modifier ce véhicule
 vehicle.places=Places
 
-vehicle.registration=Registration
-vehicle.techControlDate=Dernière révision
+vehicle.registration=Immatriculation
+vehicle.techControlDate=Contrôle technique
 
 vehicles.add.submit=Ajouter ce véhicule
 vehicles.add.alreadyExist=Un véhicule avec cette immatriculation existe déjà
@@ -96,12 +91,16 @@ pendings.flash.announcement.participe=Vous participerez au voyage de
 announcements.add.submit=Poster cette annonce
 announcements.add=Poster une nouvelle annonce
 announcements.add.error.noVehicle=Vous ne pouvez pas créer d'annonce car vous n'avez pas de véhicule !
+announcements.add.error.dateEmpty=Vous devez spécifier une date et une heure de départ !
+announcements.add.error.nbPlaces=Le véhicule que vous avez selectionné est trop petit pour ce que vous voulez !
 announcements.from=Départ
 announcements.to=Arrivée
 announcements.nbPlaces=Places libres
 announcements.full=Désolé, il n'y a plus de place
 announcements.full.short=Voyage plein
 announcements.startDate=Date de départ
+announcements.startDate.min=Départ minimum
+announcements.startDate.max=Départ maximum
 announcements.startHour=Heure de départ
 announcements.startCity=Ville de départ
 announcements.endCity=Ville d'arrivée
@@ -119,3 +118,8 @@ announcements.apply.selfError=Vous ne pouvez pas postuler à une annonce qui vou
 announcements.member.willParticipate=Vous y participez !
 announcements.member.desist=Je ne peux plus y participer, me désister !
 announcements.desist.success=Vous avez correctement été supprimé de ce voyage !
+announcements.search.init=Réinitilaiser la recherche
+announcements.search.error.sameCitys=Les villes de départ et d'arrivée sont identiques, pas besoin de co-voiturage...
+announcements.search.error.noDate=Veuillez spécifier un jour de départ !
+announcements.error.notExist=Cette annonce n'existe pas !
+announcements.error.cannotView=Vous ne pouvez pas visualiser cette annonce !

@@ -89,6 +89,8 @@ public class Vehicles extends Controller {
 	public static void edit(long id) {
 		Vehicle vehicle = Vehicle.findById(id);
 		List<VehicleModel> vehicleModels = VehicleModel.findAll();
+		
+		System.out.println(vehicle.registration);
 
 		renderArgs.put("model", vehicle);
 		renderArgs.put("vehicle", vehicle);
