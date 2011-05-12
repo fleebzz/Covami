@@ -75,30 +75,34 @@
 #{/if}
 #{elseif _as == 'teaser' || _as == 'searchResult'}
 	#{if _as == 'searchResult'}
-		<p>
+		<tr>
+			<td>
 			 &{'announcements.propose'}
 			<a href="@{Members.seeProfile(_announcement.member.id)}">
 				${_announcement.member.firstname} ${_announcement.member.lastname}
 			</a>
 			:
-		</p>
+			</td>
+		</tr>
 	#{/if}
-	<p>
-		<a href="@{Announcements.see(_announcement.id)}">
-			${_announcement.startDate.format('dd / MM / yyyy - HH:mm')} - ${_announcement.trip.from.name} => ${_announcement.trip.to.name}
-		</a>
-		(
-		#{if _announcement.freePlaces > 0}
-			&{'announcements.nbPlaces'} : ${_announcement.freePlaces} 
-		#{/if}
-		#{else}
-			&{'announcements.full.short'}
-		#{/else}
-		)
-	</p>
-	<p>
-		#{if _me != null && _announcement.passengers.contains(_me)}
-			&{'announcements.member.willParticipate'}
-		#{/if}
-	</p>
+	
+		<tr>
+			<td>${_announcement.trip.from.name}</td>
+			<td>${_announcement.trip.to.name}</td>
+			<td>
+				#{if _announcement.freePlaces > 0}
+					&{'announcements.nbPlaces'} : ${_announcement.freePlaces} 
+				#{/if}
+				#{else}
+					&{'announcements.full.short'}
+				#{/else}
+			</td>
+			<td class="c">${_announcement.startDate.format('dd / MM / yyyy - HH:mm')}</td>
+			<td class="c">
+				#{if _me != null && _announcement.passengers.contains(_me)}
+						&{'announcements.member.willParticipate'}
+					#{/if}
+				<a class="submit" href="@{Announcements.see(_announcement.id)}">Go</a>
+			</td>
+		</tr>
 #{/elseif}

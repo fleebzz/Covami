@@ -28,8 +28,8 @@ general.delete=Supprimer
 general.dateFormat=fr
 
 secure.email=Email
-secure.firstname=Firstname
-secure.lastname=Lastname
+secure.firstname=Prénom
+secure.lastname=Nom
 secure.username=Login
 secure.password=Mot de passe
 secure.signin=Se connecter

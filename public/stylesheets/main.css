@@ -14,6 +14,12 @@ body {
     margin: auto;
 }
 
+
+.c{
+	text-align:center;
+}
+
+
 a, a:visited{
 	color:#041AB7;
 }
@@ -277,7 +283,7 @@ h3 span {
 
 /** Form **/
 
-form, .item {
+form, .item, .titem {
     background:#f7f7f7;
 	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
 	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
@@ -298,13 +304,36 @@ form{
 	margin-left: 25%;
 }
 
-.item > form{
+.item > form, .titem form{
 	background:transparent;
 	padding:0;
 	margin:0;
 	border:0px;
 	width:auto;
 	display:inline-block;
+}
+
+table.titem{
+	width:100%;
+	padding: 10px 5px;
+	text-align: left;
+}
+
+table.titem th{
+	background:#f7f7f7;
+	background:-moz-linear-gradient(90deg, #ccc, #fff); /* Firefox */
+	background:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* Webkit */
+	padding:0px 0px 0px 2px;t
+}
+
+table.titem tr td{
+	padding: 10px 2px;
+}
+
+
+
+table.titem tr:nth-child(odd){
+	background-color:#f7f7f7;
 }
 
 form .error{
