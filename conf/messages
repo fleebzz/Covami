@@ -127,6 +127,7 @@ announcements.apply.selfError=Vous ne pouvez pas postuler à une annonce qui vou
 announcements.apply.error.past=Cette annonce est passée, donc impossible d'y postuler !
 announcements.member.willParticipate=Vous y participez !
 announcements.member.desist=Je ne peux plus y participer, me désister !
+announcements.member.seeAll=Voir toutes ses annonces
 announcements.desist.success=Vous avez correctement été supprimé de ce voyage !
 announcements.search.init=Réinitilaiser la recherche
 announcements.search.error.sameCitys=Les villes de départ et d'arrivée sont identiques, pas besoin de co-voiturage...
