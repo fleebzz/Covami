@@ -1,9 +1,11 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javassist.NotFoundException;
+import models.Announcement;
 import models.Member;
 import models.PendingInvitation;
 import play.data.validation.Valid;
@@ -198,11 +200,15 @@ public class Members extends Controller {
 		if(pendingsTemp != null){
 			pendings.add(memberToSee);
 		}
+		
+		List<Announcement> nextAnnouncements = Announcement.find("member_id = ? and startDate > ? order by startDate",
+				member.id, new Date()).fetch();
 
 		renderArgs.put("pendings", pendings);
 		renderArgs.put("applicants", applicants);
 		renderArgs.put("me", member);
 		renderArgs.put("member", memberToSee);
+		renderArgs.put("nextAnnouncements", nextAnnouncements);
 
 		render();
 	}

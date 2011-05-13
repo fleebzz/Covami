@@ -13,6 +13,25 @@
 			
 		#{/ifnot}
 	</div>
+	<h1>&{'pages.title.seeprofile.nextAnnouncements'}</h1>
+	<table class="titem">
+		<thead>
+			<th>&{'announcements.from'}</th>
+			<th>&{'announcements.to'}</th>
+			<th>&{'announcements.nbPlaces'}</th>
+			<th class="c">&{'announcements.startDate'}</th>
+			<th class="c">&{'general.action'}</th>
+		</thead>
+		<tbody>
+			#{list items:nextAnnouncements, as:'announcement'}
+				#{displayAnnouncement announcement:announcement, as:'teaserTable' /}
+			#{/list}
+		</tbody>
+	</table>
+	<p>
+		<a class="submit" href="@{Announcements.byMember(member.id)}" >&{'announcements.add'}</a>
+	</p>
+	
 	<h1>&{'pages.title.seeprofile.vehicles'}</h1>
 		#{if member.vehicles.size() > 0}
 			#{list items:member.vehicles, as:'vehicle'}

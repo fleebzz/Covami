@@ -21,6 +21,11 @@ public class PendingReadOnly extends Model {
 	@OneToOne
 	public Announcement announcement;
 
+	@OneToOne
+	public Member applicant;
+	
+	public String description;
+
 	public PendingReadOnly(Member _member) {
 		this.member = _member;
 	}

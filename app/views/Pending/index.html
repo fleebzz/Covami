@@ -5,7 +5,7 @@
 	
 	<h1>&{'pages.title.pendings'}</h1>
 	
-	#{if pendingInvitations.size() > 0 || pendingAnnouncements.size() > 0 || comingAnnouncements.size() > 0}
+	#{if pendingInvitations.size() > 0 || pendingAnnouncements.size() > 0 || comingAnnouncements.size() > 0 || pendingsReadOnly.size() > 0}
 		#{if pendingInvitations.size() > 0}	
 			<h2>&{'pages.titles.pendings.friends'}</h2>
 			#{list items:pendingInvitations, as:'invitation'}
@@ -26,9 +26,7 @@
 					<p>
 						<a href="@{Members.seeProfile(pendingAnnouncement.applicant.id)}">${pendingAnnouncement.applicant.firstname} ${pendingAnnouncement.applicant.lastname}</a> &{'pendings.announcement'}
 					</p>
-					<p>
-						#{displayAnnouncement announcement:pendingAnnouncement.Announcement, as:'teaser' /}
-					</p>
+					#{displayAnnouncement announcement:pendingAnnouncement.Announcement, as:'teaser' /}
 					
 					
 					#{form @acceptAnnouncement()}
@@ -50,15 +48,42 @@
 					<p>
 						&{'pendings.flash.announcement.participe'} #{memberLink member:comingAnnouncement.member /}
 					</p>
-					<p>
-						#{displayAnnouncement announcement:comingAnnouncement, as:"teaser" /}
-					</p>
-					#{if comingAnnouncementsReadOk.contains(comingAnnouncement)}
+					#{displayAnnouncement announcement:comingAnnouncement, as:"teaser" /}
+					#{if pendingsReadOk.contains(comingAnnouncement)}
 						#{form @pendingReadOnlyOk()}
 							<input type="hidden" name="announcementId" value="${comingAnnouncement.id}" />
 							<input type="submit" class="pending" value="&{'pendings.readOnly.ok'}" />
 						#{/form}
 					#{/if}
+				</div>
+			#{/list}
+		#{/if}
+		#{if pendingsReadOnly.size() > 0}
+			<h2>&{'pages.titles.pendings.alertAnnouncements'}</h2>
+			#{list items:pendingsReadOnly, as:'pending'}
+				<div class="item">
+					#{if pending.type == "desistParticipation"}
+						<p>
+							#{memberLink member:pending.applicant /} &{'pendings.readOnly.announcement.notParticipe'}
+						</p>
+						#{displayAnnouncement announcement:pending.announcement, as:"teaser" /}
+						#{form @pendingReadOnlyOkDelete()}
+							<input type="hidden" name="pendingReadOnlyId" value="${pending.id}" />
+							<input type="submit" class="pending" value="&{'pendings.readOnly.ok'}" />
+						#{/form}
+					#{/if}
+					#{elseif pending.type == "deleteAnnouncement"}
+						<p>
+							#{memberLink member:pending.applicant /} &{'pendings.readOnly.announcement.deleteAnnouncement'}
+						</p>
+						<p>
+							${pending.description}
+						</p>
+						#{form @pendingReadOnlyOkDelete()}
+							<input type="hidden" name="pendingReadOnlyId" value="${pending.id}" />
+							<input type="submit" class="pending" value="&{'pendings.readOnly.ok'}" />
+						#{/form}
+					#{/elseif}
 				</div>
 			#{/list}
 		#{/if}

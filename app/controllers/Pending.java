@@ -30,7 +30,7 @@ public class Pending extends Controller {
 		List<PendingInvitation> pendingInvitations = member.pendingInvitations;
 		List<PendingAnnouncement> pendingAnnouncements = member.pendingAnnouncements;
 		List<Passenger> memberPassengerAnnouncements = Passenger.find("byPassengers_id", member.id).fetch();
-		List<Announcement> comingAnnouncementsReadOk = new ArrayList<Announcement>();
+		List<Announcement> pendingsReadOk = new ArrayList<Announcement>();
 		List<Announcement> comingAnnouncements = new ArrayList<Announcement>();
 		for (Passenger memberPassengerAnnouncement : memberPassengerAnnouncements) {
 			Announcement announcement = Announcement.findById(memberPassengerAnnouncement.Announcement_id);
@@ -38,15 +38,19 @@ public class Pending extends Controller {
 				comingAnnouncements.add(announcement);
 			}
 			for (PendingReadOnly pendingReadOnly : member.pendings) {
-				if(pendingReadOnly.announcement == announcement) {
-					comingAnnouncementsReadOk.add(announcement);
+				if(pendingReadOnly.announcement != null && pendingReadOnly.announcement.id == announcement.id) {
+					pendingsReadOk.add(announcement);
 				}
 			}
 		}
-
+		
+		List<PendingReadOnly> pendingsReadOnly = PendingReadOnly.find("byMember_idAndAnnouncement_idIsNull", member.id).fetch();
+		
+		
 		renderArgs.put("pendingInvitations", pendingInvitations);
 		renderArgs.put("pendingAnnouncements", pendingAnnouncements);
-		renderArgs.put("comingAnnouncementsReadOk", comingAnnouncementsReadOk);
+		renderArgs.put("pendingsReadOk", pendingsReadOk);
+		renderArgs.put("pendingsReadOnly", pendingsReadOnly);
 		renderArgs.put("comingAnnouncements", comingAnnouncements);
 		render();
 	}
@@ -133,6 +137,19 @@ public class Pending extends Controller {
 		PendingReadOnly pending = PendingReadOnly.find("byAnnouncement_idAndMember_id", announcementId, member.id).first();
 		member.pendings.remove(pending);
 		member.save();
+		pending.delete();
+		
+		Pending.index();
+	}
+
+	public static void pendingReadOnlyOkDelete(long pendingReadOnlyId) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		
+		PendingReadOnly pending = PendingReadOnly.findById(pendingReadOnlyId);
+		
+		member.pendings.remove(pending);
+		member.save();
+		
 		pending.delete();
 		
 		Pending.index();

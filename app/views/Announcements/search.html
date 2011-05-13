@@ -28,7 +28,13 @@
 		</p>
 		<p>
 			<label for="startDate">&{'announcements.startDate'}</label>
-			<input id="startDate" name="startDate" value="${startDate}" type="text" class="hasDatepicker" size="10">
+			
+			
+			<!-- La ligne suivant ne fonctionne pas alors que celle d'apres oui ...
+			<input id="startDate" name="startDate" value="${startDate}" type="text" class="hasDatepicker" size="10" /> -->
+			
+			
+			<input id="startDate" disabled="disabled" name="startDate" value="${startDate}" type="text" size="10" />
 		</p>
 		<p>
 			#{if searchFrom != null || searchTo != null || searchDateMin != null || searchDateMax != null}
@@ -49,19 +55,17 @@
 
 <script type="text/javascript" charset="utf-8">
 
-	$(function() {
-		$("#hasDatepicker").datetimepicker({
-			dateFormat:'dd/mm/yy', 
-			timeFormat:'hh:mm:ss',
-			showAnim:'fadeIn',
-			dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-			monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
-			autoSize: true,
-			minDate: '0',
-			showTime: true,
-			duration: '',
-			constrainInput: true
-		});
+   $(function() {
+       $("#startDate").datepicker({
+           dateFormat:'dd/mm/yy', 
+           showAnim:'fadeIn',
+           dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
+           monthNames: ['Janvier','F&eacute;vrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','D&eacute;cembre'],
+           autoSize: true,
+           minDate: '0',
+           showTime: false,
+           constrainInput: false
+       });
 
-	});
+   });
 </script>

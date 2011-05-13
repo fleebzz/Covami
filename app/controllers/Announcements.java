@@ -121,10 +121,13 @@ public class Announcements extends Controller {
 	public static void list() {
 		Member member = Member.find("byEmail", Security.connected()).first();
 
-		List<Announcement> announcements = Announcement.find("byMember_id",
-				member.id).fetch();
+		List<Announcement> previousAnnouncements = Announcement.find("member_id = ? and startDate < ? order by startDate",
+				member.id, new Date()).fetch();
+		List<Announcement> nextAnnouncements = Announcement.find("member_id = ? and startDate > ? order by startDate",
+				member.id, new Date()).fetch();
 
-		renderArgs.put("announcements", announcements);
+		renderArgs.put("previousAnnouncements", previousAnnouncements);
+		renderArgs.put("nextAnnouncements", nextAnnouncements);
 		render();
 	}
 
@@ -132,7 +135,7 @@ public class Announcements extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(id);
 		if (announcement != null
-				&& member.friends.contains(announcement.member)) {
+				&& (member.friends.contains(announcement.member) || announcement.member == member)) {
 			renderArgs.put("announcement", Announcement.findById(id));
 			render();
 		}
@@ -175,18 +178,14 @@ public class Announcements extends Controller {
 			SimpleDateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			Date startDateMin = formatterDate.parse(startDateMinString, new ParsePosition(0));
 			Date startDateMax = formatterDate.parse(startDateMaxString, new ParsePosition(0));
-			System.out.println(startDateMin + "---------" + startDateMax);
 			allAnnouncements = Announcement.find("startDate > ? and startDate < ? order by startDate", startDateMin, startDateMax).fetch();
 		}
 		for (Announcement announcement : allAnnouncements) {
-			if (member.friends.contains(announcement.member)) {
+			if (member.friends.contains(announcement.member) && announcement.startDate.after(new Date())) {
 				announcements.add(announcement);
 			}
 		}
 		
-//		if(searchDateMin == null || searchDateMin.isEmpty()){
-//		}
-	
 		renderArgs.put("announcements", announcements);
 		renderArgs.put("cities", cities);
 		renderArgs.put("searchFrom", searchFrom);
@@ -208,6 +207,10 @@ public class Announcements extends Controller {
 
 		if (announcement.member == member) {
 			flash.error("announcements.apply.selfError");
+			Announcements.see(announcementId);
+		}
+		if(announcement.startDate.before(new Date())){
+			flash.error("announcements.apply.error.past");
 			Announcements.see(announcementId);
 		}
 
@@ -244,9 +247,46 @@ public class Announcements extends Controller {
 			member.save();
 			pending.delete();
 		}
+		
+		PendingReadOnly pendingRO = new PendingReadOnly(member);
+		pendingRO.type = "desistParticipation";
+		pendingRO.announcement = announcement;
+		pendingRO.applicant = member;
+		pendingRO.save();
+		
+		announcement.member.pendings.add(pendingRO);
+		announcement.member.save();
 
 		flash.success("announcements.desist.success");
 
 		Announcements.see(announcementId);
+	}
+
+	public static void delete(long announcementId) {
+		Member member = Member.find("byEmail", Security.connected()).first();
+		Announcement announcement = Announcement.findById(announcementId);
+		
+		SimpleDateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		
+		
+		for (Member passenger : announcement.passengers) {
+			PendingReadOnly pendingDelete = new PendingReadOnly(passenger);
+			pendingDelete.type = "deleteAnnouncement";
+			pendingDelete.applicant = member;
+			pendingDelete.description = formatterDate.format(announcement.startDate).toString()
+				+ " | "
+				+ announcement.trip.from.name
+				+ " => "
+				+ announcement.trip.to.name;
+			pendingDelete.save();
+			passenger.pendings.add(pendingDelete);
+			passenger.save();
+		}
+		announcement.delete();
+
+		flash.success("announcements.delete.success");
+
+		Announcements.list();
+		
 	}
 }

@@ -7,19 +7,39 @@
 	
 	<a class="submit" href="@{Announcements.add()}" >&{'announcements.add'}</a>
 	
-	<table class="titem">
-		<thead>
-			<th>From</th>
-			<th>To</th>
-			<th>Places</th>
-			<th class="c">Date</th>
-			<th class="c">Options</th>
-		</thead>
-		<tbody>
-			#{list items:announcements, as:'announcement'}
-				#{displayAnnouncement announcement:announcement, as:'teaser' /}
-			#{/list}
-		</tbody>
-	</table>
+	#{if nextAnnouncements.size() > 0}
+		<h2>&{'pages.title.myAnnouncements.next'}</h2>
+		<table class="titem">
+			<thead>
+				<th>&{'announcements.from'}</th>
+				<th>&{'announcements.to'}</th>
+				<th>&{'announcements.nbPlaces'}</th>
+				<th class="c">&{'announcements.startDate'}</th>
+				<th class="c">&{'general.action'}</th>
+			</thead>
+			<tbody>
+				#{list items:nextAnnouncements, as:'announcement'}
+					#{displayAnnouncement announcement:announcement, as:'teaserTable' /}
+				#{/list}
+			</tbody>
+		</table>
+	#{/if}
 	
+	#{if previousAnnouncements.size() > 0}
+		<h2>&{'pages.title.myAnnouncements.previous'}</h2>
+		<table class="titem">
+			<thead>
+				<th>&{'announcements.from'}</th>
+				<th>&{'announcements.to'}</th>
+				<th>&{'announcements.nbPlaces'}</th>
+				<th class="c">&{'announcements.startDate'}</th>
+				<th class="c">&{'general.action'}</th>
+			</thead>
+			<tbody>
+				#{list items:previousAnnouncements, as:'announcement'}
+					#{displayAnnouncement announcement:announcement, as:'teaserTable' /}
+				#{/list}
+			</tbody>
+		</table>
+	#{/if}
 </div>

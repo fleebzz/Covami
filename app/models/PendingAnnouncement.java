@@ -13,6 +13,7 @@ import play.db.jpa.Model;
 
 @Entity
 public class PendingAnnouncement extends Model {
+	
 	@Required
 	@OneToOne
 	public Announcement Announcement;

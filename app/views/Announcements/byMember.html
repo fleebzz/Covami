@@ -1,14 +1,13 @@
 #{extends 'main.html' /}
-#{set title:'Mes annonces' /}
+#{set title:'Annonces d\'un membre' /}
 
 <div>
 	
-	<h1>&{'pages.title.myAnnouncements'}</h1>
+	<h1>&{'pages.title.memberAnnouncements'}</h1>
 	
-	<a class="submit" href="@{Announcements.add()}" >&{'announcements.add'}</a>
 	#{list items:announcements, as:'announcement'}
 		<div class="item">
-			#{displayAnnouncement announcement:announcement, as:'teaser' /}
+			#{displayAnnouncement announcement:announcement, as:'searchResult' /}
 		</div>
 	#{/list}
 	

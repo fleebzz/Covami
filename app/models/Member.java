@@ -37,10 +37,10 @@ public class Member extends Model {
 	@JoinTable(name = "MemberFriends")
 	public List<Member> friends;
 
-  @IgnoreField
-  @ManyToMany
-  @JoinTable(name = "MemberReadOnlyPending")
-  public List<PendingReadOnly> pendings;
+	@IgnoreField
+	@ManyToMany
+	@JoinTable(name = "MemberReadOnlyPending")
+	public List<PendingReadOnly> pendings;
 
 	@IgnoreField
 	@OneToMany
