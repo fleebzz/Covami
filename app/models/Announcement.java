@@ -47,4 +47,6 @@ public class Announcement extends Model {
 	public List<Member> passengers;
 
 	public double totalCost;
+	
+	public String color;
 }

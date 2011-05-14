@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Color;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -9,9 +10,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import models.Announcement;
 import models.City;
+import models.JSONAnnouncement;
 import models.Member;
 import models.PendingAnnouncement;
 import models.PendingReadOnly;
@@ -22,7 +25,6 @@ import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
-// TODO: Empêcher de poster une annonce si l'utilisateur n'a pas enregistré de véhicule
 @With(Secure.class)
 public class Announcements extends Controller {
 
@@ -106,6 +108,20 @@ public class Announcements extends Controller {
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
 			flash.success("announcements.successWhileSaving");
+			
+			Random randR = new Random();
+			Random randG = new Random();
+			Random randB = new Random();
+			int minRand = 0;
+			int maxRand = 255;
+
+			int valR = minRand + randR.nextInt(maxRand - minRand);
+			int valG = minRand + randG.nextInt(maxRand - minRand);
+			int valB = minRand + randB.nextInt(maxRand - minRand);
+			
+			announcement.color = String.valueOf(new Color(valR, valG, valB).getRGB());
+			announcement.save();
+			
 			Announcements.list();
 
 		} else {
@@ -192,13 +208,6 @@ public class Announcements extends Controller {
 		renderArgs.put("searchTo", searchTo);
 		renderArgs.put("startDate", startDate);
 		render();
-	}
-
-	public static void api() {
-		List<Announcement> announcements = Announcement.find("startDate >= ?",
-				new Date()).fetch();
-
-		renderXml(announcements);
 	}
 
 	public static void apply(long announcementId) {
