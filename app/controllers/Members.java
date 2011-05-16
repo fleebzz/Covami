@@ -202,7 +202,9 @@ public class Members extends Controller {
 		}
 		
 		List<Announcement> nextAnnouncements = Announcement.find("member_id = ? and startDate > ? order by startDate",
-				member.id, new Date()).fetch();
+				memberToSee.id, new Date()).fetch();
+		
+		System.out.println(nextAnnouncements.size());
 
 		renderArgs.put("pendings", pendings);
 		renderArgs.put("applicants", applicants);

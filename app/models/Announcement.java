@@ -36,15 +36,15 @@ public class Announcement extends Model {
 	public Date startDate;
 
 	@Required
-	public double kilometers;
+	public int kilometers;
 
 	@Required
 	public int freePlaces;
 
 	@HiddenField
 	@OneToMany
-	@JoinTable(name = "Passenger")
-	public List<Member> passengers;
+//	@JoinTable(name = "Passenger")
+	public List<Passenger> passengers;
 
 	public int costByPassenger;
 	

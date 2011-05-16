@@ -29,6 +29,7 @@ pages.title.seeAnnouncement=Détails d'une annonce
 pages.title.searchAnnouncements=Chercher une annonce
 pages.title.memberAnnouncements=Annonces d'un membre
 pages.titles.pendings.alertAnnouncements=Alertes à propos des annonces
+pages.title.announcement.map=Carte de l'annonce
 
 general.delete=Supprimer
 general.action=Action
@@ -141,4 +142,5 @@ announcements.action.see.map=Voir le voyage sur la carte
 announcements.delete=Je ne peux plus organiser ce voyage - supprimer cette annonce
 announcements.delete.success=Votre annonce a été supprimée avec succés !
 announcements.map=Carte du trajet
+announcements.see.map.back=Retour aux détails de l'annonce
 announcements.costByPassenger=Prix / Passager

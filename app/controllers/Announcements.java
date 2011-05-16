@@ -16,6 +16,7 @@ import models.Announcement;
 import models.City;
 import models.JSONAnnouncement;
 import models.Member;
+import models.Passenger;
 import models.PendingAnnouncement;
 import models.PendingReadOnly;
 import models.Trip;
@@ -76,7 +77,7 @@ public class Announcements extends Controller {
 			flash.error("announcements.sameCity");
 
 			// BUG: Si on met Announcements.add(announcement); play bug !
-			// TODO: Reporter le bug
+			// TODO: Raporter le bug
 			Announcements.add(new Announcement(), null);
 		}
 		
@@ -100,7 +101,7 @@ public class Announcements extends Controller {
 				.first();
 
 		// Recherche du chemin via aStar qui retourne la distance totale en KM
-		announcement.kilometers = trip.generatePath();
+		announcement.kilometers = (int)(trip.generatePath());
 
 		announcement.costByPassenger = (int)((announcement.kilometers / 5.3) / announcement.freePlaces);
 		
@@ -153,7 +154,13 @@ public class Announcements extends Controller {
 		Announcement announcement = Announcement.findById(id);
 		if (announcement != null
 				&& (member.friends.contains(announcement.member) || announcement.member == member)) {
-			renderArgs.put("announcement", Announcement.findById(id));
+			List<Passenger> passengersAnnouncement = Passenger.find("byAnnouncement_id", announcement.id).fetch();
+			List<Member> passengers = new ArrayList<Member>();
+			for (Passenger passenger : passengersAnnouncement) {
+				passengers.add(passenger.member);
+			}
+			renderArgs.put("announcement", announcement);
+			renderArgs.put("passengers", passengers);
 			render();
 		}
 		if (announcement == null) {
@@ -165,10 +172,20 @@ public class Announcements extends Controller {
 	}
 
 	public static void byMember(long id) {
+		Member member = Member.find("byEmail", Security.connected()).first();
 		List<Announcement> announcements = Announcement.find("byMember_id", id)
 				.fetch();
+		
+		List<Announcement> participateAnnouncements = new ArrayList<Announcement>();
+		
+		for (Announcement announcement : announcements) {
+			if(Passenger.find("byAnnouncement_idAndMember_id", announcement.id, member.id) != null){
+				participateAnnouncements.add(announcement);
+			}
+		}
 
 		renderArgs.put("announcements", announcements);
+		renderArgs.put("participateAnnouncements", participateAnnouncements);
 		render();
 	}
 
@@ -202,8 +219,17 @@ public class Announcements extends Controller {
 				announcements.add(announcement);
 			}
 		}
+
+		List<Announcement> participateAnnouncements = new ArrayList<Announcement>();
 		
+		for (Announcement announcement : announcements) {
+			if(Passenger.find("byAnnouncement_idAndMember_id", announcement.id, member.id) != null){
+				participateAnnouncements.add(announcement);
+			}
+		}
+
 		renderArgs.put("announcements", announcements);
+		renderArgs.put("participateAnnouncements", participateAnnouncements);
 		renderArgs.put("cities", cities);
 		renderArgs.put("searchFrom", searchFrom);
 		renderArgs.put("searchTo", searchTo);
@@ -278,8 +304,18 @@ public class Announcements extends Controller {
 		
 		SimpleDateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		
+		List<Passenger> passengersAnnouncement = Passenger.find("byAnnouncement", announcement).fetch();
+		List<Member> passengers = new ArrayList<Member>();
 		
-		for (Member passenger : announcement.passengers) {
+		for (Passenger passengerAnnouncement : passengersAnnouncement) {
+			passengers.add(passengerAnnouncement.member);
+			announcement.passengers.remove(passengerAnnouncement);
+			announcement.save();
+			passengerAnnouncement.delete();
+		}
+		
+		
+		for (Member passenger : passengers) {
 			PendingReadOnly pendingDelete = new PendingReadOnly(passenger);
 			pendingDelete.type = "deleteAnnouncement";
 			pendingDelete.applicant = member;

@@ -29,11 +29,11 @@ public class Pending extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		List<PendingInvitation> pendingInvitations = member.pendingInvitations;
 		List<PendingAnnouncement> pendingAnnouncements = member.pendingAnnouncements;
-		List<Passenger> memberPassengerAnnouncements = Passenger.find("byPassengers_id", member.id).fetch();
+		List<Passenger> memberPassengerAnnouncements = Passenger.find("byMember_id", member.id).fetch();
 		List<Announcement> pendingsReadOk = new ArrayList<Announcement>();
 		List<Announcement> comingAnnouncements = new ArrayList<Announcement>();
 		for (Passenger memberPassengerAnnouncement : memberPassengerAnnouncements) {
-			Announcement announcement = Announcement.findById(memberPassengerAnnouncement.Announcement_id);
+			Announcement announcement = Announcement.findById(memberPassengerAnnouncement.announcement.id);
 			if(announcement.startDate.after(new Date())) {
 				comingAnnouncements.add(announcement);
 			}
@@ -99,7 +99,9 @@ public class Pending extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 
 		PendingAnnouncement pendingAnnouncement = PendingAnnouncement.findById(pendingAnnouncementId);
-		pendingAnnouncement.Announcement.passengers.add(pendingAnnouncement.applicant);
+		Passenger passenger = new Passenger(pendingAnnouncement.Announcement, pendingAnnouncement.applicant);
+		passenger.save();
+		pendingAnnouncement.Announcement.passengers.add(passenger);
 		pendingAnnouncement.Announcement.save();
 
 		member.pendingAnnouncements.remove(pendingAnnouncement);

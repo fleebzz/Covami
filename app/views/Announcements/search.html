@@ -47,7 +47,7 @@
 	
 	#{list items:announcements, as:'announcement'}
 		<div class="item">
-			#{displayAnnouncement announcement:announcement, me:user, as:'searchResult' /}
+			#{displayAnnouncement announcement:announcement, me:user, participateAnnouncements:participateAnnouncements, as:'searchResult' /}
 		</div>
 	#{/list}
 </div>

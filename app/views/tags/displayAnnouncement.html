@@ -60,8 +60,7 @@
 		</span>
 	</p>
 	<p></p>
-	
-	#{if _announcement.passengers.contains(_me)}
+	#{if _passengers != null && _passengers.contains(_me)}
 		<p>
 			&{'announcements.member.willParticipate'}
 		</p>
@@ -137,7 +136,7 @@
 		)
 	</p>
 	<p>
-		#{if _me != null && _announcement.passengers.contains(_me)}
+		#{if _me != null && _participateAnnouncements != null && _participateAnnouncements.contains(_announcement)}
 			&{'announcements.member.willParticipate'}
 		#{/if}
 	</p>
