@@ -44,14 +44,23 @@ public class Pending extends Controller {
 			}
 		}
 		
-		List<PendingReadOnly> pendingsReadOnly = PendingReadOnly.find("byMember_idAndAnnouncement_idIsNull", member.id).fetch();
+		List<PendingReadOnly> pendingsReadOnly = PendingReadOnly.find("byMember_id", member.id).fetch();
 		
+		int existDeleteOrDesist = 0;
+		
+		for (PendingReadOnly pendingReadOnly : pendingsReadOnly) {
+			System.out.println(pendingReadOnly.type);
+			if(pendingReadOnly.type.equalsIgnoreCase("deleteAnnouncement") || pendingReadOnly.type.equalsIgnoreCase("desistParticipation")){
+				existDeleteOrDesist = 1;
+			}
+		}
 		
 		renderArgs.put("pendingInvitations", pendingInvitations);
 		renderArgs.put("pendingAnnouncements", pendingAnnouncements);
 		renderArgs.put("pendingsReadOk", pendingsReadOk);
 		renderArgs.put("pendingsReadOnly", pendingsReadOnly);
 		renderArgs.put("comingAnnouncements", comingAnnouncements);
+		renderArgs.put("existDeleteOrDesist", existDeleteOrDesist);
 		render();
 	}
 
@@ -99,7 +108,13 @@ public class Pending extends Controller {
 		Member member = Member.find("byEmail", Security.connected()).first();
 
 		PendingAnnouncement pendingAnnouncement = PendingAnnouncement.findById(pendingAnnouncementId);
-		Passenger passenger = new Passenger(pendingAnnouncement.Announcement, pendingAnnouncement.applicant);
+		
+		if(pendingAnnouncement.nbPassengers > pendingAnnouncement.Announcement.freePlaces){
+			flash.error("pendings.announcements.full");
+			Pending.index();
+		}
+		
+		Passenger passenger = new Passenger(pendingAnnouncement.Announcement, pendingAnnouncement.applicant, pendingAnnouncement.nbPassengers);
 		passenger.save();
 		pendingAnnouncement.Announcement.passengers.add(passenger);
 		pendingAnnouncement.Announcement.save();
@@ -108,7 +123,7 @@ public class Pending extends Controller {
 		member.save();
 		pendingAnnouncement.delete();
 		
-		pendingAnnouncement.Announcement.freePlaces -=1;
+		pendingAnnouncement.Announcement.freePlaces -= pendingAnnouncement.nbPassengers;
 		pendingAnnouncement.Announcement.save();
 		
 		PendingReadOnly pending = new PendingReadOnly(pendingAnnouncement.applicant);

@@ -105,8 +105,6 @@ public class Announcements extends Controller {
 
 		announcement.costByPassenger = (int)((announcement.kilometers / 5.3) / announcement.freePlaces);
 		
-		System.out.println(announcement.costByPassenger);
-
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
 			flash.success("announcements.successWhileSaving");
@@ -223,7 +221,7 @@ public class Announcements extends Controller {
 		List<Announcement> participateAnnouncements = new ArrayList<Announcement>();
 		
 		for (Announcement announcement : announcements) {
-			if(Passenger.find("byAnnouncement_idAndMember_id", announcement.id, member.id) != null){
+			if(Passenger.find("byAnnouncement_idAndMember_id", announcement.id, member.id).first() != null){
 				participateAnnouncements.add(announcement);
 			}
 		}
@@ -237,10 +235,10 @@ public class Announcements extends Controller {
 		render();
 	}
 
-	public static void apply(long announcementId) {
+	public static void apply(long announcementId, long fromId, long toId, int wantedPlaces, int price) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(announcementId);
-
+		
 		if (announcement.member == member) {
 			flash.error("announcements.apply.selfError");
 			Announcements.see(announcementId);
@@ -254,8 +252,10 @@ public class Announcements extends Controller {
 				"byAnnouncement_idAndApplicant_id", announcement.id, member.id)
 				.first();
 		if (existPending == null) {
+			City from = City.findById(fromId);
+			City to = City.findById(toId);
 			PendingAnnouncement pending = new PendingAnnouncement(announcement,
-					member);
+					member, from, to, wantedPlaces);
 			pending.save();
 
 			announcement.member.pendingAnnouncements.add(pending);
@@ -266,14 +266,50 @@ public class Announcements extends Controller {
 
 		Announcements.see(announcementId);
 	}
+	
+	public static void applyCustom(long announcementId, long fromId, long toId, int wantedPlaces){
+		Announcement announcement = Announcement.findById(announcementId);
+		City from = City.findById(fromId);
+		City to = null;
+		
+		if(toId != 0 && wantedPlaces != 0){
+			to = City.findById(toId);
+			renderArgs.put("to", to);
+			renderArgs.put("wantedPlaces", wantedPlaces);
+		}
+		else{
+			to = announcement.trip.to;
+			renderArgs.put("to", null);
+			renderArgs.put("wantedPlaces", 0);
+		}
+		
+		Trip trip = new Trip(from, to);
+		double distance = trip.generatePath();
+		
+		int price = (int)(distance / 5.3 / announcement.vehicle.model.nbPlaces * wantedPlaces);
+		
+		List<City> cities = trip.cities;
+		cities.remove(from);
+		
+		renderArgs.put("announcement", announcement);
+		renderArgs.put("from", from);
+		renderArgs.put("cities", cities);
+		renderArgs.put("price", price);
+		
+		render();
+	}
 
 	public static void desist(long announcementId) {
 		Member member = Member.find("byEmail", Security.connected()).first();
 		Announcement announcement = Announcement.findById(announcementId);
+		Passenger passenger = Passenger.find("byAnnouncement_idAndMember_id", announcement.id, member.id).first();
+		
+		
 
-		announcement.freePlaces += 1;
-		announcement.passengers.remove(member);
+		announcement.freePlaces += passenger.nbPlaces;
+		announcement.passengers.remove(passenger);
 		announcement.save();
+		passenger.delete();
 
 		PendingReadOnly pending = PendingReadOnly.find(
 				"byAnnouncement_idAndMember_id", announcement.id, member.id)
@@ -284,7 +320,7 @@ public class Announcements extends Controller {
 			pending.delete();
 		}
 		
-		PendingReadOnly pendingRO = new PendingReadOnly(member);
+		PendingReadOnly pendingRO = new PendingReadOnly(announcement.member);
 		pendingRO.type = "desistParticipation";
 		pendingRO.announcement = announcement;
 		pendingRO.applicant = member;

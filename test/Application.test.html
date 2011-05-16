@@ -1,7 +1,35 @@
 *{ You can use plain selenium command using the selenium tag }*
 
-#{selenium}
+#{fixture delete:'all' /}
+
+#{selenium 'Test inscription'}
     // Open the home page, and check that no error occured
+    open('/logout')
     open('/')
-    assertNotTitle('Application error')
+    assertTextPresent('Oops ! You are not connected !')
+    assertTitle('Home')
+    clickAndWait('link=S'inscrire')
+    assertTitle('Inscription')
+    type('email', 'Mauvaise valeur')
+    click('css=input[type=submit]')
+    assertTitle('Inscription')
+    type('email', 'florian.bezagu@gmail.com')
+    type('firstname', 'Florian')
+    type('lastname', 'Bezagu')
+    type('password', 'password')
+    clickAndWait('css=input[type=submit]')
+    assertTextPresent('You are connected')
+#{/selenium}
+
+#{selenium 'Test connexion'}
+    open('/logout')
+    open('/')
+    assertTextPresent('Oops ! You are not connected !')
+    assertTitle('Home')
+    clickAndWait('link=Se connecter')
+    assertTitle('Connexion')
+    type('username', 'florian.bezagu@gmail.com')
+    type('password', 'password')
+    clickAndWait('css=input[type=submit]')
+    assertTextPresent('You are connected')
 #{/selenium}

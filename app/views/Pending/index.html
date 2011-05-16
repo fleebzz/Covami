@@ -24,7 +24,12 @@
 			#{list items:pendingAnnouncements, as:'pendingAnnouncement'}
 				<div class="item">
 					<p>
-						<a href="@{Members.seeProfile(pendingAnnouncement.applicant.id)}">${pendingAnnouncement.applicant.firstname} ${pendingAnnouncement.applicant.lastname}</a> &{'pendings.announcement'}
+						<a href="@{Members.seeProfile(pendingAnnouncement.applicant.id)}">
+							${pendingAnnouncement.applicant.firstname}
+							${pendingAnnouncement.applicant.lastname}
+						</a>
+						(${pendingAnnouncement.nbPassengers} personne) 
+						&{'pendings.announcement'}
 					</p>
 					#{displayAnnouncement announcement:pendingAnnouncement.Announcement, as:'teaser' /}
 					
@@ -58,7 +63,7 @@
 				</div>
 			#{/list}
 		#{/if}
-		#{if pendingsReadOnly.size() > 0}
+		#{if pendingsReadOnly.size() > 0 && existDeleteOrDesist == 1}
 			<h2>&{'pages.titles.pendings.alertAnnouncements'}</h2>
 			#{list items:pendingsReadOnly, as:'pending'}
 				<div class="item">

@@ -25,19 +25,25 @@ public class Application extends Controller {
 		render();
 	}
 	
-	public static void citiesForApplet(){
-		List<City> cities = City.find("order by insee").fetch();
-		List<String> neighborhood = new ArrayList<String>();
-		for (City city : cities) {
-			for (City city2 : city.neighborhood) {
-				if(city2.insee > city.insee){
-					neighborhood.add("autoroutes.add(new Troncon(getVille(" + city.insee + "), getVille(" + city2.insee + ")));");
-				}
-			}
-		}
+	public static void citiesForTests(){
 		
-		for (String string : neighborhood) {
-			System.out.println(string);
-		}
+		List<City> cities = City.findAll();
+		
+		renderXml(cities);
+		
+//		List<String> neighborhood = new ArrayList<String>();
+//		System.out.println(cities.size());
+//		for (City city : cities) {
+//			System.out.println(city.name);
+////			for (City city2 : city.neighborhood) {
+////				if(city2.insee > city.insee){
+////					neighborhood.add("autoroutes.add(new Troncon(getVille(" + city.insee + "), getVille(" + city2.insee + ")));");
+////				}
+////			}
+//		}
+		
+//		for (String string : neighborhood) {
+//			System.out.println(string);
+//		}
 	}
 }

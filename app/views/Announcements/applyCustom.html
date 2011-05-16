@@ -1,0 +1,74 @@
+#{extends 'main.html' /}
+#{set title:'Postuler a une annonce' /}
+
+<div>
+	
+	<h1>&{'pages.title.announcement.apply'}</h1>
+	
+	#{if to != null && wantedPlaces != 0}
+		<form action="@{Announcements.apply()}" method="GET" >
+			<input type="hidden" name="announcementId" value="${announcement.id}" />
+			<input type="hidden" name="fromId" value="${from.id}" />
+			<input type="hidden" name="toId" value="${to.id}" />
+			<input type="hidden" name="wantedPlaces" value="${wantedPlaces}" />
+			<input type="hidden" name="price" value="${price}" />
+			<p>
+				<label for="fromId">&{'announcements.from'}</label>
+				<input type="text" name="fromId" value="${from.name}" disabled="disabled" />
+			</p>
+			<p>
+				<label for="toId">&{'announcements.to'}</label>
+				<input type="text" name="toId" value="${to.name}" disabled="disabled" />
+			</p>
+			<p>
+				<label for="wantedPlaces">&{'announcements.nbWantedPlaces'}</label>
+				<input type="text" name="wantedPlaces" value="${wantedPlaces}" disabled="disabled" />
+			</p>
+			<p>
+				<label for="price">&{'announcements.totalCost'}</label>
+				<input type="text" name="price" value="${price} &{'general.money'}" disabled="disabled" />
+			</p>
+			
+			<p id="signup-field">
+				<input type="submit" id="signup" value="&{'general.valid'}" />
+			</p>
+		</form>
+	#{/if}
+	#{else}
+		<form action="@{Announcements.applyCustom(announcement.id, from.id)}" method="GET" >
+			<p>
+				<label for="fromId">&{'announcements.from'}</label>
+				<input type="text" name="fromId" value="${from.name}" disabled="disabled" />
+			</p>
+			<p>
+				<label for="toId">&{'announcements.to'}</label>
+				<select name="toId">
+					#{list items:cities, as:'city'}
+							<option value="${city.id}"
+								#{if city.id == announcement.trip.to.id}
+									selected="selected"
+								#{/if}
+								>
+								${city.name}
+							</option>
+					#{/list}
+				</select>
+			</p>
+			<p>
+				<label>&{'announcements.nbWantedPlaces'}</label>
+				<select name="wantedPlaces">
+					#{list items:1..announcement.freePlaces, as:'i'}
+						<option value="${i}">
+					    	${i} 
+						</option>
+					#{/list}
+				</select>
+			</p>
+			
+			<p id="signup-field">
+				<input type="submit" id="signup" value="&{'announcements.apply'}" />
+			</p>
+		</form>
+	#{/else}
+	
+</div>

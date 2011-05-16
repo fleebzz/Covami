@@ -13,7 +13,7 @@
 	</p>
 	<p>
 		<label for='announcement.startHour'>&{'announcements.startHour'}</label>
-		<span name="announcement.startHour">${_announcement.startDate.format('HH:mm')}</span>
+		<span name="announcement.startHour">${_announcement.startDate.format('HH : mm')}</span>
 	</p>
 
 	<p>
@@ -23,13 +23,16 @@
 	
 	<ul>
 		<li>${_announcement.trip.from.name} (<strong>&{'announcements.startCity'}</strong>)</li>
-	#{list items:_announcement.trip.cities, as:'city'}
-		#{if city != _announcement.trip.from && city != _announcement.trip.to}
-			<li>
-				${city.name}
-			</li>
-		#{/if}
-	#{/list}
+		#{list items:_announcement.trip.cities, as:'city'}
+			#{if city != _announcement.trip.from && city != _announcement.trip.to}
+				<li>
+					${city.name}
+					#{if _announcement.member != _me && !_passengers.contains(_me)}
+						<a href="@{Announcements.applyCustom(_announcement.id, city.id)}">(Rejoindre ici)</a>
+					#{/if}
+				</li>
+			#{/if}
+		#{/list}
 		<li>${_announcement.trip.to.name} (<strong>&{'announcements.endCity'}</strong>)</li>
 	</ul>
 	
@@ -81,8 +84,7 @@
 	#{elseif _announcement.member != _me}
 		#{if _announcement.freePlaces > 0}
 			#{form @Announcements.apply()}
-				<input type="hidden" name="announcementId" value="${_announcement.id}" />
-				<input type="submit" value="&{'announcements.apply'}" />
+				<a class="submit" href="@{Announcements.applyCustom(_announcement.id, _announcement.trip.from.id)}">&{'announcements.apply'}</a>
 			#{/form}
 		#{/if}
 		#{else}

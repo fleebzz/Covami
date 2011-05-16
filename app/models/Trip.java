@@ -42,6 +42,12 @@ public class Trip extends Model {
 	public double getHeuristic() {
 		return heuristic;
 	}
+	
+	public Trip(City from, City to){
+		this.from = from;
+		this.to = to;
+		this.heuristic = 0;
+	}
 
 	/**
 	 * Constructeur de Trajet
@@ -116,8 +122,6 @@ public class Trip extends Model {
 				City neighbour = (City) City.find("byId", cn.neighborhood_id)
 						.first();
 
-				System.out.println("-- " + neighbour.name + " --");
-
 				// Ajouter la route à la file
 				if (!curTrip.cities.contains(neighbour)) {// Ne pas ajouter
 															// une ville
@@ -126,7 +130,6 @@ public class Trip extends Model {
 
 					_Trip t = curTrip.clone().addCity(neighbour,
 							City.distanceBetween(neighbour, this.getTo()));
-					System.out.println(t.toString());
 
 					t.realDistance += cn.kms;
 					fileOpen.add(t);

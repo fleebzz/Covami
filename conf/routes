@@ -32,8 +32,12 @@ GET		/amis/									Members.listFriends
 
 GET		/notifications/							Pending.index
 
-POST	/annonces/postuler/{id}					Announcements.apply
+# POST	/annonces/postuler/{announcementId}/{fromId}/{toId}/{wantedPlaces}/{price}	Announcements.apply
 GET		/annonces/								Announcements.list
+
+GET		/annonces/apply/{announcementId}/{fromId}/{toId}/{wantedPlaces}		Announcements.applyCustom
+GET		/annonces/apply/{announcementId}/{fromId}	Announcements.applyCustom
+
 *		/annonces/ajouter						Announcements.add
 GET		/annonces/rechercher					Announcements.search
 GET		/annonces/api							Announcements.api

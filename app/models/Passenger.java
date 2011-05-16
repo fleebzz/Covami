@@ -17,8 +17,11 @@ public class Passenger extends Model {
 	@OneToOne
 	public Member member;
 	
-	public Passenger(Announcement announcement, Member member){
+	public int nbPlaces;
+	
+	public Passenger(Announcement announcement, Member member, int nbPlaces){
 		this.announcement = announcement;
 		this.member = member;
+		this.nbPlaces = nbPlaces;
 	}
 }

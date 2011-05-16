@@ -30,10 +30,12 @@ pages.title.searchAnnouncements=Chercher une annonce
 pages.title.memberAnnouncements=Annonces d'un membre
 pages.titles.pendings.alertAnnouncements=Alertes à propos des annonces
 pages.title.announcement.map=Carte de l'annonce
+pages.title.announcement.apply=Postuler à une annonce
 
 general.delete=Supprimer
 general.action=Action
 general.money=€
+general.valid=Valider
 
 secure.email=Email
 secure.firstname=Prénom
@@ -96,6 +98,7 @@ pendings.invitation.accept=Accepter
 pendings.invitation.deny=Refuser
 pendings.readOnly.ok=OK, j'ai pris note
 pendings.announcement= veut participer à une de vos annonces :
+pendings.announcements.full=Vous n'avez plus assez de place pour accepter cette personne
 pendings.flash.announcement.participe=Vous participerez au voyage de 
 pendings.readOnly.announcement.notParticipe= s'est désisté d'une de vos annonces :
 pendings.readOnly.announcement.deleteAnnouncement= a supprimé cette annonce à laquelle vous deviez participer :
@@ -144,3 +147,5 @@ announcements.delete.success=Votre annonce a été supprimée avec succés !
 announcements.map=Carte du trajet
 announcements.see.map.back=Retour aux détails de l'annonce
 announcements.costByPassenger=Prix / Passager
+announcements.nbWantedPlaces=Places désirées
+announcements.totalCost=Prix total
