@@ -22,6 +22,9 @@ GET     /public/                                staticDir:public
 
 GET		/live									Live.index
 
+GET		/api									Api.index
+GET		/api/{id}								API.byAnnouncement
+
 GET		/membres/								Members.findFriends
 GET		/membres/{id}							Members.seeProfile
 
@@ -35,6 +38,7 @@ GET		/annonces/								Announcements.list
 GET		/annonces/rechercher					Announcements.search
 GET		/annonces/api							Announcements.api
 GET		/annonces/{id}							Announcements.see
+GET		/annonces/plan/{id}						Announcements.seeMap
 GET		/annonces/membre/{id}					Announcements.byMember
 
 *		/annonces/api							Announcements.api

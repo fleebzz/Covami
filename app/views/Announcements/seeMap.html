@@ -1,0 +1,13 @@
+#{extends 'main.html' /}
+#{set title:'Carte d\'une annonce' /}
+
+<div id="profile">
+	
+	<h1>&{'pages.title.announcement.map'}</h1>
+	
+	<applet code="AppletCOVAMI.class" codebase="/public/applet/bin" width="850" height="600" alt="Carte des covoiturages en cours">
+	<param name="announcement" value="${announcementId}">
+	Carte d'une annonce
+	</applet>
+	
+</div>

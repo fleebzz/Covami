@@ -47,6 +47,18 @@
 			${_announcement.freePlaces}
 		</span>
 	</p>
+	<p>
+		<label for='announcement.cost.byPassenger'>&{'announcements.costByPassenger'}</label>
+		<span name="announcement.cost.byPassenger">
+			${_announcement.costByPassenger} &{'general.money'}
+		</span>
+	</p>
+	<p>
+		<label for='announcement.map'>&{'announcements.map'}</label>
+		<span name="announcement.map">
+			<a class="submit" href="@{Announcements.seeMap(_announcement.id)}">&{'announcements.action.see.map'}</a>
+		</span>
+	</p>
 	<p></p>
 	
 	#{if _announcement.passengers.contains(_me)}

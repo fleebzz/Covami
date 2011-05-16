@@ -102,8 +102,9 @@ public class Announcements extends Controller {
 		// Recherche du chemin via aStar qui retourne la distance totale en KM
 		announcement.kilometers = trip.generatePath();
 
-		// 1€ pour 10Km
-		announcement.totalCost = (announcement.kilometers / 10);
+		announcement.costByPassenger = (int)((announcement.kilometers / 5.3) / announcement.freePlaces);
+		
+		System.out.println(announcement.costByPassenger);
 
 		if (announcement.trip.validateAndSave()
 				&& announcement.validateAndSave()) {
@@ -296,6 +297,12 @@ public class Announcements extends Controller {
 		flash.success("announcements.delete.success");
 
 		Announcements.list();
+	}
+
+	public static void seeMap(long id) {
 		
+		renderArgs.put("announcementId", id);
+		
+		render();
 	}
 }

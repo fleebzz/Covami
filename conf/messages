@@ -32,6 +32,7 @@ pages.titles.pendings.alertAnnouncements=Alertes à propos des annonces
 
 general.delete=Supprimer
 general.action=Action
+general.money=€
 
 secure.email=Email
 secure.firstname=Prénom
@@ -136,5 +137,8 @@ announcements.search.error.noDate=Veuillez spécifier un jour de départ !
 announcements.error.notFound=Cette annonce n'existe pas !
 announcements.error.forbiden=Vous ne pouvez pas visualiser cette annonce !
 announcements.action.see=Voir
+announcements.action.see.map=Voir le voyage sur la carte
 announcements.delete=Je ne peux plus organiser ce voyage - supprimer cette annonce
 announcements.delete.success=Votre annonce a été supprimée avec succés !
+announcements.map=Carte du trajet
+announcements.costByPassenger=Prix / Passager

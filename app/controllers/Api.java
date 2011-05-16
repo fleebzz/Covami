@@ -23,4 +23,11 @@ public class Api extends Controller {
 		
 		renderJSON(jsonAnnouncements);
 	}
+	
+	public static void byAnnouncement(long id){
+		Announcement announcement = Announcement.findById(id);
+		if(announcement != null){
+			renderJSON(new JSONAnnouncement(announcement.trip.from.insee, announcement.trip.to.insee, announcement.color));
+		}
+	}
 }

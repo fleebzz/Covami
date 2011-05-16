@@ -46,7 +46,7 @@ public class Announcement extends Model {
 	@JoinTable(name = "Passenger")
 	public List<Member> passengers;
 
-	public double totalCost;
+	public int costByPassenger;
 	
 	public String color;
 }
