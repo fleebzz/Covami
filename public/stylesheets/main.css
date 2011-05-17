@@ -384,7 +384,7 @@ form input[type="datetime"], form textarea{
 	width:300px;
 }
 
-form label, .item label {
+form label, .item label, .span {
     cursor:pointer;
 	display:block;
 	float:left;

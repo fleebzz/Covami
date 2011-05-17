@@ -21,18 +21,21 @@
 		<span>&nbsp;</span>
 	</p>
 	
-	<ul style="padding:0 0 0 10px;margin:0;list-style:none">
-		<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat;">
+	<ul style="clear:both;padding:0 0 0 10px;margin:0;list-style:none">
+	
+		<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat; padding-left:20px">
 		${_announcement.trip.from.name} (<strong>&{'announcements.startCity'}</strong>)
 		</li>
 		
 		#{list items:_announcement.trip.cities, as:'city'}
 			#{if city != _announcement.trip.from && city != _announcement.trip.to}
 				<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat; padding-left:20px">
-					${city.name}
 					#{if _announcement.member != _me && !_passengers.contains(_me)}
-						<a href="@{Announcements.applyCustom(_announcement.id, city.id)}">(Rejoindre ici)</a>
+						<a href="@{Announcements.applyCustom(_announcement.id, city.id)}">
+						Rejoindre</a>
 					#{/if}
+					
+					${city.name}
 				</li>
 			#{/if}
 		#{/list}
@@ -65,7 +68,10 @@
 	<p>
 		<label for='announcement.map'>&{'announcements.map'}</label>
 		<span name="announcement.map">
-			<a class="submit" href="@{Announcements.seeMap(_announcement.id)}">&{'announcements.action.see.map'}</a>
+			<a class="submit" href="@{Announcements.seeMap(_announcement.id)}">
+				<img src="@{'/public/images/icons/world.png'}"/>
+				&{'announcements.action.see.map'}
+			</a>
 		</span>
 	</p>
 	<p></p>
