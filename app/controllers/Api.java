@@ -13,8 +13,7 @@ import play.mvc.With;
 
 public class Api extends Controller {
 	public static void index() {
-		List<Announcement> announcements = Announcement.find("startDate >= ?",
-				new Date()).fetch();
+		List<Announcement> announcements = Announcement.findByStartDateGreaterThan(new Date());
 		
 		List<JSONAnnouncement> jsonAnnouncements = new ArrayList<JSONAnnouncement>();
 		for (Announcement announcement : announcements) {

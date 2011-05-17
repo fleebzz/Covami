@@ -44,4 +44,10 @@ public class PendingAnnouncement extends Model {
 		this.to = to;
 		this.nbPassengers = nbPassengers;
 	}
+
+	public static PendingAnnouncement findByAnnouncementAndApplicant(Long announcementId, Long applicantId) {
+		return PendingAnnouncement.find(
+				"byAnnouncement_idAndApplicant_id", announcementId, applicantId)
+				.first();
+	}
 }

@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -28,5 +29,13 @@ public class PendingReadOnly extends Model {
 
 	public PendingReadOnly(Member _member) {
 		this.member = _member;
+	}
+
+	public static PendingReadOnly findByAnnouncementAndMember(long announcementId, Long memberId) {
+		return PendingReadOnly.find("byAnnouncement_idAndMember_id", announcementId, memberId).first();
+	}
+
+	public static List<PendingReadOnly> findByMember(Long memberId) {
+		return PendingReadOnly.find("byMember_id", memberId).fetch();
 	}
 }

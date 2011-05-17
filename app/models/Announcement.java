@@ -49,4 +49,38 @@ public class Announcement extends Model {
 	public int costByPassenger;
 	
 	public String color;
+
+	public static List<Announcement> findByMember(long memberId) {
+		return Announcement.find("byMember_id", memberId).fetch();
+	}
+
+	public static List<Announcement> findByMemberAndStartDateLessThanOrderByStartDate(
+			Long memberId, Date date) {
+		return Announcement.find("member_id = ? and startDate < ? order by startDate",
+				memberId, date).fetch();
+	}
+
+	public static List<Announcement> findByMemberAndStartDateGreaterThanOrderByStartDate(
+			Long memberId, Date date) {
+		return Announcement.find("member_id = ? and startDate > ? order by startDate",
+				memberId, date).fetch();
+	}
+
+	public static List<Announcement> findByStartDateGreaterThanAndStartDateLessThanOrderByStartDate(
+			Date startDateMin, Date startDateMax) {
+		return Announcement.find("startDate > ? and startDate < ? order by startDate", startDateMin, startDateMax).fetch();
+	}
+
+	public static List<Announcement> findAllOrderByStartDate() {
+		return Announcement.find("order by startDate").fetch();
+	}
+
+	public static List<Announcement> findByStartDateGreaterThan(Date date) {
+		return Announcement.find("startDate >= ?", date).fetch();
+	}
+
+	public static Announcement findByStartDateGreaterThanAndVehicle(Date date,
+			Long vehicleId) {
+		return Announcement.find("byStartDateGreaterThanAndVehicle_id", date, vehicleId).first();
+	}
 }
