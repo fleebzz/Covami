@@ -3,7 +3,6 @@
 #{fixture delete:'all' /}
 
 #{selenium 'Test inscription'}
-    // Open the home page, and check that no error occured
     open('/logout')
     open('/')
     assertTextPresent('Oops ! You are not connected !')

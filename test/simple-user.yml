@@ -1,9 +1,8 @@
 # you describe your data using the YAML notation here
 # and then load them using Fixtures.load("data.yml")
 
-Member:
-    florian.bezagu@gmail.com
-    Florian
-    Bezagu
-    passwordd
-    
+Member(florian):
+    email:              florian.bezagu@gmail.com
+    firstname:          Florian
+    lastname:           Bezagu
+    password:           password

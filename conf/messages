@@ -44,6 +44,7 @@ secure.username=Login
 secure.password=Mot de passe
 secure.signin=Se connecter
 secure.signout=Déconnexion
+secure.error=Erreur de connexion
 
 member.email=Email
 member.password=Mot de passe

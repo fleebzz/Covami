@@ -1,6 +1,7 @@
 tmp/
 eclipse/
 precompiled/
+test-result/
 test-result/BasicTest.class.passed.html
 test-result/Members.class.passed.html
 test-result/TEST-BasicTest.xml
