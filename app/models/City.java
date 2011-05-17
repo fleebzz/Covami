@@ -141,4 +141,8 @@ public class City extends Model implements Comparable<City> {
 		return City.compare(cityA, cityB) == 1 ? cityB : cityA;
 	}
 
+	public static List<City> findAllOrderByName() {
+		return City.find("order by name").fetch();
+	}
+
 }

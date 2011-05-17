@@ -29,7 +29,8 @@ public class Announcements extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			Member user = Member.find("byEmail", Security.connected()).first();
+			Member user = Member.findByEmail(controllers.Secure.Security
+					.connected());
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 		}
@@ -49,9 +50,10 @@ public class Announcements extends Controller {
 	 * @param startDate
 	 */
 	public static void add(Announcement announcement, String startDate) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 
-		List<City> cities = City.find("order by name").fetch();
+		List<City> cities = City.findAllOrderByName();
 
 		renderArgs.put("vehicles", member.vehicles);
 		renderArgs.put("cities", cities);
@@ -111,8 +113,8 @@ public class Announcements extends Controller {
 
 		// = trip.from.distanceBetween(trip.to);
 		announcement.publicationDate = new Date();
-		announcement.member = Member.find("byEmail", Security.connected())
-				.first();
+		announcement.member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 
 		// Recherche du chemin via aStar qui retourne la distance totale en KM
 		announcement.kilometers = (int) (trip.generatePath());
@@ -150,14 +152,15 @@ public class Announcements extends Controller {
 	}
 
 	public static void list() {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 
-		List<Announcement> previousAnnouncements = Announcement.find(
-				"member_id = ? and startDate < ? order by startDate",
-				member.id, new Date()).fetch();
-		List<Announcement> nextAnnouncements = Announcement.find(
-				"member_id = ? and startDate > ? order by startDate",
-				member.id, new Date()).fetch();
+		List<Announcement> previousAnnouncements = Announcement
+				.findByMemberAndStartDateLessThanOrderByStartDate(member.id,
+						new Date());
+		List<Announcement> nextAnnouncements = Announcement
+				.findByMemberAndStartDateGreaterThanOrderByStartDate(member.id,
+						new Date());
 
 		renderArgs.put("previousAnnouncements", previousAnnouncements);
 		renderArgs.put("nextAnnouncements", nextAnnouncements);
@@ -165,12 +168,13 @@ public class Announcements extends Controller {
 	}
 
 	public static void see(long id) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 		Announcement announcement = Announcement.findById(id);
 		if (announcement != null
 				&& (member.friends.contains(announcement.member) || announcement.member == member)) {
-			List<Passenger> passengersAnnouncement = Passenger.find(
-					"byAnnouncement_id", announcement.id).fetch();
+			List<Passenger> passengersAnnouncement = Passenger
+					.findByAnnouncement(announcement.id);
 			List<Member> passengers = new ArrayList<Member>();
 			for (Passenger passenger : passengersAnnouncement) {
 				passengers.add(passenger.member);
@@ -189,15 +193,15 @@ public class Announcements extends Controller {
 	}
 
 	public static void byMember(long id) {
-		Member member = Member.find("byEmail", Security.connected()).first();
-		List<Announcement> announcements = Announcement.find("byMember_id", id)
-				.fetch();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
+		List<Announcement> announcements = Announcement.findByMember(id);
 
 		List<Announcement> participateAnnouncements = new ArrayList<Announcement>();
 
 		for (Announcement announcement : announcements) {
-			if (Passenger.find("byAnnouncement_idAndMember_id",
-					announcement.id, member.id) != null) {
+			if (Passenger.findByAnnouncementAndMember(announcement.id,
+					member.id) != null) {
 				participateAnnouncements.add(announcement);
 			}
 		}
@@ -209,15 +213,16 @@ public class Announcements extends Controller {
 
 	public static void search(String searchFrom, String searchTo,
 			String startDate) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 
-		List<City> cities = City.find("order by name").fetch();
+		List<City> cities = City.findAllOrderByName();
 
 		List<Announcement> announcements = new ArrayList<Announcement>();
 		List<Announcement> allAnnouncements = new ArrayList<Announcement>();
 
 		if (searchFrom == null) {
-			allAnnouncements = Announcement.find("order by startDate").fetch();
+			allAnnouncements = Announcement.findAllOrderByStartDate();
 		} else if (searchFrom.equalsIgnoreCase(searchTo)) {
 			flash.error("announcements.search.error.sameCitys");
 		} else if (startDate == null) {
@@ -225,15 +230,17 @@ public class Announcements extends Controller {
 		} else {
 			String startDateMinString = startDate + " 00:00:00";
 			String startDateMaxString = startDate + " 23:59:59";
+
 			SimpleDateFormat formatterDate = new SimpleDateFormat(
 					"dd/MM/yyyy HH:mm:ss");
 			Date startDateMin = formatterDate.parse(startDateMinString,
 					new ParsePosition(0));
 			Date startDateMax = formatterDate.parse(startDateMaxString,
 					new ParsePosition(0));
-			allAnnouncements = Announcement.find(
-					"startDate > ? and startDate < ? order by startDate",
-					startDateMin, startDateMax).fetch();
+			allAnnouncements = Announcement
+					.findByStartDateGreaterThanAndStartDateLessThanOrderByStartDate(
+							startDateMin, startDateMax);
+
 		}
 
 		for (Announcement announcement : allAnnouncements) {
@@ -246,8 +253,8 @@ public class Announcements extends Controller {
 		List<Announcement> participateAnnouncements = new ArrayList<Announcement>();
 
 		for (Announcement announcement : announcements) {
-			if (Passenger.find("byAnnouncement_idAndMember_id",
-					announcement.id, member.id).first() != null) {
+			if (Passenger.findByAnnouncementAndMember(announcement.id,
+					member.id) != null) {
 				participateAnnouncements.add(announcement);
 			}
 		}
@@ -268,7 +275,9 @@ public class Announcements extends Controller {
 
 	public static void apply(long announcementId, long fromId, long toId,
 			int wantedPlaces, int price) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
+
 		Announcement announcement = Announcement.findById(announcementId);
 
 		if (announcement.member == member) {
@@ -280,9 +289,8 @@ public class Announcements extends Controller {
 			Announcements.see(announcementId);
 		}
 
-		PendingAnnouncement existPending = PendingAnnouncement.find(
-				"byAnnouncement_idAndApplicant_id", announcement.id, member.id)
-				.first();
+		PendingAnnouncement existPending = PendingAnnouncement
+				.findByAnnouncementAndApplicant(announcement.id, member.id);
 		if (existPending == null) {
 			City from = City.findById(fromId);
 			City to = City.findById(toId);
@@ -332,19 +340,19 @@ public class Announcements extends Controller {
 	}
 
 	public static void desist(long announcementId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 		Announcement announcement = Announcement.findById(announcementId);
-		Passenger passenger = Passenger.find("byAnnouncement_idAndMember_id",
-				announcement.id, member.id).first();
+		Passenger passenger = Passenger.findByAnnouncementAndMember(
+				announcement.id, member.id);
 
 		announcement.freePlaces += passenger.nbPlaces;
 		announcement.passengers.remove(passenger);
 		announcement.save();
 		passenger.delete();
 
-		PendingReadOnly pending = PendingReadOnly.find(
-				"byAnnouncement_idAndMember_id", announcement.id, member.id)
-				.first();
+		PendingReadOnly pending = PendingReadOnly.findByAnnouncementAndMember(
+				announcement.id, member.id);
 		if (pending != null) {
 			member.pendings.remove(pending);
 			member.save();
@@ -366,14 +374,15 @@ public class Announcements extends Controller {
 	}
 
 	public static void delete(long announcementId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security
+				.connected());
 		Announcement announcement = Announcement.findById(announcementId);
 
 		SimpleDateFormat formatterDate = new SimpleDateFormat(
 				"dd/MM/yyyy HH:mm:ss");
 
-		List<Passenger> passengersAnnouncement = Passenger.find(
-				"byAnnouncement", announcement).fetch();
+		List<Passenger> passengersAnnouncement = Passenger
+				.findAllByAnnouncement(announcement);
 		List<Member> passengers = new ArrayList<Member>();
 
 		for (Passenger passengerAnnouncement : passengersAnnouncement) {

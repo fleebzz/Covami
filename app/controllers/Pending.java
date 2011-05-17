@@ -19,17 +19,17 @@ public class Pending extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			Member user = Member.find("byEmail", Security.connected()).first();
+			Member user = Member.findByEmail(controllers.Secure.Security.connected());
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 		}
 	}
 
 	public static void index() {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		List<PendingInvitation> pendingInvitations = member.pendingInvitations;
 		List<PendingAnnouncement> pendingAnnouncements = member.pendingAnnouncements;
-		List<Passenger> memberPassengerAnnouncements = Passenger.find("byMember_id", member.id).fetch();
+		List<Passenger> memberPassengerAnnouncements = Passenger.findByMember(member.id);
 		List<Announcement> pendingsReadOk = new ArrayList<Announcement>();
 		List<Announcement> comingAnnouncements = new ArrayList<Announcement>();
 		for (Passenger memberPassengerAnnouncement : memberPassengerAnnouncements) {
@@ -44,7 +44,7 @@ public class Pending extends Controller {
 			}
 		}
 		
-		List<PendingReadOnly> pendingsReadOnly = PendingReadOnly.find("byMember_id", member.id).fetch();
+		List<PendingReadOnly> pendingsReadOnly = PendingReadOnly.findByMember(member.id);
 		
 		int existDeleteOrDesist = 0;
 		
@@ -70,10 +70,10 @@ public class Pending extends Controller {
 	 * @param applicantId
 	 */
 	public static void acceptFriend(long applicantId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		Member applicant = Member.findById(applicantId);
 		
-		PendingInvitation invitation = PendingInvitation.find("byMember_idAndApplicant_id", member.id, applicant.id).first();
+		PendingInvitation invitation = PendingInvitation.findByMemberAndApplicant(member.id, applicant.id);
 		member.pendingInvitations.remove(invitation);
 		member.save();
 		invitation.delete();
@@ -93,10 +93,10 @@ public class Pending extends Controller {
 	 * @param applicantId
 	 */
 	public static void denyFriend(long applicantId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		Member applicant = Member.findById(applicantId);
-
-		PendingInvitation invitation = PendingInvitation.find("byMember_idAndApplicant_id", member.id, applicant.id).first();
+		
+		PendingInvitation invitation = PendingInvitation.findByMemberAndApplicant(member.id, applicant.id);
 		member.pendingInvitations.remove(invitation);
 		member.save();
 		invitation.delete();
@@ -105,7 +105,7 @@ public class Pending extends Controller {
 	}
 
 	public static void acceptAnnouncement(long pendingAnnouncementId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 
 		PendingAnnouncement pendingAnnouncement = PendingAnnouncement.findById(pendingAnnouncementId);
 		
@@ -138,7 +138,7 @@ public class Pending extends Controller {
 	}
 
 	public static void denyAnnouncement(long pendingAnnouncementId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 
 		PendingAnnouncement pendingAnnouncement = PendingAnnouncement.findById(pendingAnnouncementId);
 		member.pendingAnnouncements.remove(pendingAnnouncement);
@@ -149,9 +149,9 @@ public class Pending extends Controller {
 	}
 
 	public static void pendingReadOnlyOk(long announcementId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		
-		PendingReadOnly pending = PendingReadOnly.find("byAnnouncement_idAndMember_id", announcementId, member.id).first();
+		PendingReadOnly pending = PendingReadOnly.findByAnnouncementAndMember(announcementId, member.id);
 		member.pendings.remove(pending);
 		member.save();
 		pending.delete();
@@ -160,7 +160,7 @@ public class Pending extends Controller {
 	}
 
 	public static void pendingReadOnlyOkDelete(long pendingReadOnlyId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		
 		PendingReadOnly pending = PendingReadOnly.findById(pendingReadOnlyId);
 		

@@ -21,7 +21,7 @@ public class Members extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			Member user = Member.find("byEmail", Security.connected()).first();
+			Member user = Member.findByEmail(controllers.Secure.Security.connected());
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 		}
@@ -31,7 +31,7 @@ public class Members extends Controller {
 	 * Visualiser le profile de l'utilisateur
 	 */
 	public static void editProfile(Member m) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		if (m.id != null) {
 			member = m;
 		}
@@ -59,16 +59,15 @@ public class Members extends Controller {
 	 * Visualiser le profile de l'utilisateur
 	 */
 	public static void editProfile() {
-		models.Member model = models.Member.find("byEmail",
-				Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 
-		renderArgs.put("model", model);
+		renderArgs.put("model", member);
 
 		render();
 	}
 
 	public static void listFriends(Member m) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		if (m.id != null) {
 			member = m;
 		}
@@ -82,8 +81,8 @@ public class Members extends Controller {
 	public static void deleteFriend(long friendId) throws NotFoundException {
 
 		// Récupérer l'user actuel
-		Member member = Member.find("byEmail", Security.connected()).first();
-		Member friend = Member.find("byId", friendId).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
+		Member friend = Member.findById(friendId);
 
 		if (Member.removeFriend(member, friend)) {
 			flash.success("members.deleteFriendSuccess");
@@ -98,8 +97,8 @@ public class Members extends Controller {
 	 * Envoi une demande d'invitation à un ami
 	 */
 	public static void inviteFriend(long friendId) {
-		Member member1 = Member.find("byEmail", Security.connected()).first();
-		Member member2 = Member.find("byId", friendId).first();
+		Member member1 = Member.findByEmail(controllers.Secure.Security.connected());
+		Member member2 = Member.findById(friendId);
 
 		if (member1 != null && member2 != null && member1.id != member2.id) {
 			PendingInvitation invitation = new PendingInvitation(member2, member1);
@@ -131,7 +130,7 @@ public class Members extends Controller {
 	 * @param s
 	 */
 	public static void findFriends(String s) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		List<Member> members = null;
 
 		if (s == null || s.isEmpty() || s.length() < 3) {
@@ -144,11 +143,10 @@ public class Members extends Controller {
 			members = Member.all().fetch(maxMembersToFind);
 		} else {
 			// ByFirstnameLikeOrLastnameLike ne fonctionnait pas
-			members = Member.find("firstname like ? or lastname like ?",
-					"%" + s + "%", "%" + s + "%").fetch(maxMembersToFind);
+			members = Member.findByFirstnameOrLastnameMax(s, s, maxMembersToFind);
 		}
 		
-		List<PendingInvitation> pendingInvitations = PendingInvitation.find("byApplicant_id", member.id).fetch();
+		List<PendingInvitation> pendingInvitations = PendingInvitation.findByApplicant(member.id);
 		List<Member> pendings = new ArrayList<Member>();
 		for (PendingInvitation pi : pendingInvitations) {
 			if (members.contains(pi.Member)) {
@@ -178,7 +176,7 @@ public class Members extends Controller {
 	 * @param id
 	 */
 	public static void seeProfile(long id) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		Member memberToSee = null;
 
 		if (id != 0) {
@@ -190,8 +188,8 @@ public class Members extends Controller {
 		List<Member> applicants = new ArrayList<Member>();
 		List<Member> pendings = new ArrayList<Member>();
 
-		PendingInvitation applicantsTemp = PendingInvitation.find("byMember_idAndApplicant_id", member.id, memberToSee.id).first();
-		PendingInvitation pendingsTemp = PendingInvitation.find("byMember_idAndApplicant_id", memberToSee.id, member.id).first();
+		PendingInvitation applicantsTemp = PendingInvitation.findByMemberAndApplicant(member.id, memberToSee.id);
+		PendingInvitation pendingsTemp = PendingInvitation.findByMemberAndApplicant(memberToSee.id, member.id);
 
 		if(applicantsTemp != null){
 			applicants.add(memberToSee);
@@ -201,8 +199,7 @@ public class Members extends Controller {
 			pendings.add(memberToSee);
 		}
 		
-		List<Announcement> nextAnnouncements = Announcement.find("member_id = ? and startDate > ? order by startDate",
-				memberToSee.id, new Date()).fetch();
+		List<Announcement> nextAnnouncements = Announcement.findByMemberAndStartDateGreaterThanOrderByStartDate(memberToSee.id, new Date());
 		
 		System.out.println(nextAnnouncements.size());
 

@@ -19,7 +19,7 @@ public class Signup extends Controller {
 	 */
 	public static void dosignup(@Required Member m) throws Throwable {
 
-		Member existMember = Member.find("byEmail", m.email).first();
+		Member existMember = Member.findByEmail(controllers.Secure.Security.connected());
 		
 		if(existMember.count() > 1){
 			flash.error("members.signup.alreadyExist");

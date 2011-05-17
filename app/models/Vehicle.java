@@ -25,4 +25,12 @@ public class Vehicle extends Model {
 	@HiddenField
 	public VehicleModel model;
 
+	public static Vehicle findByRegistration(String vehicleRegistration) {
+		return Vehicle.find("byRegistration", vehicleRegistration).first();
+	}
+
+	public static Vehicle findByRegistrationAndIdNotEqual(String vehicleRegistration, Long vehicleId) {
+		return Vehicle.find("byRegistrationAndIdNotEqual",vehicleRegistration, vehicleId).first();
+	}
+
 }

@@ -9,6 +9,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import controllers.Security;
+
 import play.data.validation.Email;
 import play.data.validation.MaxSize;
 import play.data.validation.Required;
@@ -100,5 +102,15 @@ public class Member extends Model {
 		member2.refresh();
 
 		return true;
+	}
+	
+	public static Member findByEmail(String email){
+		return Member.find("byEmail", email).first();
+	}
+
+	public static List<Member> findByFirstnameOrLastnameMax(String s,
+			String s2, int maxMembersToFind) {
+		return Member.find("firstname like ? or lastname like ?",
+				"%" + s + "%", "%" + s2 + "%").fetch(maxMembersToFind);
 	}
 }

@@ -19,7 +19,7 @@ public class Vehicles extends Controller {
 	@Before
 	static void setConnectedUser() {
 		if (Security.isConnected()) {
-			Member user = Member.find("byEmail", Security.connected()).first();
+			Member user = Member.findByEmail(controllers.Secure.Security.connected());
 			renderArgs.put("user", user);
 			renderArgs.put("security", Security.connected());
 		}
@@ -33,7 +33,7 @@ public class Vehicles extends Controller {
 	 * Lister les voitures du membre
 	 */
 	public static void list() {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		List<Vehicle> vehicles = member.vehicles;
 
 		render(vehicles);
@@ -60,12 +60,10 @@ public class Vehicles extends Controller {
 	 */
 	public static void addPost(@Required Vehicle vehicle,
 			@Required VehicleModel vehicleModel) throws Throwable {
+		
+		Vehicle existVehicle = Vehicle.findByRegistration(vehicle.registration);
 
-		Vehicle existVehicle = Vehicle.find("byRegistration",
-				vehicle.registration).first();
-
-		models.Member member = models.Member.find("byEmail",
-				Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 
 		if (existVehicle != null) {
 			flash.error("vehicles.add.alreadyExist");
@@ -108,9 +106,8 @@ public class Vehicles extends Controller {
 	 */
 	public static void editPost(@Valid Vehicle vehicle,
 			@Required VehicleModel vehicleModel) throws Throwable {
-
-		Vehicle existVehicle = Vehicle.find("byRegistrationAndIdNotEqual",
-				vehicle.registration, vehicle.id).first();
+		
+		Vehicle existVehicle = Vehicle.findByRegistrationAndIdNotEqual(vehicle.registration, vehicle.id);
 
 		if (existVehicle != null) {
 			flash.error("vehicles.add.alreadyExist");
@@ -131,12 +128,10 @@ public class Vehicles extends Controller {
 	 * @param vehicleId
 	 */
 	public static void delete(long vehicleId) {
-		Member member = Member.find("byEmail", Security.connected()).first();
+		Member member = Member.findByEmail(controllers.Secure.Security.connected());
 		Vehicle vehicle = Vehicle.findById(vehicleId);
-
-		Announcement announcement = Announcement.find(
-				"byStartDateGreaterThanAndVehicle_id", new Date(), vehicle.id)
-				.first();
+		
+		Announcement announcement = Announcement.findByStartDateGreaterThanAndVehicle(new Date(), vehicle.id);
 
 		if (announcement == null) {
 			member.vehicles.remove(vehicle);

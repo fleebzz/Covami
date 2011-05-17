@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -24,5 +25,13 @@ public class PendingInvitation extends Model {
 	public PendingInvitation(Member member, Member applicant) {
 		this.Member = member;
 		this.applicant = applicant;
+	}
+
+	public static List<PendingInvitation> findByApplicant(Long memberId) {
+		return PendingInvitation.find("byApplicant_id", memberId).fetch();
+	}
+
+	public static PendingInvitation findByMemberAndApplicant(Long memberId, Long applicantId) {
+		return PendingInvitation.find("byMember_idAndApplicant_id", memberId, applicantId).first();
 	}
 }
