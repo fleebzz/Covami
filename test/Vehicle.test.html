@@ -1,0 +1,36 @@
+*{ You can use plain selenium command using the selenium tag }*
+
+#{fixture delete:'all', load:'simple-user.yml' /}
+
+#{selenium 'Test création vehicule'}
+    open('/logout')
+    open('/login')
+    type('username', 'florian.bezagu@gmail.com')
+    type('password', 'password')
+    clickAndWait('css=input[type=submit]')
+    assertTextPresent('You are connected')
+    clickAndWait('link=Mes vehicules')
+    assertTextNotPresent('Supprimer')
+    clickAndWait('link=Ajouter un v&eacute;hicule')
+    assertTextPresent('Corola')
+    type('vehicleregistration', 'BC-833-YY')
+    type('vehicletechControlDate', '2011-05-10')
+    clickAndWait('css=input[type=submit]')
+    assertTextPresent('Votre v&eacute;hicule a correctement &eacute;t&eacute; ajout&eacute;')
+#{/selenium}
+
+#{selenium 'Test doublon vehicule'}
+    clickAndWait('link=Mes vehicules')
+    clickAndWait('link=Ajouter un v&eacute;hicule')
+    assertTextPresent('Corola')
+    type('vehicleregistration', 'BC-833-YY')
+    type('vehicletechControlDate', '2011-05-10')
+    clickAndWait('css=input[type=submit]')
+    assertTextPresent('Un v&eacute;hicule avec cette immatriculation existe d&eacute;j')
+#{/selenium}
+
+#{selenium 'Test suppression vehicule'}
+    clickAndWait('link=Mes vehicules')
+    clickAndWait('css=input[value=Supprimer]')
+    assertTextPresent('Votre v&eacute;hicule a correctement &eacute;t&eacute; supprim&eacute; !')
+#{/selenium}

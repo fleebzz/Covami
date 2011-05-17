@@ -6,3 +6,8 @@ Member(florian):
     firstname:          Florian
     lastname:           Bezagu
     password:           password
+    
+VehicleModel(corola):
+    make:               Toyota
+    model:              Corola
+    nbPlaces:           5
