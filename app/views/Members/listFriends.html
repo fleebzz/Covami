@@ -5,7 +5,7 @@
 	
 	<h1>&{'pages.title.friends'}</h1>
 	
-	<a class="submit" href="@{Members.findFriends()}" >&{'member.addFriend'}</a>
+	<a class="submit" href="@{Members.findFriends()}" ><img src="@{'/public/images/icons/user_add.png'}" /> &{'member.addFriend'}</a>
 	
 	<table class="titem">
 		<thead>
@@ -16,7 +16,10 @@
 	#{list items:friends, as:'friend'}
 		<tr>
 			<td>
-				<a href="@{Members.seeProfile(friend.id)}">${friend.firstname} ${friend.lastname}</a>
+				<img src="@{'/public/images/icons/user.png'}" />
+				<a href="@{Members.seeProfile(friend.id)}">
+					${friend.firstname} ${friend.lastname}
+				</a>
 			</td>
 			<td class="c">
 			#{form @deleteFriend()}

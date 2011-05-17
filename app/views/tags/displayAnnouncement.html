@@ -21,11 +21,14 @@
 		<span>&nbsp;</span>
 	</p>
 	
-	<ul>
-		<li>${_announcement.trip.from.name} (<strong>&{'announcements.startCity'}</strong>)</li>
+	<ul style="padding:0 0 0 10px;margin:0;list-style:none">
+		<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat;">
+		${_announcement.trip.from.name} (<strong>&{'announcements.startCity'}</strong>)
+		</li>
+		
 		#{list items:_announcement.trip.cities, as:'city'}
 			#{if city != _announcement.trip.from && city != _announcement.trip.to}
-				<li>
+				<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat; padding-left:20px">
 					${city.name}
 					#{if _announcement.member != _me && !_passengers.contains(_me)}
 						<a href="@{Announcements.applyCustom(_announcement.id, city.id)}">(Rejoindre ici)</a>
@@ -33,7 +36,10 @@
 				</li>
 			#{/if}
 		#{/list}
-		<li>${_announcement.trip.to.name} (<strong>&{'announcements.endCity'}</strong>)</li>
+		
+		<li style="background:url('@{'/public/images/icons/map.png'}') left 50% no-repeat; padding-left:20px;list-style:none;">
+		${_announcement.trip.to.name} (<strong>&{'announcements.endCity'}</strong>)
+		</li>
 	</ul>
 	
 	<p>
@@ -118,6 +124,8 @@
 	#{if _as == 'searchResult'}
 		<p>
 			 &{'announcements.propose'}
+			 
+			<img src="@{'/public/images/icons/user.png'}" />
 			<a href="@{Members.seeProfile(_announcement.member.id)}">
 				${_announcement.member.firstname} ${_announcement.member.lastname}
 			</a>

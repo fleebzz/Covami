@@ -36,7 +36,7 @@
 		#{if member.vehicles.size() > 0}
 			#{list items:member.vehicles, as:'vehicle'}
 				<div class="item">
-					${vehicle.model.make} ${vehicle.model.model} ${vehicle.model.nbPlaces} places
+					<img src="@{'/public/images/icons/car.png'}" /> ${vehicle.model.make} ${vehicle.model.model} ${vehicle.model.nbPlaces} places
 				</div>
 			#{/list}
 		#{/if}

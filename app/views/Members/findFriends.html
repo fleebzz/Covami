@@ -19,7 +19,7 @@
 		#{ifnot member.id == me.id}
 		<tr>
 			<td>
-				<a href="@{Members.seeProfile(member.id)}">${member.firstname} ${member.lastname}</a>
+				<img src="@{'/public/images/icons/user.png'}" /> <a href="@{Members.seeProfile(member.id)}">${member.firstname} ${member.lastname}</a>
 			</td>
 			<td class="c">
 				#{pendingFriend me:me, member:member, applicants:applicants, pendings:pendings, as:"full" /}
@@ -31,6 +31,6 @@
 	</table>
 
 	#{if members.size() == 0}
-		<p class="errorMsg">&{'members.findFriends.nothingFound'}</p>
+		<p class="errorMsg"><img src="@{'/public/images/icons/user.png'}" /> &{'members.findFriends.nothingFound'}</p>
 	#{/if}
 </div>

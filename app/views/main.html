@@ -16,8 +16,17 @@
 		    </div>
 		    <ul id="tools">
 		    	#{if security == null || user == null}
-			    	<a class="submit" href="/signup">&{'members.signup.submit'}</a>
-			    	<a class="submit" href="@{Secure.login()}">&{'secure.signin'}</a>
+		    		
+			    	<a class="submit" href="/signup">
+			    		<img src="@{'/public/images/icons/add.png'}" />
+			    		&{'members.signup.submit'}
+			    	</a>
+			    	
+			    	
+			    	<a class="submit" href="@{Secure.login()}">
+			    		<img src="@{'/public/images/icons/key.png'}" />
+			    		&{'secure.signin'}
+			    	</a>
 		    	#{/if}
 				#{else}
 						#{userControl user:user, applicants:user.pendingInvitations, announcements:user.pendingAnnouncements /}
@@ -25,32 +34,55 @@
 		        
 		    </ul>
 		    <div id="title">
+		    	<h2>&{'application.slogan'}</h2>
+		    	
 		    	#{if security != null}
 			    	<ul id="adminMenu">
 			    		<li>
-			    			<a href="@{Announcements.search()}">&{'pages.title.findAnnouncements'}</a>
+			    			
+			    			<a href="@{Announcements.search()}">
+				    			<img src="@{'/public/images/icons/zoom.png'}" />
+				    			&{'pages.title.findAnnouncements'}
+			    			</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Announcements.list()}">&{'pages.title.myAnnouncements'}</a>
+			    			<a href="@{Announcements.list()}">
+				    			<img src="@{'/public/images/icons/page_copy.png'}" />
+				    			&{'pages.title.myAnnouncements'}
+			    			</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Members.findFriends()}">&{'pages.title.findFriends'}</a>
+			    			<a href="@{Members.findFriends()}">
+			    				<img src="@{'/public/images/icons/group_go.png'}" />
+			    				&{'pages.title.findFriends'}
+			    			</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Members.listFriends()}">&{'pages.title.friends'}</a>
+			    			<a href="@{Members.listFriends()}">
+			    				<img src="@{'/public/images/icons/group.png'}" />
+			    				&{'pages.title.friends'}
+			    			</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Vehicles.list()}">&{'pages.title.myVehicles'}</a>
+			    			<a href="@{Vehicles.list()}">
+			    				<img src="@{'/public/images/icons/car.png'}" />
+				    			&{'pages.title.myVehicles'}
+				    		</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Members.editProfile()}">&{'pages.title.profile'}</a>
+			    			<a href="@{Members.editProfile()}">
+			    				<img src="@{'/public/images/icons/user_go.png'}" />
+			    				&{'pages.title.profile'}
+			    			</a>
 			    		</li>
 			    		<li>
-			    			<a href="@{Live.index()}">&{'pages.title.live'}</a>
+			    			<a href="@{Live.index()}">
+			    				<img src="@{'/public/images/icons/world.png'}" />
+			    				&{'pages.title.live'}
+			    			</a>
 			    		</li>
 			    	</ul>
 			    #{/if}
-		    	<h2>&{'application.slogan'}</h2>
 		    </div>
 		</div>
         <div id="main">
